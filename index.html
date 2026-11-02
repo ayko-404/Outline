@@ -2241,6 +2241,9 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 /* Блок 10 · Команда (28.10.2026). Тексты — Иван (content.md); навыки — по его описаниям ролей + один шуточный (образец, согласовать с Иваном).
    Реф Никиты — overmindlab.ai/about: навыки шкалой из 10 делений, третий навык шуточный. Перестройку карточки по наведению пока не делаем. Фото — старый outlineagency.ru. */
 .tm__note { margin: 0 0 1.25rem; font: 500 1.75rem/1.05 "Caveat", cursive; color: #8b8f99; }
+/* стрелка справа, к карточкам — рукописные подписи всегда со стрелкой (02.11, Никита); та же стрелка, что у подписи блока 7, повёрнута вниз */
+.tm__note { position: relative; z-index: 1; display: inline-block; padding-right: 4.25rem; }
+.tm__note svg { position: absolute; right: 0; top: -.5rem; width: 3.25rem; height: 3.25rem; overflow: visible; transform: rotate(180deg) scaleX(-1); }
 .tm { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .tm__card { border-radius: 2.25rem; background: #fff; padding: .5rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / .08), 0 4px 6px -4px rgb(0 0 0 / .08); }
 .tm__ph { position: relative; overflow: hidden; border-radius: 1.75rem; aspect-ratio: 1; background: #1f4fe0; }
@@ -3805,7 +3808,7 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
       <p class="lt__lead">Внутри Outline Agency работают команды геомаркетинга и&nbsp;дизайна, специалисты по&nbsp;репутации и&nbsp;сопровождению проектов. Объединяем их&nbsp;опыт в&nbsp;работе с&nbsp;ресторанами, клиниками, магазинами и&nbsp;сервисными компаниями.</p>
     </div>
     <div class="tm__nums" id="tm-nums"><div><b><i data-to="30">30</i><span>+</span></b><small>человек в&nbsp;команде</small></div><div><b>5–15</b><small>лет опыта работы в&nbsp;маркетинге</small></div><div><b><i data-to="300">300</i><span>+</span></b><small>успешных кейсов в&nbsp;портфолио</small></div></div>
-    <div class="tm__top"><p class="tm__note">Знакомьтесь с&nbsp;частью команды</p></div>
+    <div class="tm__top"><p class="tm__note">Знакомьтесь с&nbsp;частью команды<svg viewBox="0 0 64 65" fill="none" aria-hidden="true"><path d="M13.5372 25.1143L4.55211 12.8586C3.78803 11.8164 4.61159 10.3602 5.89852 10.478L20.7844 11.8401C22.2622 11.9753 22.6673 13.945 21.3628 14.6524L16.5476 17.2637C16.0223 17.5486 15.7161 18.1182 15.7684 18.7135L16.2411 24.0962C16.3739 25.6081 14.4345 26.3383 13.5372 25.1143Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/><path d="M16.0894 17.6178C16.0894 17.6178 28.068 21.9449 31.6792 28.409C35.8322 35.8427 33.3192 41.68 37.6885 48.9886C42.6422 57.2747 58.5142 54.8341 58.5142 54.8341" stroke="currentColor" stroke-width="1.25"/></svg></p></div>
     <div class="tm" id="tm-grid" data-fx="on"></div>
   </div>
 </section>
