@@ -2069,15 +2069,12 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .stg7:focus-visible { background: rgb(255 255 255 / .07); }
 @media (hover: hover) and (pointer: fine) { .stg7:hover { background: rgb(255 255 255 / .05); } }
 
-/* график этапа: легенда + источник · число месяца и изменение · график с осью месяцев; подсказка по наведению */
+/* график этапа: легенда · число месяца и изменение · график с осью месяцев (02.11, Никита: без пометок источника и подсказок — это визуал к тезисам) */
 .ch7 { position: relative; margin-bottom: 1.75rem; }
 .ch7__hd { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .875rem; font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: rgb(255 255 255 / .6); }
 .ch7__hd > span { display: inline-flex; align-items: center; gap: .4375rem; white-space: nowrap; }
 .sw7 { flex: none; width: .75rem; height: 2px; border-radius: 1px; background: var(--c); }
 .sw7--bar { width: .5rem; height: .625rem; border-radius: 2px 2px 0 0; background: color-mix(in srgb, var(--c) 35%, transparent); box-shadow: inset 0 1.5px 0 var(--c); }
-.ch7__hd .ch7__src { margin-left: auto; color: rgb(255 255 255 / .4); }
-.ch7__src::before { content: ""; flex: none; width: .375rem; height: .375rem; border-radius: 50%; background: rgb(255 255 255 / .45); }
-.ch7__src--calc::before { background: none; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .5); }
 /* строка числа — постоянной высоты: подпись переносится внутри, графики трёх этапов стоят на одной линии */
 .ch7__v { display: flex; align-items: baseline; align-items: last baseline; gap: .5rem; height: 2.25rem; margin-top: .75rem; }
 .ch7__v span { min-width: 0; }
@@ -2092,15 +2089,6 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .ch7 .ln { fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .ch7 .pt { fill: #1d1f25; stroke-width: 1.5; }
 .ch7 .br { transform-box: fill-box; transform-origin: 50% 100%; }
-.ch7 .gd { stroke: rgb(255 255 255 / .28); stroke-dasharray: 2 3; }
-.ch7 :is(.gd, .hd) { opacity: 0; transition: opacity 140ms ease; }
-.ch7.is-tip :is(.gd, .hd) { opacity: 1; }
-.tip7 { position: absolute; z-index: 3; left: 0; top: 0; display: flex; flex-direction: column; gap: .25rem; padding: .5rem .625rem; border-radius: 10px; background: #0f1115; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); font-size: .75rem; line-height: 1.3; color: rgb(255 255 255 / .7); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 140ms ease; }
-.ch7 .tip7 small { font: 500 .625rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: rgb(255 255 255 / .45); }
-.tip7 b { font-weight: 600; color: #fff; }
-.tip7 dl { display: grid; grid-template-columns: auto auto; gap: .125rem .875rem; margin: 0; font-size: .6875rem; color: rgb(255 255 255 / .5); }
-.tip7 dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; color: rgb(255 255 255 / .75); }
-.ch7.is-tip .tip7 { opacity: 1; }
 /* появление: слева направо по этапам — линия рисуется, заливка открывается за ней, столбики растут, число считает от мая к октябрю, ₽ встречает линию */
 .fun7.js7 .ch7 .ln { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1100ms var(--ease-out) var(--d); }
 .fun7.js7 .ch7 .ar7 { clip-path: inset(0 100% 0 0); transition: clip-path 1100ms var(--ease-out) var(--d); }
@@ -2111,6 +2099,25 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .fun7 .ch7.is-play .ar7 { clip-path: inset(0 0 0 0); }
 .fun7 .ch7.is-play .br { transform: none; }
 .fun7 .ch7.is-play :is(.pt, .ch7__v em, .rub7, .rg7) { opacity: 1; scale: 1; }
+/* после появления — тихий цикл 7 с, как поток точек прежней ленты: по линиям слева направо пробегает световой импульс
+   (просмотры → обращения → стоимость), от последней точки просмотров расходится круг, столбик вспыхивает, когда импульс над ним,
+   импульс входит в ₽ — монета отзывается и от неё расходится круг. За экраном цикл стоит */
+.ch7 { --cy: 7s; --run: 2.1s; --ld: 0s; }
+.ch7 .cm7 { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: .09 2; stroke-dashoffset: .09; opacity: 0; filter: drop-shadow(0 0 3px var(--c)); }
+.ch7 .bf { opacity: 0; }
+.ch7 .rp7 { fill: none; stroke-width: 1.25; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.rub7::after { content: ""; position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 1.5px rgb(255 138 77 / .7); opacity: 0; }
+.fun7 .ch7.is-loop .cm7 { animation: cm7 var(--cy) linear var(--ld) infinite; }
+.fun7 .ch7.is-loop .bf { animation: bf7 var(--cy) ease-out calc(var(--ld) + var(--run) * var(--i) / 5 - 120ms) infinite; }
+.fun7 .ch7.is-loop .rp7 { animation: rp7 var(--cy) var(--ease-out) calc(var(--ld) + var(--run) * .97) infinite; }
+.fun7 .ch7.is-loop .rub7 { animation: rb7 var(--cy) var(--ease-out) calc(var(--ld) + var(--run) * .95) infinite; }
+.fun7 .ch7.is-loop .rub7::after { animation: rp7 var(--cy) var(--ease-out) calc(var(--ld) + var(--run) * .95) infinite; }
+.fun7.is-off .ch7 :is(.cm7, .bf, .rp7, .rub7), .fun7.is-off .ch7 .rub7::after { animation-play-state: paused; }
+@keyframes cm7 { 0% { opacity: 1; stroke-dashoffset: .09; } 30% { opacity: 1; stroke-dashoffset: -1; } 30.01%, 100% { opacity: 0; stroke-dashoffset: -1; } }
+@keyframes bf7 { 0% { opacity: 0; } 3% { opacity: 1; } 15%, 100% { opacity: 0; } }
+@keyframes rp7 { 0% { opacity: .8; transform: scale(1); } 20% { opacity: 0; transform: scale(2.4); } 100% { opacity: 0; transform: scale(2.4); } }
+@keyframes rb7 { 0% { transform: none; } 3% { transform: scale(1.1); } 10%, 100% { transform: none; } }
+@media (min-width: 1001px) { .ch7[data-ch="leads"] { --ld: 1.3s; } .ch7[data-ch="cost"] { --ld: 2.6s; } }
 .stg7 small { font: 500 .75rem/1 "Geist Mono", monospace; color: #ff8a4d; }
 .stg7 h4 { margin: .5rem 0 0; font-family: var(--f-head); font-weight: var(--head-w, 600); letter-spacing: -.025em; font-size: 1.375rem; line-height: 1.2; color: #fff; }
 .stg7 p { margin: .5rem 0 0; font-size: .9375rem; line-height: 1.5; color: rgb(255 255 255 / .65); }
@@ -2146,41 +2153,7 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 #tarify { padding-bottom: 6rem !important; }
 #komanda { padding-top: 3rem !important; }
 
-/* ===== кейсы ===== */
-.cs { display: grid; grid-template-columns: 21rem 1fr; gap: 1.25rem; align-items: start; }
-.cs__nav { display: flex; flex-direction: column; gap: .25rem; }
-.cs__tab { display: grid; grid-template-columns: 3rem 1fr; gap: .875rem; align-items: center; padding: .5rem .75rem .5rem .5rem; border: 0; border-radius: 1.125rem; background: transparent; text-align: left; cursor: pointer; font: inherit; color: inherit;
-  transition: background-color 200ms ease, box-shadow 200ms ease; }
-.cs__tab img { width: 3rem; height: 3rem; border-radius: .875rem; object-fit: cover; display: block; }
-.cs__tab b { display: block; font-weight: 600; font-size: .9375rem; line-height: 1.25; }
-.cs__tab small { display: block; font-size: .8125rem; color: rgb(15 21 29 / .5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (hover: hover) and (pointer: fine) { .cs__tab:hover { background: rgb(15 21 29 / .04); } }
-.cs__tab[aria-selected="true"] { background: #fff; box-shadow: 0 0 0 1.5px #ff6414, 0 .5rem 1rem -.5rem rgb(255 100 20 / .35); }
-.cs__all { display: inline-flex; align-items: center; gap: .375rem; margin: .75rem 0 0 .75rem; font-weight: 600; font-size: .9375rem; color: #0f151d; text-decoration: none; }
-.cs__all:hover { color: #e8530b; }
-
-.cs__card { position: relative; border-radius: 48px; background: #fff; box-shadow: 0 10px 15px -3px rgb(0 0 0 / .08), 0 4px 6px -4px rgb(0 0 0 / .08); padding: .75rem; }
-.cs__in { position: relative; border-radius: 38px; overflow: hidden; border: 1px solid var(--line); box-shadow: inset 0 2px 4px rgb(0 0 0 / .04);
-  background: radial-gradient(70% 60% at 100% 0%, rgb(255 100 20 / .08), transparent 60%), rgb(37 37 37 / .025); padding: 2rem 2.25rem 2rem; }
-.cs__in .nm__grid { opacity: .6; }
-.cs__body { position: relative; display: grid; grid-template-columns: 1fr 1.05fr; gap: 2rem; }
-.cs__swap { transition: opacity 260ms var(--ease-out), transform 360ms var(--ease-out), filter 260ms var(--ease-out); }
-.cs__swap.is-out { opacity: 0; transform: translateY(8px); filter: blur(4px); }
-/* читаемость (28.10): без повторов фото и названия, без сетки; цифры результатов — крупнее подписей */
-.cs__in { background: rgb(37 37 37 / .02); padding: 2.25rem 2.5rem 2rem; }
-.cs__in .nm__grid { display: none; }
-.cs__body { grid-template-columns: 15.5rem 1fr; gap: 0 2.75rem; align-items: start; }
-/* телефон с настоящей карточкой клиента в Яндекс Картах — со старого outlineagency.ru */
-.cs__phone { grid-row: 1 / span 4; position: relative; margin: 0; padding: .4375rem; border-radius: 2.5rem; background: #0f151d;
-  box-shadow: 0 0 0 1px rgb(255 255 255 / .06) inset, 0 1.75rem 3rem -1.25rem rgb(15 21 29 / .45), 0 .5rem 1rem -.5rem rgb(15 21 29 / .25); }
-.cs__phone img { display: block; width: 100%; aspect-ratio: 440 / 937; object-fit: cover; object-position: top; border-radius: 2.0625rem; background: #e9ebee; }
-.cs__phone figcaption { position: absolute; left: 50%; bottom: -1.75rem; translate: -50% 0; white-space: nowrap; font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: rgb(15 21 29 / .45); }
-/* телефон кликабельный: открывает скриншот карточки крупно (28.10) */
-.cs__phone { cursor: zoom-in; transition: translate 300ms var(--ease-out), box-shadow 300ms var(--ease-out); }
-@media (hover: hover) and (pointer: fine) { .cs__phone:hover { translate: 0 -4px; } }
-.cs__phone:focus-visible { outline: 2px solid #ff6414; outline-offset: 4px; }
-.cs__phone figcaption { display: inline-flex; align-items: center; gap: .375rem; }
-.cs__phone figcaption svg { width: .875rem; height: .875rem; }
+/* кейсы — разметка и стили в b06v-cases.html; здесь данные (window.__cases) и окно со скриншотом карточки */
 .cs-lb { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 1.5rem; background: rgb(10 12 16 / .72); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
   opacity: 0; pointer-events: none; transition: opacity 240ms var(--ease-out); }
 .cs-lb.is-open { opacity: 1; pointer-events: auto; }
@@ -2193,148 +2166,6 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .cs-lb__x:hover { background: rgb(255 255 255 / .22); }
 @media (max-width: 760px) { .cs-lb__x { right: 0; top: -3.5rem; } .cs-lb__ph img { height: min(72vh, 58.5rem); } }
 @media (prefers-reduced-motion: reduce) { .cs-lb, .cs-lb__in { transition: none; } }
-.cs__main { display: flex; flex-direction: column; min-width: 0; }
-/* ===== кейсы — папки (29.10, 3 варианта) ===== */
-#keysy { padding-top: 4.5rem !important; }
-#keysy .lt__head { margin-bottom: 1.5rem !important; }
-.cfv { display: flex; gap: .25rem; width: max-content; margin: 0 0 1.25rem auto; padding: .25rem; border-radius: 99px; background: rgb(15 21 29 / .05); }
-.cfv button { height: 2.125rem; padding: 0 .875rem; border: 0; border-radius: 99px; background: transparent; font: 500 .8125rem/1 var(--f-body); color: rgb(15 21 29 / .6); cursor: pointer; }
-.cfv button[aria-pressed="true"] { background: #fff; color: #0f151d; box-shadow: 0 1px 3px rgb(15 21 29 / .12); }
-.cf { --acc: #2878ee; }
-.cf__sheet { position: relative; z-index: 1; padding: 2rem 2.25rem 1.75rem; border-radius: 1.75rem; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 1.25rem 2.5rem -1.75rem rgb(15 21 29 / .35); animation: cf-in 380ms cubic-bezier(0.23,1,0.32,1); }
-@keyframes cf-in { from { opacity: .4; transform: translateY(6px); } }
-.cf__body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-.cf__l { display: flex; flex-direction: column; } .cf__r { display: flex; flex-direction: column; padding-left: 3rem; border-left: 1px solid rgb(15 21 29 / .07); }
-.cf .cz__top { margin-top: 1.25rem; font-size: 4.25rem; } .cf .cz__cap { font-size: 1.1875rem; } .cf .cz__q { margin: .75rem 0 .75rem; }
-.cf .cz__rh { margin-top: 0; } .cf .cz__ft { padding-top: 1.25rem; }
-.cf .cz__row.is-was { background: #f6f7f9; }
-/* А · вкладки, как у папок Humble */
-.cf__tabs { display: flex; gap: .25rem; padding: 0 1.25rem; overflow-x: auto; scrollbar-width: none; }
-.cf__tabs::-webkit-scrollbar { display: none; }
-.cf__tab { flex: 0 1 auto; min-width: 0; display: flex; align-items: center; gap: .5rem; height: 2.875rem; padding: 0 1rem 0 .5rem; border: 0; border-radius: 1rem 1rem 0 0; background: #e9eaed; color: rgb(15 21 29 / .6); font: 500 .875rem/1 var(--f-body); cursor: pointer; transform: translateY(.5rem); transition: transform 240ms cubic-bezier(0.23,1,0.32,1), background-color 160ms ease, color 160ms ease; }
-.cf__tab img { width: 1.75rem; height: 1.75rem; border-radius: .5rem; object-fit: cover; flex: none; }
-.cf__tab span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 9rem; }
-.cf__tab:hover { background: #f1f2f4; color: #0f151d; }
-.cf__tab.is-on { position: relative; z-index: 2; background: #fff; color: #0f151d; transform: none; box-shadow: 0 -.5rem 1rem -.75rem rgb(15 21 29 / .25); }
-.cf[data-v="a"] .cf__sheet { border-top-left-radius: 1rem; }
-/* Б · стопка: следующие папки торчат сзади своими ушками */
-.cf__stack { position: relative; padding-top: 2.75rem; }
-.cf__back { position: absolute; bottom: 1.25rem; border-radius: 1.75rem; box-shadow: 0 0 0 1px rgb(15 21 29 / .06); }
-.cf__back.b2 { left: 3rem; right: 3rem; top: 0; background: #e4e5e8; }
-.cf__back.b1 { left: 1.5rem; right: 1.5rem; top: 1.375rem; background: #eef0f2; }
-.cf__front { position: relative; z-index: 2; margin-top: 1.375rem; }
-.cf__ear { position: absolute; top: -2.5rem; height: 2.625rem; display: inline-flex; align-items: center; gap: .5rem; padding: 0 1rem 0 .5rem; border: 0; border-radius: 1rem 1rem 0 0; background: inherit; font: 500 .875rem/1 var(--f-body); color: rgb(15 21 29 / .6); cursor: pointer; white-space: nowrap; }
-.cf__ear img { width: 1.625rem; height: 1.625rem; border-radius: .5rem; object-fit: cover; }
-.cf__back.b2 .cf__ear { left: 62%; } .cf__back.b1 .cf__ear { left: 34%; }
-.cf__back .cf__ear:hover { color: #0f151d; }
-.cf__front .cf__ear { left: 1.5rem; z-index: 2; background: #fff; color: #0f151d; cursor: default; }
-.cf__front .cf__sheet { border-top-left-radius: 1rem; }
-.cf__ctl { display: flex; justify-content: flex-end; align-items: center; gap: .625rem; margin-top: 1rem; }
-/* В · картотека: ушки слева, по одному на клиента */
-.cf__side { display: grid; grid-template-columns: 15rem 1fr; align-items: start; }
-.cf__index { display: flex; flex-direction: column; gap: .25rem; padding-top: 1.25rem; }
-.cf__index .cf__tab { height: 3.25rem; border-radius: 1rem 0 0 1rem; transform: translateX(.5rem); background: #eceef1; }
-.cf__index .cf__tab span { max-width: 11rem; }
-.cf__index .cf__tab.is-on { transform: none; background: #fff; box-shadow: -.5rem 0 1rem -.75rem rgb(15 21 29 / .25); }
-.cf[data-v="c"] .cf__sheet { min-height: 100%; }
-@media (max-width: 1000px) {
-  .cfv { display: none; }
-  .cf__body { grid-template-columns: 1fr; gap: 1.5rem; } .cf__r { padding-left: 0; border-left: 0; padding-top: 1.5rem; border-top: 1px solid rgb(15 21 29 / .07); }
-  .cf__side { grid-template-columns: 1fr; } .cf__index { flex-direction: row; overflow-x: auto; padding: 0 1rem; scrollbar-width: none; } .cf__index .cf__tab { border-radius: 1rem 1rem 0 0; transform: translateY(.5rem); flex: none; } .cf__index .cf__tab.is-on { transform: none; }
-  .cf__back { display: none; } .cf__stack { padding-top: 2.5rem; } .cf__front { margin-top: 0; }
-  .cf__sheet { padding: 1.5rem 1.25rem; } .cf .cz__top { font-size: 3.25rem; }
-}
-/* ===== кейсы — карточки по референсу Ивана (29.10) ===== */
-.cz { --acc: #2878ee; margin: 0 -.5rem; }
-.cz__track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 1.25rem) / 2); column-gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .5rem; scrollbar-width: none; overscroll-behavior-x: contain; }
-.cz__track::-webkit-scrollbar { display: none; }
-.cz__card { scroll-snap-align: start; display: flex; flex-direction: column; padding: 2rem 2rem 1.5rem; border-radius: 2rem; background: #f1f3f7; box-shadow: inset 0 0 0 1px rgb(15 21 29 / .05); }
-.cz__hd { display: flex; align-items: center; gap: .875rem; }
-.cz__hd img { width: 3.25rem; height: 3.25rem; border-radius: .875rem; object-fit: cover; background: #fff; box-shadow: 0 0 0 3px #fff, 0 .25rem .75rem -.25rem rgb(15 21 29 / .25); }
-.cz__hd b { display: block; font-family: var(--f-head); font-weight: var(--head-w, 600); font-size: 1.5rem; letter-spacing: -.03em; line-height: 1.1; color: #0f151d; }
-.cz__hd small { display: block; margin-top: .25rem; font-size: .875rem; color: rgb(15 21 29 / .5); }
-.cz__top { margin: 1.75rem 0 0; font-family: var(--f-head); font-weight: 600; font-size: 5.25rem; line-height: .88; letter-spacing: -.06em; color: var(--acc); white-space: nowrap; }
-.cz__cap { margin: .625rem 0 0; font-size: 1.375rem; font-weight: 500; letter-spacing: -.02em; line-height: 1.25; color: #0f151d; text-wrap: balance; }
-.cz__q { margin: 1.5rem 0 .625rem; font-size: .8125rem; color: rgb(15 21 29 / .5); }
-.cz__row { display: grid; grid-template-columns: 2.75rem 2.75rem 1fr auto; gap: .875rem; align-items: center; padding: .75rem 1rem .75rem .5rem; border-radius: 1rem; background: #fff; box-shadow: 0 1rem 1.75rem -1.25rem rgb(15 21 29 / .35), 0 0 0 1px rgb(15 21 29 / .04); }
-.cz__pos { text-align: center; font-family: var(--f-head); font-weight: 500; font-size: 2rem; line-height: 1; color: var(--acc); }
-.cz__pos small { display: block; margin-top: .3125rem; font: 500 .5625rem/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: rgb(15 21 29 / .45); }
-.cz__row img { width: 2.75rem; height: 2.75rem; border-radius: .75rem; object-fit: cover; }
-.cz__nm { min-width: 0; } .cz__nm b { display: block; font-weight: 600; font-size: 1.0625rem; color: #0f151d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cz__nm em { display: block; margin-top: .125rem; font-style: normal; font-size: .8125rem; color: rgb(15 21 29 / .5); }
-.cz__rt { text-align: right; } .cz__rt b { font-weight: 600; font-size: 1rem; color: #0f151d; white-space: nowrap; } .cz__rt i { font-style: normal; color: var(--acc); }
-.cz__rt small { display: block; margin-top: .125rem; font-size: .75rem; color: rgb(15 21 29 / .45); white-space: nowrap; }
-.cz__row.is-was { margin-top: 0; background: rgb(255 255 255 / .5); box-shadow: none; }
-.cz__row.is-was .cz__pos, .cz__row.is-was b { color: rgb(15 21 29 / .38); } .cz__row.is-was img { filter: grayscale(1); opacity: .45; }
-.cz__tbc { align-self: center; padding: .25rem .625rem; border-radius: 99px; background: #fff4d6; color: #8a5a00; font-size: .75rem; font-weight: 600; white-space: nowrap; }
-.cz__arr { display: block; width: 2.75rem; margin-left: .5rem; padding: .25rem 0; text-align: center; color: var(--acc); line-height: 0; } .cz__arr svg { width: .75rem; height: 1.375rem; }
-.cz__rh { margin: 2rem 0 .75rem; font-family: var(--f-head); font-weight: 500; font-size: 1.5rem; letter-spacing: -.025em; color: #0f151d; }
-.cz__tbl { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.cz__tbl th { padding: 0 0 .75rem 1rem; text-align: right; font: 600 .6875rem/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: rgb(15 21 29 / .5); border-bottom: 1px solid rgb(15 21 29 / .1); }
-.cz__tbl th.a { color: var(--acc); }
-.cz__tbl th:first-child, .cz__tbl td:first-child { text-align: left; padding-left: 0; }
-.cz__tbl td { padding: .9375rem 0 .9375rem 1rem; text-align: right; font-size: 1rem; color: #0f151d; border-bottom: 1px solid rgb(15 21 29 / .07); }
-.cz__tbl td.n { font-family: var(--f-head); font-weight: 600; font-size: 1.25rem; letter-spacing: -.02em; white-space: nowrap; }
-.cz__tbl td.b { color: rgb(15 21 29 / .5); } .cz__tbl td.d { font-weight: 600; color: var(--acc); }
-.cz__ft { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1.5rem; }
-.cz__shot { display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1.125rem; border: 0; border-radius: 99px; background: #eef0f3; font: 500 .9375rem/1 var(--f-body); color: #0f151d; cursor: zoom-in; transition: background-color 160ms ease; }
-.cz__shot svg { width: 1.0625rem; height: 1.0625rem; } .cz__shot:hover { background: #e3e6ea; }
-.cz__more { display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1.25rem; border-radius: 99px; background: #0f151d; color: #fff; text-decoration: none; font-weight: 500; font-size: .9375rem; white-space: nowrap; }
-.cz__more svg { width: 1rem; height: 1rem; } .cz__more:hover { background: #2a2f37; }
-.cz__bar { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; }
-.cz__all { display: inline-flex; align-items: center; gap: .375rem; font-weight: 600; font-size: .9375rem; color: #0f151d; text-decoration: none; } .cz__all svg { width: 1rem; height: 1rem; }
-.cz__nav { display: flex; align-items: center; gap: .5rem; } .cz__cnt { margin-right: .5rem; font-size: .875rem; color: rgb(15 21 29 / .5); font-variant-numeric: tabular-nums; }
-.cz__btn { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 50%; background: #fff; color: #0f151d; box-shadow: 0 0 0 1px rgb(15 21 29 / .1); cursor: pointer; transition: background-color 160ms ease, opacity 160ms ease; }
-.cz__btn svg { width: 1.125rem; height: 1.125rem; } .cz__btn:hover:not(:disabled) { background: #f1f3f7; } .cz__btn:disabled { opacity: .35; cursor: default; }
-@media (max-width: 760px) { .cz__track { grid-auto-columns: 88%; } .cz__card { padding: 1.5rem 1.25rem 1.25rem; } .cz__top { font-size: 3.75rem; } .cz__cap { font-size: 1.125rem; } .cz__ft { flex-direction: column; align-items: flex-start; } .cz__row { grid-template-columns: 2.25rem 2.25rem 1fr; } .cz__rt { display: none; } .cz__tbl td { font-size: .9375rem; } }
-/* карточка кейса по референсу Ивана (29.10) */
-.cs__hd { display: flex; align-items: center; gap: .875rem; }
-.cs__hd img { width: 3rem; height: 3rem; border-radius: .875rem; object-fit: cover; box-shadow: 0 0 0 1px rgb(15 21 29 / .08); }
-.cs__hd b { display: block; font-family: var(--f-head); font-weight: var(--head-w, 600); font-size: 1.375rem; letter-spacing: -.025em; line-height: 1.15; color: #0f151d; }
-.cs__hd small { display: block; margin-top: .25rem; font-size: .875rem; color: rgb(15 21 29 / .55); }
-.cs__main .cs__big { margin: 1.5rem 0 0; font-size: 5rem !important; line-height: .9; letter-spacing: -.055em; color: #0f151d; }
-.cs__main .cs__cap { margin: .5rem 0 0; max-width: none; font-size: 1.25rem; font-weight: 500; letter-spacing: -.015em; color: #0f151d; }
-.cs__q { margin: 1.25rem 0 .625rem; font-size: .8125rem; color: rgb(15 21 29 / .5); }
-.cs__rank { display: flex; flex-direction: column; }
-.cs__row { display: grid; grid-template-columns: 3rem 2.75rem 1fr; gap: .875rem; align-items: center; padding: .75rem 1rem .75rem .625rem; border-radius: 1rem; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 .75rem 1.5rem -1rem rgb(15 21 29 / .3); }
-.cs__row .pos { text-align: center; font-family: var(--f-head); font-weight: 500; font-size: 1.875rem; line-height: 1; color: #0f151d; }
-.cs__row .pos small { display: block; margin-top: .3125rem; font: 500 .5625rem/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: rgb(15 21 29 / .45); }
-.cs__row img { width: 2.75rem; height: 2.75rem; border-radius: .75rem; object-fit: cover; }
-.cs__row b { display: block; font-weight: 600; font-size: 1rem; color: #0f151d; } .cs__row em { display: block; margin-top: .125rem; font-style: normal; font-size: .8125rem; color: rgb(15 21 29 / .5); }
-.cs__row--was { background: rgb(255 255 255 / .5); box-shadow: 0 0 0 1px rgb(15 21 29 / .05); }
-.cs__row--was .pos, .cs__row--was b { color: rgb(15 21 29 / .4); } .cs__row--was img { filter: grayscale(1); opacity: .5; }
-.cs__arr { display: block; width: 3rem; padding: .25rem 0; margin-left: .625rem; text-align: center; color: #0f151d; line-height: 0; } .cs__arr svg { width: .75rem; height: 1.375rem; }
-.cs__rh { margin: 2rem 0 .625rem; font-family: var(--f-head); font-weight: 500; font-size: 1.375rem; letter-spacing: -.02em; color: #0f151d; }
-.cs__main .cs__tbl { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.cs__main .cs__tbl th { padding: 0 0 .625rem; text-align: right; font: 600 .6875rem/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: rgb(15 21 29 / .45); border-bottom: 1px solid rgb(15 21 29 / .1); }
-.cs__main .cs__tbl th:first-child, .cs__main .cs__tbl td:first-child { text-align: left; }
-.cs__main .cs__tbl td { padding: .875rem 0 .875rem 1rem; text-align: right; font-size: 1rem; color: #0f151d; border-bottom: 1px solid rgb(15 21 29 / .07); }
-.cs__main .cs__tbl td:first-child { padding-left: 0; }
-.cs__main .cs__tbl td.n { font-family: var(--f-head); font-weight: 600; font-size: 1.25rem; letter-spacing: -.02em; white-space: nowrap; }
-.cs__main .cs__tbl td.b { color: rgb(15 21 29 / .5); } .cs__main .cs__tbl td.d { font-weight: 600; }
-.cs__main .cs__more { margin-top: 1.5rem; }
-@media (max-width: 760px) { .cs__main .cs__big { font-size: 3.5rem !important; } .cs__main .cs__cap { font-size: 1.0625rem; } }
-.cs__top { padding-bottom: 1.25rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
-.cs__top h3 { margin: 0; font-family: var(--f-head); font-weight: var(--head-w, 600); font-size: 1.75rem; letter-spacing: -.03em; line-height: 1.1; color: #0f151d; }
-.cs__top p { margin: .5rem 0 0; font-size: 1rem; color: rgb(15 21 29 / .62); }
-.cs__top p span { white-space: nowrap; }
-.cs__label { display: block; font: 500 .75rem/1 "Geist Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: rgb(15 21 29 / .5); }
-.cs__big { margin: .75rem 0 0; font-family: var(--f-head); font-weight: var(--head-w, 600); font-size: 4.5rem; line-height: .9; letter-spacing: -.05em; color: #0f151d; }
-.cs__big span { color: #ff6414; }
-.cs__cap { margin: 1rem 0 0; max-width: 22rem; font-size: 1.1875rem; line-height: 1.4; letter-spacing: -.01em; color: #0f151d; text-wrap: pretty; }
-.cs__was { margin: 1.25rem 0 0; display: flex; gap: .625rem; align-items: baseline; max-width: 22rem; font-size: .9375rem; line-height: 1.45; color: rgb(15 21 29 / .62); }
-.cs__was b { flex: none; font: 500 .75rem/1 "Geist Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: rgb(15 21 29 / .5); }
-.cs__res { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
-.cs__stats { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-.cs__stats li { padding-left: 1rem; border-left: 1px solid var(--line); }
-.cs__stats li:first-child { padding-left: 0; border-left: 0; }
-.cs__stats b { display: block; font-family: var(--f-head); font-weight: var(--head-w, 600); font-size: 1.875rem; white-space: nowrap; line-height: 1; letter-spacing: -.035em; font-variant-numeric: tabular-nums; color: #0f151d; }
-.cs__stats span { display: block; margin-top: .5rem; font-size: .9375rem; line-height: 1.35; color: rgb(15 21 29 / .62); }
-.cs__more { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
-.cs__more small { font-size: .875rem; color: rgb(15 21 29 / .55); }
-.cs__link { white-space: nowrap; flex: none; display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1.25rem; border-radius: 99px; background: #0f151d; color: #fff; text-decoration: none; font-weight: 500; font-size: .9375rem; transition: background-color 160ms ease; }
-.cs__link:hover { background: #2a2f37; } .cs__link svg { width: 1rem; height: 1rem; }
-
 /* ===== тарифы ===== */
 .tf { display: grid; grid-template-columns: 1fr 1.14fr 1fr; gap: 1.25rem; align-items: stretch; padding-block: 2.25rem; }
 /* выбранный тариф (28.10, рефы Никиты: Calendly — рамка с градиентом и подписью сверху; Mobbin — карточка крупнее соседних).
@@ -2397,7 +2228,7 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .tf__terms { margin: 1.5rem 0 0; display: flex; justify-content: center; gap: 1.5rem; font-size: .9375rem; color: rgb(15 21 29 / .55); }
 .tf__terms span { display: inline-flex; align-items: center; gap: .5rem; } .tf__terms span::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: #ff6414; }
 
-@media (max-width: 1000px) { .tf { padding-block: 0; } .tf .tf__card--pop { margin-block: 0 !important; } .cs, .cs__body, .tf { grid-template-columns: 1fr; } .cs__big { font-size: 3.75rem; } .cs__in { padding: 1.5rem 1.25rem; } .cs__phone { grid-row: auto; width: min(15.5rem, 100%); margin: 0 auto 2.75rem; } .cs__stats { grid-template-columns: 1fr; gap: 1rem; } .cs__stats li { padding: 1rem 0 0; border-left: 0; border-top: 1px solid var(--line); } .cs__stats li:first-child { padding-top: 0; border-top: 0; } }
+@media (max-width: 1000px) { .tf { padding-block: 0; } .tf .tf__card--pop { margin-block: 0 !important; } .tf { grid-template-columns: 1fr; } }
 </style>
 <style>
 /* Блок 10 · Команда (28.10.2026). Тексты — Иван (content.md); навыки — по его описаниям ролей + один шуточный (образец, согласовать с Иваном).
@@ -2571,7 +2402,7 @@ body .ft__brand .lg { --H: 1.375rem; }
 .vbar button[aria-pressed="true"] { background: #0f151d; color: #fff; }
 [data-vg][hidden] { display: none !important; }
 
-/* Варианты блоков (02.11.2026): кейсы, отзывы, FAQ, CTA, подвал — по рефам Никиты. Переключатели над блоками; выбранное потом оставим. */
+/* Варианты блоков (02.11.2026): отзывы, FAQ, CTA, подвал — по рефам Никиты. Переключатели над блоками; выбранное потом оставим. */
 .vx { --ink: #0f151d; --mut: rgb(15 21 29 / .6); --line: rgb(15 21 29 / .08); }
 .vx__in { width: min(86rem, calc(100% - clamp(2rem, 8vw, 10rem))); margin: 0 auto; }
 .vx__head { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.25rem; align-items: end; margin-bottom: 2.5rem; }
@@ -2581,70 +2412,6 @@ body .ft__brand .lg { --H: 1.375rem; }
 .vx__btn { display: inline-flex; align-items: center; gap: .5rem; height: 3.25rem; padding: 0 1.5rem; border-radius: 99px; border: 1.5px solid var(--btn-orange-border, #d74b06); background: var(--btn-orange-bg, #ff6414); box-shadow: var(--btn-orange-shadow); color: #fff; font: 600 1rem var(--f-body); text-decoration: none; cursor: pointer; }
 .vx__btn--ghost { border: 0; background: rgb(15 21 29 / .06); box-shadow: none; color: var(--ink); }
 .vx__btn svg { width: 1rem; height: 1rem; }
-
-/* ===== Кейсы Б · две карточки как в рефе Ивана ===== */
-.csb { padding: 7rem 0 4rem; }
-.csb__track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 1.25rem) / 2); gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: .25rem; margin: -.25rem; }
-.csb__track::-webkit-scrollbar { display: none; }
-.csb__c { scroll-snap-align: start; padding: 2.25rem 2.25rem 2rem; border-radius: 2rem; background: #eef1f8; }
-.csb__hd { display: flex; align-items: center; gap: .875rem; }
-.csb__hd img { width: 3.25rem; height: 3.25rem; border-radius: .875rem; object-fit: cover; box-shadow: 0 0 0 3px #fff; }
-.csb__hd b { display: block; font-family: var(--f-head); font-weight: 600; font-size: 1.5rem; letter-spacing: -.03em; color: var(--ink); }
-.csb__hd small { display: block; margin-top: .25rem; color: var(--mut); font-size: .875rem; }
-.csb__top { margin: 2rem 0 0; font-family: var(--f-head); font-weight: 700; font-size: 5.5rem; line-height: .86; letter-spacing: -.06em; color: #2878ee; }
-.csb__cap { margin: .75rem 0 0; font-size: 1.375rem; font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
-.csb__q { margin: 1.5rem 0 .625rem; font-size: .8125rem; color: var(--mut); }
-.csb__row { display: grid; grid-template-columns: 2.75rem 2.75rem 1fr auto; gap: .875rem; align-items: center; padding: .75rem 1rem .75rem .5rem; border-radius: 1rem; background: #fff; box-shadow: 0 1rem 1.75rem -1.25rem rgb(15 21 29 / .35); }
-.csb__row .p { text-align: center; font-family: var(--f-head); font-size: 1.875rem; line-height: 1; color: #2878ee; } .csb__row .p small { display: block; margin-top: .25rem; font: 500 .5625rem/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--mut); }
-.csb__row img { width: 2.75rem; height: 2.75rem; border-radius: .75rem; object-fit: cover; }
-.csb__row b { display: block; font-weight: 600; } .csb__row em { display: block; font-style: normal; font-size: .8125rem; color: var(--mut); }
-.csb__row .rt { text-align: right; font-weight: 600; } .csb__row .rt small { display: block; font-weight: 400; font-size: .75rem; color: var(--mut); }
-.csb__row.was { margin-top: .5rem; background: rgb(255 255 255 / .55); box-shadow: none; } .csb__row.was .p, .csb__row.was b { color: rgb(15 21 29 / .4); } .csb__row.was img { filter: grayscale(1); opacity: .5; }
-.csb__tbl { width: 100%; margin-top: 1.75rem; border-collapse: collapse; } .csb__tbl caption { text-align: left; font-family: var(--f-head); font-weight: 500; font-size: 1.375rem; margin-bottom: .75rem; color: var(--ink); }
-.csb__tbl th { padding: 0 0 .625rem; text-align: right; font: 600 .6875rem/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: var(--mut); border-bottom: 1px solid rgb(15 21 29 / .1); } .csb__tbl th:first-child { text-align: left; } .csb__tbl th.a { color: #2878ee; }
-.csb__tbl td { padding: .875rem 0; border-bottom: 1px solid rgb(15 21 29 / .07); text-align: right; } .csb__tbl td:first-child { text-align: left; } .csb__tbl td.n { font-family: var(--f-head); font-weight: 600; font-size: 1.25rem; }
-.csb__bar { display: flex; justify-content: flex-end; gap: .5rem; margin-top: 1.25rem; }
-.csb__bar button { width: 2.75rem; height: 2.75rem; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px var(--line); cursor: pointer; font-size: 1.125rem; }
-
-/* кейсы Б — выбран Никитой 02.11: переключатели по клиентам + карточки в стиле сайта (белый кант, внутренняя панель) */
-.csb__nav { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 1.25rem; }
-.csb__tabs { display: flex; gap: .375rem; overflow-x: auto; scrollbar-width: none; padding: .25rem; margin: -.25rem; }
-.csb__tabs::-webkit-scrollbar { display: none; }
-.csb__tabs button { flex: none; display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1rem 0 .375rem; border: 0; border-radius: 99px; background: #fff; box-shadow: 0 0 0 1px var(--line); font: 500 .9375rem var(--f-body); color: var(--mut); cursor: pointer; transition: background-color 200ms ease, color 200ms ease, box-shadow 200ms ease; }
-.csb__tabs button img { width: 2rem; height: 2rem; border-radius: 50%; object-fit: cover; }
-.csb__tabs button:hover { color: var(--ink); }
-.csb__tabs button[aria-selected="true"] { background: var(--ink); color: #fff; box-shadow: none; }
-.csb__bar { flex: none; display: flex; align-items: center; gap: .5rem; margin: 0 !important; }
-.csb__bar span { margin-right: .5rem; font: 500 .875rem var(--f-body); color: var(--mut); font-variant-numeric: tabular-nums; }
-.csb__bar button { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px var(--line); cursor: pointer; transition: background-color 160ms ease, opacity 160ms ease; }
-.csb__bar button:disabled { opacity: .35; cursor: default; }
-.csb__bar svg { width: 1.125rem; height: 1.125rem; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.csb .csb__c { position: relative; padding: .75rem; border-radius: 48px; background: #fff; box-shadow: 0 10px 15px -3px rgb(0 0 0 / .08), 0 4px 6px -4px rgb(0 0 0 / .08); }
-.csb .csb__in { height: 100%; padding: 2rem 2rem 1.75rem; border-radius: 38px; border: 1px solid var(--line); background: rgb(37 37 37 / .025); box-shadow: inset 0 2px 4px rgb(0 0 0 / .04); }
-.csb .csb__top { color: #0f151d; } .csb .csb__top span { color: #2878ee; }
-.csb .csb__row .p, .csb .csb__tbl th.a { color: #2878ee; }
-.csb .csb__more { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.5rem; }
-.csb .csb__more button { display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1.125rem; border: 0; border-radius: 99px; background: #eef0f3; font: 500 .9375rem var(--f-body); color: var(--ink); cursor: zoom-in; }
-.csb .csb__more a { display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1.25rem; border-radius: 99px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 500; font-size: .9375rem; }
-.csb .csb__more svg { width: 1rem; height: 1rem; }
-@media (max-width: 1000px) { .csb__row { grid-template-columns: 2.25rem 2.25rem 1fr !important; } .csb__row .rt { display: none; } .csb__nav { flex-direction: column; align-items: stretch; } .csb__bar { justify-content: flex-end; } .csb .csb__in { padding: 1.5rem 1.25rem; } }
-/* ===== Кейсы В · большой телефон с карточкой (первая версия, доработанная) ===== */
-.csc { padding: 7rem 0 4rem; }
-.csc__tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-.csc__tabs button { display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1rem 0 .375rem; border: 0; border-radius: 99px; background: #fff; box-shadow: 0 0 0 1px var(--line); font: 500 .9375rem var(--f-body); color: var(--mut); cursor: pointer; }
-.csc__tabs button img { width: 2rem; height: 2rem; border-radius: 50%; object-fit: cover; }
-.csc__tabs button[aria-selected="true"] { background: var(--ink); color: #fff; box-shadow: none; }
-.csc__card { display: grid; grid-template-columns: 22rem 1fr; gap: 3.5rem; align-items: center; padding: 2.5rem 3rem; border-radius: 2.5rem; background: #fff; box-shadow: 0 0 0 1px var(--line), 0 2rem 3rem -2.5rem rgb(15 21 29 / .3); }
-.csc__ph { position: relative; padding: .5rem; border-radius: 3rem; background: #0b0b0c; box-shadow: 0 0 0 1.5px #3b3d42, 0 2rem 3rem -1.75rem rgb(15 21 29 / .5); transform: rotate(-3deg); }
-.csc__ph::before { content: ""; position: absolute; z-index: 2; left: 50%; top: 1rem; width: 5rem; height: 1.375rem; margin-left: -2.5rem; border-radius: 99px; background: #0b0b0c; }
-.csc__ph div { overflow: hidden; border-radius: 2.5rem; aspect-ratio: 440 / 900; background: #fff; }
-.csc__ph img { display: block; width: 100%; }
-.csc__r small { font: 500 .75rem/1 "Geist Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--mut); }
-.csc__r h3 { margin: .625rem 0 0; font-family: var(--f-head); font-weight: 600; font-size: 2rem; letter-spacing: -.035em; color: var(--ink); }
-.csc__top { display: flex; align-items: baseline; gap: 1.25rem; margin-top: 1.5rem; } .csc__top b { font-family: var(--f-head); font-size: 6rem; line-height: .85; letter-spacing: -.06em; color: #2878ee; } .csc__top span { max-width: 18rem; font-size: 1.25rem; line-height: 1.3; color: var(--ink); }
-.csc__nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid var(--line); }
-.csc__nums b { display: block; font-family: var(--f-head); font-weight: 600; font-size: 2rem; letter-spacing: -.04em; color: var(--ink); } .csc__nums span { display: block; margin-top: .375rem; font-size: .9375rem; color: var(--mut); }
-.csc__ft { display: flex; gap: .75rem; margin-top: 2rem; }
 
 /* ===== Отзывы Б · вертикальные видео лентой ===== */
 .rvb { padding: 6rem 0; } .rvb .rvb__track { scroll-snap-type: x mandatory; }
@@ -2772,8 +2539,7 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
 .ftc__legal { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem 2rem; padding: 1.25rem 0 2rem; border-top: 1px solid rgb(15 21 29 / .1); font-size: .8125rem; color: var(--mut); } .ftc__legal a { color: var(--mut); }
 
 @media (max-width: 1000px) {
-  .vx__head, .csc__card, .rvc__grid, .ctb__grid, .ctd__card, .ftb__card, .ftc__top, .fqc__box { grid-template-columns: 1fr; }
-  .csb__track { grid-auto-columns: 88%; } .csb__top { font-size: 3.75rem; } .csc__card { padding: 1.5rem; } .csc__ph { max-width: 16rem; margin: 0 auto; }
+  .vx__head, .rvc__grid, .ctb__grid, .ctd__card, .ftb__card, .ftc__top, .fqc__box { grid-template-columns: 1fr; }
   .ctd__r { min-height: 18rem; } .ctd__l { padding: 2rem; } .ctd__l h2 { font-size: 2.75rem; } .ftb__cols { grid-column: auto; grid-template-columns: 1fr 1fr; } .ftb__form input { font-size: 1.25rem; height: 4rem; }
   .fqb h2, .ctb h2, .ctc h2 { font-size: 2.5rem; } .vx__h { font-size: 2.25rem; }
 }
@@ -3783,23 +3549,23 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
       <div class="stages7">
         <div class="stg7" tabindex="0">
           <div class="ch7" data-ch="views" style="--c:#6fa2f7;--d:0ms" role="img" aria-label="Просмотры карточки по неделям, май — октябрь: с 1 990 до 2 910 в неделю, рост на 46 %">
-            <div class="ch7__hd"><span><i class="sw7"></i>Просмотры карточки</span><span class="ch7__src">подтверждено</span></div>
+            <div class="ch7__hd"><span><i class="sw7"></i>Просмотры карточки</span></div>
             <div class="ch7__v"><b data-from="1990" data-to="2910">2&nbsp;910</b><span>за&nbsp;неделю</span><em>↑ 46&nbsp;%</em></div>
-            <div class="ch7__plot"><svg aria-hidden="true"></svg><div class="tip7"></div></div>
+            <div class="ch7__plot"><svg aria-hidden="true"></svg></div>
           </div>
           <small>Этап 1</small><h4>Интерес к&nbsp;бизнесу</h4><p>Как люди смотрят карточку и&nbsp;сайт и&nbsp;где теряют интерес: вовлечённость, глубина просмотра, отказы.</p><div class="tags7"><span>Яндекс Карты</span><span>2ГИС</span><span>Метрика</span></div></div>
         <div class="stg7" tabindex="0">
           <div class="ch7" data-ch="leads" style="--c:#ff8a4d;--c2:#8aa2e2;--d:220ms" role="img" aria-label="Клики и обращения по месяцам, май — октябрь: клики с 610 до 1 040, обращения с 41 до 88">
-            <div class="ch7__hd"><span><i class="sw7 sw7--bar" style="--c:var(--c2)"></i>Клики</span><span><i class="sw7"></i>Обращения</span><span class="ch7__src">подтверждено</span></div>
+            <div class="ch7__hd"><span><i class="sw7 sw7--bar" style="--c:var(--c2)"></i>Клики</span><span><i class="sw7"></i>Обращения</span></div>
             <div class="ch7__v"><b data-from="41" data-to="88">88</b><span>обращений из&nbsp;1&nbsp;040 кликов</span><em>↑ 115&nbsp;%</em></div>
-            <div class="ch7__plot"><svg aria-hidden="true"></svg><div class="tip7"></div></div>
+            <div class="ch7__plot"><svg aria-hidden="true"></svg></div>
           </div>
           <small>Этап 2</small><h4>Обращения и&nbsp;записи</h4><p>Сопоставляем действия в&nbsp;картах с&nbsp;записями и&nbsp;заказами, в&nbsp;том числе из&nbsp;YClients.</p><div class="tags7"><span>Геосервисы</span><span>YClients</span></div></div>
         <div class="stg7" tabindex="0">
           <div class="ch7" data-ch="cost" style="--c:#ff8a4d;--d:440ms" role="img" aria-label="Стоимость обращения по месяцам, май — октябрь: с 880 до 410 ₽, снижение на 53 %, расчётно">
-            <div class="ch7__hd"><span><i class="sw7"></i>Стоимость обращения</span><span class="ch7__src ch7__src--calc">расчётно</span></div>
+            <div class="ch7__hd"><span><i class="sw7"></i>Стоимость обращения</span></div>
             <div class="ch7__v"><b data-from="880" data-to="410" data-unit=" ₽">410&nbsp;₽</b><span>за&nbsp;обращение</span><em>↓ 53&nbsp;%</em></div>
-            <div class="ch7__plot"><svg aria-hidden="true"></svg><div class="tip7"></div><span class="rg7" aria-hidden="true"></span><span class="rub7" aria-hidden="true">₽</span></div>
+            <div class="ch7__plot"><svg aria-hidden="true"></svg><span class="rg7" aria-hidden="true"></span><span class="rub7" aria-hidden="true">₽</span></div>
           </div>
           <small>Этап 3</small><h4>Стоимость результата</h4><p>Считаем цену обращения там, где известен источник. В&nbsp;отчёте&nbsp;— итоги, работы и&nbsp;приоритеты на&nbsp;месяц.</p><div class="tags7"><span>Расходы</span><span>Отчёт за&nbsp;месяц</span></div></div>
       </div>
@@ -3833,19 +3599,15 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
   document.querySelectorAll('.lt').forEach(s => new IntersectionObserver((es, io) => es.forEach(e => { if (e.isIntersecting && (!s.classList.contains('lt') || s.id !== 'kak-nachinaem' || s.classList.contains('is-ready'))) { s.classList.add('is-in'); io.disconnect(); } }), { threshold: .2 }).observe(s));
   const mo = new MutationObserver(() => { if (sec6.classList.contains('is-ready')) setTimeout(() => sec6.classList.add('is-in'), 300); }); mo.observe(sec6, { attributes: true, attributeFilter: ['class'] });
 
-  /* графики отчёта (02.11): строятся под размер окна, рисуются при появлении слева направо, по наведению — значения точки */
+  /* графики отчёта (02.11): строятся под размер окна, рисуются при появлении слева направо, потом — тихий цикл импульсов (CSS) */
   const card = document.querySelector('.fun7');
   const nb = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  const pl = (n, f) => f[n % 10 === 1 && n % 100 !== 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2];
-  const MON = ['май', 'июн', 'июл', 'авг', 'сен', 'окт'], MONF = ['май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь'];
-  const GEN = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  const MON = ['май', 'июн', 'июл', 'авг', 'сен', 'окт'];
   // иллюстрация месячного отчёта, метрики — content.md «Макет месячного отчёта»; заменить на обезличенный отчёт клиента от Ивана
   const VIEWS = [1990, 2040, 1960, 2080, 2110, 2060, 2170, 2140, 2230, 2190, 2280, 2350, 2310, 2400, 2460, 2420, 2530, 2580, 2540, 2650, 2700, 2660, 2760, 2810, 2850, 2910];
   const CLICKS = [[210, 305, 95], [235, 340, 105], [275, 395, 120], [295, 425, 130], [335, 480, 145], [360, 520, 160]];   // звонок, маршрут, сайт
   const LEADS = [41, 49, 60, 68, 79, 88], COST = [880, 730, 600, 530, 460, 410];
   const wk = i => new Date(2026, 4, 4 + i * 7);   // недели с понедельника 4 мая
-  const week = i => { const a = wk(i), b = new Date(2026, 4, 10 + i * 7);
-    return a.getMonth() === b.getMonth() ? `${a.getDate()}–${b.getDate()} ${GEN[a.getMonth()]}` : `${a.getDate()} ${GEN[a.getMonth()]} – ${b.getDate()} ${GEN[b.getMonth()]}`; };
   // монотонная кривая: плавно, без выбросов выше и ниже точек
   const curve = P => { const n = P.length, m = [], t = []; for (let i = 0; i < n - 1; i++) m[i] = (P[i + 1][1] - P[i][1]) / (P[i + 1][0] - P[i][0]);
     t[0] = m[0]; t[n - 1] = m[n - 2]; for (let i = 1; i < n - 1; i++) t[i] = m[i - 1] * m[i] <= 0 ? 0 : (m[i - 1] + m[i]) / 2;
@@ -3859,7 +3621,7 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
     cost: { max: 900, grid: [300, 600, 900], g: ['#ed9270', '#ff8a4d'] },
   };
   const AX = 24, TOP = 8;   // снизу — подписи месяцев, сверху — запас под пик
-  const charts = [...card.querySelectorAll('.ch7')].map(el => ({ el, k: el.dataset.ch, plot: el.querySelector('.ch7__plot'), svg: el.querySelector('svg'), tip: el.querySelector('.tip7'), coin: el.querySelector('.rub7'), rings: el.querySelector('.rg7'), pts: [] }));
+  const charts = [...card.querySelectorAll('.ch7')].map(el => ({ el, k: el.dataset.ch, plot: el.querySelector('.ch7__plot'), svg: el.querySelector('svg'), coin: el.querySelector('.rub7'), rings: el.querySelector('.rg7') }));
   const render = c => {
     const W = c.plot.clientWidth, H = c.plot.clientHeight, base = H - AX, h = base - TOP, o = CFG[c.k], id = 'c7' + c.k;
     if (!W) return;
@@ -3879,48 +3641,30 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
     const label = (x, i, anchor = 'middle') => `<text class="ax" x="${f(x)}" y="${H - 6}" text-anchor="${anchor}">${MON[i]}</text>`;
     if (c.k === 'views') {
       P = VIEWS.map((v, i) => [2 + i / (VIEWS.length - 1) * (W - 8), Y(v)]);
-      s += area(P, P[0][0], P[P.length - 1][0]) + `<path class="ln" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/>`;
-      const L = P[P.length - 1]; s += `<circle class="pt" cx="${f(L[0])}" cy="${f(L[1])}" r="3.5" stroke="${o.g[1]}"/>`;
+      s += area(P, P[0][0], P[P.length - 1][0]) + `<path class="ln" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/><path class="cm7" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/>`;
+      const L = P[P.length - 1]; s += `<circle class="rp7" cx="${f(L[0])}" cy="${f(L[1])}" r="3.5" stroke="${o.g[1]}"/><circle class="pt" cx="${f(L[0])}" cy="${f(L[1])}" r="3.5" stroke="${o.g[1]}"/>`;
       let m = -1; VIEWS.forEach((_, i) => { const mo = wk(i).getMonth() - 4; if (mo !== m) { m = mo; ax += label(P[i][0], mo, 'start'); } });
     } else if (c.k === 'leads') {
       const band = W / 6, bw = Math.min(band * .5, 30), r = 3;
-      defs += `<pattern id="${id}p" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="${o.bar}" fill-opacity=".55"/></pattern>`;
+      defs += `<pattern id="${id}p" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="${o.bar}" fill-opacity=".55"/></pattern>`
+        + `<pattern id="${id}q" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.1" fill="#c3d3ff"/></pattern>`;
       CLICKS.forEach((a, i) => { const v = a[0] + a[1] + a[2], x = band * (i + .5) - bw / 2, y = Y(v);
         const d = `M${f(x)} ${base} V${f(y + r)} Q${f(x)} ${f(y)} ${f(x + r)} ${f(y)} H${f(x + bw - r)} Q${f(x + bw)} ${f(y)} ${f(x + bw)} ${f(y + r)} V${base} Z`;
-        s += `<g class="br" style="--i:${i}"><path d="${d}" fill="${o.bar}" fill-opacity=".14"/><path d="${d}" fill="url(#${id}p)"/><path d="M${f(x + r)} ${f(y + .75)} H${f(x + bw - r)}" stroke="${o.bar}" stroke-width="1.5" stroke-linecap="round"/></g>`;
+        s += `<g class="br" style="--i:${i}"><path d="${d}" fill="${o.bar}" fill-opacity=".14"/><path d="${d}" fill="url(#${id}p)"/><path class="bf" d="${d}" fill="url(#${id}q)"/><path d="M${f(x + r)} ${f(y + .75)} H${f(x + bw - r)}" stroke="${o.bar}" stroke-width="1.5" stroke-linecap="round"/></g>`;
         ax += label(band * (i + .5), i); });
       P = LEADS.map((v, i) => [band * (i + .5), Y(v, o.lmax)]);
-      s += `<path class="ln" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/>` + P.map(p => `<circle class="pt" cx="${f(p[0])}" cy="${f(p[1])}" r="3" stroke="url(#${id}g)"/>`).join('');
+      s += `<path class="ln" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/><path class="cm7" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/>` + P.map(p => `<circle class="pt" cx="${f(p[0])}" cy="${f(p[1])}" r="3" stroke="url(#${id}g)"/>`).join('');
     } else {
       const R = c.coin.offsetWidth / 2;
       P = COST.map((v, i) => [4 + i / 5 * (W - 4 - R), Y(v)]);
-      s += area(P, P[0][0], P[5][0]) + `<path class="ln" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/>` + P.slice(0, 5).map(p => `<circle class="pt" cx="${f(p[0])}" cy="${f(p[1])}" r="3" stroke="url(#${id}g)"/>`).join('');
+      s += area(P, P[0][0], P[5][0]) + `<path class="ln" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/><path class="cm7" pathLength="1" d="${curve(P)}" stroke="url(#${id}g)"/>` + P.slice(0, 5).map(p => `<circle class="pt" cx="${f(p[0])}" cy="${f(p[1])}" r="3" stroke="url(#${id}g)"/>`).join('');
       P.forEach((p, i) => { ax += label(p[0], i, i ? 'middle' : 'start'); });
       const L = P[5]; [c.coin, c.rings].forEach(e => { e.style.left = L[0] + 'px'; e.style.top = L[1] + 'px'; });
     }
-    c.pts = P;
     c.svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-    c.svg.innerHTML = `<defs>${defs}</defs>${s}${ax}<line class="gd" x1="0" x2="0" y1="${TOP}" y2="${base}"/><circle class="hd" r="4" fill="${o.g[1]}" stroke="#1a1c21" stroke-width="2"/>`;
+    c.svg.innerHTML = `<defs>${defs}</defs>${s}${ax}`;
   };
-  // подсказка: ближайшая точка по горизонтали
-  const tipHTML = (k, i) => k === 'views' ? `<small>${week(i)}</small><span><b>${nb(VIEWS[i])}</b> просмотров карточки</span>`
-    : k === 'leads' ? (([a, b, d]) => `<small>${MONF[i]}</small><span><b>${nb(a + b + d)}</b> кликов</span><dl><dt>звонок</dt><dd>${a}</dd><dt>маршрут</dt><dd>${b}</dd><dt>сайт</dt><dd>${d}</dd></dl><span><b>${LEADS[i]}</b> ${pl(LEADS[i], ['обращение', 'обращения', 'обращений'])}</span>`)(CLICKS[i])
-    : `<small>${MONF[i]} · расчётно</small><span><b>${nb(COST[i])}&nbsp;₽</b> за обращение</span>`;
   charts.forEach(c => {
-    const show = e => { const r = c.plot.getBoundingClientRect(), px = e.clientX - r.left; let i = 0;
-      c.pts.forEach((p, j) => { if (Math.abs(p[0] - px) < Math.abs(c.pts[i][0] - px)) i = j; });
-      const [x, y] = c.pts[i], gd = c.svg.querySelector('.gd'), hd = c.svg.querySelector('.hd');
-      gd.setAttribute('x1', x); gd.setAttribute('x2', x); hd.setAttribute('cx', x); hd.setAttribute('cy', y);
-      if (c.tip.dataset.i !== String(i)) { c.tip.innerHTML = tipHTML(c.k, i); c.tip.dataset.i = i; }
-      const tw = c.tip.offsetWidth, th = c.tip.offsetHeight, W = c.plot.clientWidth;
-      // сбоку от точки, чтобы не закрывать её и число в шапке; не помещается ни справа, ни слева — над точкой
-      const side = x + 16 + tw <= W ? x + 16 : x - 16 - tw >= 0 ? x - 16 - tw : null;
-      c.tip.style.transform = side === null ? `translate(${Math.round(Math.min(Math.max(x - tw / 2, 0), W - tw))}px, ${Math.round(y - th - 14)}px)` : `translate(${Math.round(side)}px, 0)`;
-      c.el.classList.add('is-tip'); };
-    const hide = () => c.el.classList.remove('is-tip');
-    c.plot.addEventListener('pointermove', show); c.plot.addEventListener('pointerdown', show);
-    c.plot.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hide(); });
-    document.addEventListener('pointerdown', e => { if (!c.plot.contains(e.target)) hide(); });
     new ResizeObserver(() => render(c)).observe(c.plot);
     render(c);
   });
@@ -3937,8 +3681,10 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
         requestAnimationFrame(() => c.el.classList.add('is-play'));
         const tick = now => { const t = Math.min(1, Math.max(0, (now - t0 - d) / 1100)); put(a + (z - a) * ease(t)); if (t < 1) requestAnimationFrame(tick); };
         requestAnimationFrame(tick);
-        if (c.coin) setTimeout(() => c.coin.classList.add('is-hit'), d + 1000); }), { threshold: .6 }).observe(c.el);
+        if (c.coin) setTimeout(() => c.coin.classList.add('is-hit'), d + 1000);
+        setTimeout(() => c.el.classList.add('is-loop'), 1500); }), { threshold: .6 }).observe(c.el);
     });
+    new IntersectionObserver(es => es.forEach(e => card.classList.toggle('is-off', !e.isIntersecting))).observe(card);
   }
 })();
 </script>
@@ -3949,7 +3695,6 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
       <h2 class="lt__title" id="cs-title">Кейсы</h2>
       <p class="lt__lead">Что было, что сделали и&nbsp;к&nbsp;чему пришли&nbsp;— по&nbsp;проектам в&nbsp;разных нишах.</p>
     </div>
-    <div class="cf" id="cf" data-v="c"></div>
   </div>
 </section>
 
@@ -4007,44 +3752,7 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
   ];
   /* кейсы — карточки по референсу Ивана (29.10): по две в ряд с листанием; рейтинг и число оценок — со скриншотов карточек в Яндекс Картах */
   const RT = { kamyshi: ['5,0', '2002'], michurinsky: ['5,0', '227'], baza: ['5,0', '507'], ucandles: ['5,0', '268'], avtodush: ['5,0', '109'], notarius: ['5,0', '97'], aviator: ['4,9', '37'] };
-  const ARR = '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   window.__cases = { C, IMG, YA, RT };
-  const plural = n => { n = +n; const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? 'оценка' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'оценки' : 'оценок'; };
-  const num = v => { const m = String(v).replace(/\s/g, '').replace(',', '.').match(/[\d.]+/); return m ? +m[0] : NaN; };
-  const delta = (b, n) => { const x = num(b), y = num(n); return x > 0 && y >= 0 ? (y >= x ? '+' : '') + Math.round((y - x) / x * 100) + '%' : ''; };
-  /* кейсы — «папки», вариант В «Картотека» (выбор Никиты 29.10; содержимое — по референсу Ивана, компактно, чтобы помещалось в экран) */
-  const inner = (c, i) => { const hasB = c.rows.some(r => r[2] != null), rt = RT[c.id];
-    const row = (pos, lab, cls, sub) => `<div class="cz__row ${cls}"><span class="cz__pos">${pos}<small>${lab}</small></span><img src="${IMG[c.id]}" alt=""><span class="cz__nm"><b>${c.name}</b><em>${sub}</em></span>${cls.includes('is-tbc') ? '<span class="cz__tbc">уточнить</span>' : ''}${cls === 'is-now' ? `<span class="cz__rt"><b>${rt[0]} <i>★</i></b><small>${rt[1]} ${plural(rt[1])}</small></span>` : ''}</div>`;
-    return `<div class="cf__body">
-      <div class="cf__l">
-        <header class="cz__hd"><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><small>${c.niche} · ${c.city} · Яндекс Карты</small></span></header>
-        <p class="cz__top">${c.big.replace('-', ' ')}</p><p class="cz__cap">${c.cap}</p><p class="cz__q">${c.period}</p>
-        ${row(c.pos, 'сейчас', 'is-now', c.niche)}
-        ${c.was || c.wasPos ? `<span class="cz__arr" aria-hidden="true"><svg viewBox="0 0 12 22"><path d="M6 21V2M1.5 6.5 6 2l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${row(c.wasPos || '—', 'до', 'is-was' + (c.tbc ? ' is-tbc' : ''), c.was || 'позиция до начала работы')}` : ''}
-      </div>
-      <div class="cf__r">
-        <h4 class="cz__rh">Результаты</h4>
-        <table class="cz__tbl"><thead><tr><th>Показатели карточки</th>${hasB ? '<th>До</th>' : ''}<th class="a">${hasB ? 'После' : 'Сейчас'}</th>${hasB ? '<th class="a">Изменение</th>' : ''}</tr></thead>
-          <tbody>${c.rows.map(r => `<tr><td>${r[0]}</td>${hasB ? `<td class="b">${r[2] ?? '—'}</td>` : ''}<td class="n">${r[1]}</td>${hasB ? `<td class="d">${r[2] != null ? delta(r[2], r[1]) : ''}</td>` : ''}</tr>`).join('')}</tbody></table>
-        <footer class="cz__ft"><button type="button" class="cz__shot" data-shot="${i}">Карточка в&nbsp;Яндекс Картах <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M11 8.5v5M8.5 11h5"/></svg></button><a class="cz__more" href="#">Читать кейс ${ARR}</a></footer>
-      </div></div>`; };
-  const cf = document.getElementById('cf'); let cur = 0;
-  const tabs = () => C.map((c, i) => `<button type="button" class="cf__tab${i === cur ? ' is-on' : ''}" data-i="${i}" role="tab" aria-selected="${i === cur}"><img src="${IMG[c.id]}" alt=""><span>${c.name}</span></button>`).join('');
-  const AR = d => `<svg viewBox="0 0 24 24"><path d="${d ? 'M5 12h14M13 6l6 6-6 6' : 'M19 12H5M11 6l-6 6 6 6'}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  const render = () => { const v = cf.dataset.v, c = C[cur];
-    if (v === 'a') cf.innerHTML = `<div class="cf__tabs" role="tablist" aria-label="Кейсы">${tabs()}</div><div class="cf__sheet">${inner(c, cur)}</div>`;
-    else if (v === 'b') { const n1 = (cur + 1) % C.length, n2 = (cur + 2) % C.length;
-      cf.innerHTML = `<div class="cf__stack"><div class="cf__back b2"><button type="button" class="cf__ear" data-i="${n2}"><img src="${IMG[C[n2].id]}" alt="">${C[n2].name}</button></div>
-        <div class="cf__back b1"><button type="button" class="cf__ear" data-i="${n1}"><img src="${IMG[C[n1].id]}" alt="">${C[n1].name}</button></div>
-        <div class="cf__front"><span class="cf__ear is-on"><img src="${IMG[c.id]}" alt="">${c.name}</span><div class="cf__sheet">${inner(c, cur)}</div></div></div>
-        <div class="cf__ctl"><button type="button" class="cz__btn" data-step="-1" aria-label="Предыдущий кейс">${AR(0)}</button><span class="cz__cnt">${cur + 1} из ${C.length}</span><button type="button" class="cz__btn" data-step="1" aria-label="Следующий кейс">${AR(1)}</button></div>`; }
-    else cf.innerHTML = `<div class="cf__side"><div class="cf__index" role="tablist" aria-label="Кейсы">${tabs()}</div><div class="cf__sheet">${inner(c, cur)}</div></div>`;
-  };
-  cf.addEventListener('click', e => { const t = e.target.closest('[data-i]'), st = e.target.closest('[data-step]'), sh = e.target.closest('[data-shot]');
-    if (sh) return lbOpen(+sh.dataset.shot);
-    if (t) { cur = +t.dataset.i; render(); } else if (st) { cur = (cur + +st.dataset.step + C.length) % C.length; render(); } });
-  render();
-
   /* скриншот карточки в Яндекс Картах — крупно поверх страницы */
   const lb = document.createElement('div'); lb.className = 'cs-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-hidden', 'true');
   lb.innerHTML = '<div class="cs-lb__in"><div class="cs-lb__ph"><img alt=""></div><p class="cs-lb__cap"></p><button class="cs-lb__x" type="button" aria-label="Закрыть">×</button></div>';
@@ -4228,11 +3936,6 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
 })();
 </script>
 
-<section class="vx csb" id="keysy-b" aria-label="Кейсы">
-  <div class="vx__in"><div class="vx__head"><h2 class="vx__h">Кейсы</h2><p class="vx__lead">Что было, что сделали и&nbsp;к&nbsp;чему пришли&nbsp;— по&nbsp;проектам в&nbsp;разных нишах.</p></div>
-  <div class="csb__nav"><div class="csb__tabs" id="csb-tabs" role="tablist" aria-label="Кейсы"></div><div class="csb__bar"><span id="csb-cnt">1–2 из 7</span><button type="button" data-d="-1" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" data-d="1" aria-label="Вперёд"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div><div class="csb__track" id="csb-track"></div></div>
-</section>
-
 <section class="vx rvb" id="otzyvy-b" aria-label="Отзывы"><div class="vx__in"><div class="vx__head"><h2 class="vx__h">Отзывы клиентов</h2><p class="vx__lead">Владельцы бизнеса рассказывают о&nbsp;работе с&nbsp;Outline&nbsp;— на&nbsp;видео, своими словами.</p></div><div class="rvb__panel"><div class="rvb__in"><div class="rvb__track" id="rvb-track"></div><div class="rvb__bar"><a class="rvb__ya" href="#">Отзывы о&nbsp;нас на&nbsp;Яндекс Картах <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span><button type="button" data-d="-1" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" data-d="1" aria-label="Вперёд"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></span></div></div></div></div></section>
 
 <div class="vbar" data-for="faq" id="vbar-faq"><div class="vbar__in"><small>FAQ</small><button type="button" data-v="a" aria-pressed="true">А · Как сейчас</button><button type="button" data-v="b" aria-pressed="false">Б · Тёмный по центру</button><button type="button" data-v="c" aria-pressed="false">В · По темам</button></div></div>
@@ -4307,37 +4010,12 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
   const place = (key, orig) => { if (!orig) return; orig.dataset.vg = key; orig.dataset.v = 'a';
     const vs = [...document.querySelectorAll(`[data-vg="${key}"]:not([data-v="a"])`)]; let at = orig; vs.forEach(v => { at.after(v); at = v; });
     window.__vbar(document.getElementById('vbar-' + key)); };
-  { const o = document.getElementById('keysy'), b = document.getElementById('keysy-b'); if (o && b) { o.after(b); o.remove(); b.id = 'keysy'; } }
   { const o = document.getElementById('otzyvy'), b = document.getElementById('otzyvy-b'); if (o && b) { o.after(b); o.remove(); b.id = 'otzyvy'; } }
   place('faq', document.getElementById('faq'));
   place('cta', document.getElementById('razbor'));
   place('foot', document.querySelector('footer.ft'));
 
-  const ARR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></svg>';
-  const K = window.__cases;
-  if (K) {
-    const { C, IMG, YA, RT } = K;
-    /* Б — две карточки, как в рефе Ивана */
-    const row = (c, pos, lab, sub, was) => `<div class="csb__row${was ? ' was' : ''}"><span class="p">${pos}<small>${lab}</small></span><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><em>${sub}</em></span>${was ? '<span></span>' : `<span class="rt">${RT[c.id][0]} ★<small>${RT[c.id][1]} оценок</small></span>`}</div>`;
-    const tr = document.getElementById('csb-track'), tabs = document.getElementById('csb-tabs'), cnt = document.getElementById('csb-cnt'), [prev, next] = document.querySelectorAll('.csb__bar button');
-    tr.innerHTML = C.map((c, i) => `<article class="csb__c" data-i="${i}"><div class="csb__in"><div class="csb__hd"><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><small>${c.niche} · Яндекс Карты</small></span></div>
-      <p class="csb__top">${c.big.replace('ТОП-', '<span>ТОП</span> ')}</p><p class="csb__cap">${c.cap}</p><p class="csb__q">${c.city} · ${c.period}</p>
-      ${row(c, c.pos, 'сейчас', c.niche)}${c.was || c.wasPos ? row(c, c.wasPos || '—', 'до', c.was || 'позиция до начала работы', 1) : ''}
-      <table class="csb__tbl"><caption>Результаты</caption><thead><tr><th>Показатели карточки</th><th class="a">Сейчас</th></tr></thead><tbody>${c.rows.map(r => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td></tr>`).join('')}</tbody></table>
-      <div class="csb__more"><button type="button" data-shot="${i}">Карточка в&nbsp;Яндекс Картах</button><a href="#">Читать кейс ${ARR}</a></div></div></article>`).join('');
-    tabs.innerHTML = C.map((c, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}"><img src="${IMG[c.id]}" alt="">${c.name}</button>`).join('');
-    const cs = [...tr.children], tb = [...tabs.children];
-    const step = () => cs[1].offsetLeft - cs[0].offsetLeft, per = () => Math.max(1, Math.round(tr.clientWidth / step()));
-    const first = () => Math.round(tr.scrollLeft / step());
-    const sync = () => { const f = first(), v = per(); cnt.textContent = v > 1 ? `${f + 1}–${Math.min(C.length, f + v)} из ${C.length}` : `${f + 1} из ${C.length}`;
-      prev.disabled = f <= 0; next.disabled = f + v >= C.length; tb.forEach((b, k) => b.setAttribute('aria-selected', k >= f && k < f + v)); };
-    const go = i => tr.scrollTo({ left: Math.max(0, Math.min(C.length - per(), i)) * step(), behavior: 'smooth' });
-    tabs.addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(+b.dataset.i); });
-    prev.addEventListener('click', () => go(first() - per())); next.addEventListener('click', () => go(first() + per()));
-    tr.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true }); addEventListener('resize', sync); sync();
-    tr.addEventListener('click', e => { const b = e.target.closest('[data-shot]'); if (b && window.__csShot) window.__csShot(+b.dataset.shot); });
-  }
   const R = window.__revs;
   if (R) {
     const url = r => `https://rutube.ru/shorts/${r.v}/`;
