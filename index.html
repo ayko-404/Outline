@@ -1027,8 +1027,8 @@ body[data-hdr="plate"]:is([data-glass="1"], [data-glass="2"]) .hdr .plate { filt
 /* появление как у humble: заголовки — по словам из размытия; лиды, кнопки, карточки — из размытия со сдвигом */
 .rw { display: inline-block; }
 .rv :is(.clients__title, .svc3__title, .nw__title, .nw-sub h3, .lt__title) { opacity: 0; }
-.rv .hero .h1.rise { animation: none !important; opacity: 1 !important; }
-.rv .hero .h1 { visibility: hidden; }
+/* 02.11: заголовок обложки появляется вместе с подзаголовком и кнопками (CSS-анимация .rise с разметки), а не после загрузки всех 3,6 МБ —
+   раньше он ждал скрипт в конце файла, и на секунду обложка была без заголовка */
 .rv :is(.svc3__lead, .nw__lead, .clients__press, .svc3__stage, .svc3__grid, .svc3__pf, .nw-card, .nc, .nw-cta) { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .rv * { opacity: 1 !important; visibility: visible !important; } }
 </style>
@@ -2914,7 +2914,7 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
 </style>
 
 </head>
-<body class="v-a1">
+<body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
 <div class="page">
   <div class="guides"></div>
   <div class="paper-grid" aria-hidden="true"></div>
@@ -4414,7 +4414,7 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
     el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, easing: EO, delay, fill: 'backwards' }); };
 
   /* обложка — сразу */
-  const h1 = document.querySelector('.hero .h1'); if (h1) words(h1, 150);
+  const h1 = document.querySelector('.hero .h1'); if (h1) split(h1);   // появление — CSS .rise; скрипт только делит на слова для смены заголовка
   window.__rewordH1 = () => { if (!h1) return; delete h1.dataset.split; words(h1, 0); };
 
   /* остальное — при появлении, один раз */
