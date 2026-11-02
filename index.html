@@ -2076,11 +2076,6 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .sw7 { flex: none; width: .75rem; height: 2px; border-radius: 1px; background: var(--c); }
 .sw7--bar { width: .5rem; height: .625rem; border-radius: 2px 2px 0 0; background: color-mix(in srgb, var(--c) 35%, transparent); box-shadow: inset 0 1.5px 0 var(--c); }
 /* строка числа — постоянной высоты: подпись переносится внутри, графики трёх этапов стоят на одной линии */
-.ch7__v { display: flex; align-items: baseline; align-items: last baseline; gap: .5rem; height: 2.25rem; margin-top: .75rem; }
-.ch7__v span { min-width: 0; }
-.ch7__v b { font-family: var(--f-head); font-variation-settings: var(--head-var); font-weight: var(--head-w, 600); letter-spacing: -.03em; font-size: 2rem; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.ch7__v span { font-size: .8125rem; line-height: 1.3; color: rgb(255 255 255 / .55); }
-.ch7__v em { margin-left: auto; padding: .3125rem .5rem; border-radius: 99px; background: rgb(255 255 255 / .07); font: 500 .75rem/1 "Geist Mono", monospace; font-style: normal; color: var(--c); white-space: nowrap; }
 .ch7__plot { position: relative; height: 8.75rem; margin-top: 1rem; }
 .ch7__plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .ch7 .gl { stroke: rgb(255 255 255 / .07); stroke-dasharray: 2 4; }
@@ -2093,12 +2088,12 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .fun7.js7 .ch7 .ln { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1100ms var(--ease-out) var(--d); }
 .fun7.js7 .ch7 .ar7 { clip-path: inset(0 100% 0 0); transition: clip-path 1100ms var(--ease-out) var(--d); }
 .fun7.js7 .ch7 .br { transform: scaleY(0); transition: transform 650ms var(--ease-out) calc(var(--d) + var(--i) * 60ms); }
-.fun7.js7 .ch7 :is(.pt, .ch7__v em) { opacity: 0; transition: opacity 300ms var(--ease-out) calc(var(--d) + 800ms); }
+.fun7.js7 .ch7 .pt { opacity: 0; transition: opacity 300ms var(--ease-out) calc(var(--d) + 800ms); }
 .fun7.js7 .ch7 :is(.rub7, .rg7) { opacity: 0; scale: .9; transition: opacity 400ms var(--ease-out) calc(var(--d) + 900ms), scale 500ms var(--ease-out) calc(var(--d) + 900ms); }
 .fun7 .ch7.is-play .ln { stroke-dashoffset: 0; }
 .fun7 .ch7.is-play .ar7 { clip-path: inset(0 0 0 0); }
 .fun7 .ch7.is-play .br { transform: none; }
-.fun7 .ch7.is-play :is(.pt, .ch7__v em, .rub7, .rg7) { opacity: 1; scale: 1; }
+.fun7 .ch7.is-play :is(.pt, .rub7, .rg7) { opacity: 1; scale: 1; }
 /* после появления — тихий цикл 7 с, как поток точек прежней ленты: по линиям слева направо пробегает световой импульс
    (просмотры → обращения → стоимость), от последней точки просмотров расходится круг, столбик вспыхивает, когда импульс над ним,
    импульс входит в ₽ — монета отзывается и от неё расходится круг. За экраном цикл стоит */
@@ -3523,21 +3518,18 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
         <div class="stg7" tabindex="0">
           <div class="ch7" data-ch="views" style="--c:#6fa2f7;--d:0ms" role="img" aria-label="Просмотры карточки по неделям, май — октябрь: с 1 990 до 2 910 в неделю, рост на 46 %">
             <div class="ch7__hd"><span><i class="sw7"></i>Просмотры карточки</span></div>
-            <div class="ch7__v"><b data-from="1990" data-to="2910">2&nbsp;910</b><span>за&nbsp;неделю</span><em>↑ 46&nbsp;%</em></div>
             <div class="ch7__plot"><svg aria-hidden="true"></svg></div>
           </div>
           <small>Этап 1</small><h4>Интерес к&nbsp;бизнесу</h4><p>Как люди смотрят карточку и&nbsp;сайт и&nbsp;где теряют интерес: вовлечённость, глубина просмотра, отказы.</p><div class="tags7"><span>Яндекс Карты</span><span>2ГИС</span><span>Метрика</span></div></div>
         <div class="stg7" tabindex="0">
           <div class="ch7" data-ch="leads" style="--c:#ff8a4d;--c2:#8aa2e2;--d:220ms" role="img" aria-label="Клики и обращения по месяцам, май — октябрь: клики с 610 до 1 040, обращения с 41 до 88">
             <div class="ch7__hd"><span><i class="sw7 sw7--bar" style="--c:var(--c2)"></i>Клики</span><span><i class="sw7"></i>Обращения</span></div>
-            <div class="ch7__v"><b data-from="41" data-to="88">88</b><span>обращений из&nbsp;1&nbsp;040 кликов</span><em>↑ 115&nbsp;%</em></div>
             <div class="ch7__plot"><svg aria-hidden="true"></svg></div>
           </div>
           <small>Этап 2</small><h4>Обращения и&nbsp;записи</h4><p>Сопоставляем действия в&nbsp;картах с&nbsp;записями и&nbsp;заказами, в&nbsp;том числе из&nbsp;YClients.</p><div class="tags7"><span>Геосервисы</span><span>YClients</span></div></div>
         <div class="stg7" tabindex="0">
           <div class="ch7" data-ch="cost" style="--c:#ff8a4d;--d:440ms" role="img" aria-label="Стоимость обращения по месяцам, май — октябрь: с 880 до 410 ₽, снижение на 53 %, расчётно">
             <div class="ch7__hd"><span><i class="sw7"></i>Стоимость обращения</span></div>
-            <div class="ch7__v"><b data-from="880" data-to="410" data-unit=" ₽">410&nbsp;₽</b><span>за&nbsp;обращение</span><em>↓ 53&nbsp;%</em></div>
             <div class="ch7__plot"><svg aria-hidden="true"></svg><span class="rg7" aria-hidden="true"></span><span class="rub7" aria-hidden="true">₽</span></div>
           </div>
           <small>Этап 3</small><h4>Стоимость результата</h4><p>Считаем цену обращения там, где известен источник. В&nbsp;отчёте&nbsp;— итоги, работы и&nbsp;приоритеты на&nbsp;месяц.</p><div class="tags7"><span>Расходы</span><span>Отчёт за&nbsp;месяц</span></div></div>
@@ -3574,7 +3566,6 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
 
   /* графики отчёта (02.11): строятся под размер окна, рисуются при появлении слева направо, потом — тихий цикл импульсов (CSS) */
   const card = document.querySelector('.fun7');
-  const nb = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   const MON = ['май', 'июн', 'июл', 'авг', 'сен', 'окт'];
   // иллюстрация месячного отчёта, метрики — content.md «Макет месячного отчёта»; заменить на обезличенный отчёт клиента от Ивана
   const VIEWS = [1990, 2040, 1960, 2080, 2110, 2060, 2170, 2140, 2230, 2190, 2280, 2350, 2310, 2400, 2460, 2420, 2530, 2580, 2540, 2650, 2700, 2660, 2760, 2810, 2850, 2910];
@@ -3642,18 +3633,13 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
     render(c);
   });
   // появление: каждый график — когда он на экране (на телефоне они друг под другом); линии и столбики — CSS-переходами,
-  // число считает от мая к октябрю, ₽ отзывается, когда линия дошла
+  // ₽ отзывается, когда линия дошла (цифры над графиками убраны 02.11 — Никита: «акцент на цифры не нужен»)
   if (!reduce) {
     card.classList.add('js7');
-    const ease = t => 1 - Math.pow(1 - t, 4);
     charts.forEach(c => {
-      const b = c.el.querySelector('.ch7__v b[data-from]'), a = +b.dataset.from, z = +b.dataset.to, u = (b.dataset.unit || '').replace(' ', '\u00a0');
-      const put = v => { b.textContent = nb(v) + u; }; put(a);
       new IntersectionObserver((es, io) => es.forEach(e => { if (!e.isIntersecting) return; io.disconnect();
-        const d = parseFloat(getComputedStyle(c.el).getPropertyValue('--d')) || 0, t0 = performance.now();
+        const d = parseFloat(getComputedStyle(c.el).getPropertyValue('--d')) || 0;
         requestAnimationFrame(() => c.el.classList.add('is-play'));
-        const tick = now => { const t = Math.min(1, Math.max(0, (now - t0 - d) / 1100)); put(a + (z - a) * ease(t)); if (t < 1) requestAnimationFrame(tick); };
-        requestAnimationFrame(tick);
         if (c.coin) setTimeout(() => c.coin.classList.add('is-hit'), d + 1000);
         setTimeout(() => c.el.classList.add('is-loop'), 1500); }), { threshold: .6 }).observe(c.el);
     });
