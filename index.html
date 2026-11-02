@@ -2854,7 +2854,7 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
   .svc3[data-v="b"] .sv { padding: .875rem 0 !important; }
   .svc3[data-v="b"] .sv h3 { font-size: 1.375rem !important; color: #17171a !important; }
   .svc3[data-v="b"] .sv p { max-height: none !important; opacity: 1 !important; margin-top: .375rem !important; }
-  .svc3[data-v="b"] .sv__pic { display: none !important; }
+  .svc3[data-v="b"] .sv__pic, .svc3[data-v="b"] .sv .sv__pic:has(.xph) { display: none !important; }   /* :has — иначе правило окна с телефоном (w-ill) сильнее, и на месте окна оставалась пустая полоса */
 
   /* блок 4: заголовок и лид — друг под другом; «Одна точка / Сеть» — в столбик */
   .nw__head, .nw-two { grid-template-columns: 1fr !important; row-gap: 1rem; }
