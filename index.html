@@ -2600,10 +2600,18 @@ body .ftb__card .lg { --H: 1.75rem; filter: brightness(0) invert(1); } .ftb__car
 .csv__dev .mph__sb > i { position: static; grid-column: 2; width: 100%; height: 100%; margin: 0; border-radius: 99px; background: #000; }
 .csv__dev .mph__sb > span:last-child { justify-self: center; display: flex; padding-right: 1cqw; }
 .csv__dev .mph__sb svg { height: 2.85cqw; width: auto; }
-.csv__dev .mph__view { display: block; top: 12.6cqw; background: #fff; }
+.csv__dev .mph__view { display: block; top: 0; background: #fff; }
 .csv__dev .mph__home { display: block; left: 50%; width: 34cqw; height: 1.25cqw; margin-left: -17cqw; bottom: 1.9cqw; background: rgb(0 0 0 / .82); }
-/* у скриншота свой статус-бар со «островом» — прячем его под нарисованным */
-.csv__dev .mph__view img { position: absolute; left: 0; top: -8.4cqw; width: 100%; height: auto; }
+/* экран целиком, как в «Услугах» (02.11, Никита): без белых подложек у статус-бара и индикатора «домой».
+   Скриншот 440 px шириной, у него свой статус-бар (до 38 px) и своя полоска «домой» (центр — 12 px от низа):
+   масштаб подобран так, что свой статус-бар уходит за верх экрана, а своя полоска ложится ровно под нарисованную.
+   Экран 92,4cqw × 200,3cqw, центр нарисованной полоски — 197,8cqw: 197,8 / (927 − 38) = 0,2225cqw на пиксель → ширина 97,9cqw, по бокам срезано по 2,75cqw */
+.csv__dev .mph__view img { position: absolute; left: -2.75cqw; top: -8.45cqw; width: 97.9cqw; height: auto; }
+/* статус-бар поверх фото карточки: прозрачный, белые время и значки, под ними мягкое затемнение (как у iOS поверх фото) */
+.csv__dev .mph__sb { position: absolute; z-index: 4; left: 0; right: 0; top: 0; width: 100%; background: transparent; color: #fff; }
+.csv__dev .mph__sb svg { fill: #fff; } .csv__dev .mph__sb svg [stroke] { stroke: #fff; }
+.csv__dev .mph__sb::before { content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0; height: 150%; pointer-events: none; border-radius: 13.2cqw 13.2cqw 0 0;
+  background: linear-gradient(to bottom, rgb(0 0 0 / .32) 0%, rgb(0 0 0 / .12) 55%, rgb(0 0 0 / 0) 100%); }
 .csv__dev .mph__view img.is-new { animation: csv-fade 400ms ease both; }
 .csv__ph .cap { font-size: .8125rem; color: var(--mut); white-space: nowrap; }
 @media (hover: hover) and (pointer: fine) { .csv__ph:hover .csv__dev { transform: translateY(-.375rem); } .csv__more:hover svg { animation: arr-swap 450ms var(--ease-out); } }
