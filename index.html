@@ -2427,6 +2427,14 @@ body .ft__brand .lg { --H: 1.375rem; }
 .fq__tg-ic { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: rgb(255 255 255 / .16); }
 .fq__tg-ic svg { width: 1.125rem; height: 1.125rem; margin-left: -1px; }
 @media (max-width: 1000px) { .fq { grid-template-columns: 1fr; row-gap: 2rem; } .fq__side { padding-right: 0; } }
+
+/* FAQ (03.11, Никита): открыт только один вопрос; раскрытие и закрытие — плавно по высоте (JS ниже), плюс/минус поворачиваются в такт */
+.fq__it { overflow: hidden; transition: box-shadow .35s ease; }
+.fq__it p { opacity: 0; transform: translateY(-.25rem); transition: opacity .35s ease .05s, transform .45s cubic-bezier(0.22, 1, 0.36, 1); }
+.fq__it[open]:not(.is-closing) p { opacity: 1; transform: none; }
+.fq__it summary i, .fq__it summary i::after { transition-duration: .45s !important; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important; }
+.fq__it.is-closing summary i { background: #f1f2f4; } .fq__it.is-closing summary i::before, .fq__it.is-closing summary i::after { background: #0f151d; } .fq__it.is-closing summary i::after { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .fq__it p { transition: none; } }
 </style>
 <style>
 /* общий переключатель вариантов */
@@ -4214,6 +4222,28 @@ html.rvs-lock { overflow: hidden; }
 })();
 </script>
 
+<script>
+(() => {
+  /* FAQ: один открытый вопрос, плавная высота (WAAPI). Закрытие: анимируем до высоты заголовка, потом снимаем open */
+  const items = [...document.querySelectorAll('#faq .fq__it')]; if (!items.length) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, EASE = 'cubic-bezier(0.22, 1, 0.36, 1)', DUR = 480;
+  const head = d => d.querySelector('summary').offsetHeight;
+  const close = d => { if (!d.open || d.classList.contains('is-closing')) return;
+    if (reduce) { d.open = false; return; }
+    d.classList.add('is-closing'); d._a && d._a.cancel();
+    d._a = d.animate({ height: [d.offsetHeight + 'px', head(d) + 'px'] }, { duration: DUR * .85, easing: EASE });
+    d._a.onfinish = () => { d.open = false; d.classList.remove('is-closing'); d._a = null; };
+    d._a.oncancel = () => d.classList.remove('is-closing'); };
+  const open = d => { items.forEach(x => x !== d && close(x));
+    if (reduce) { d.open = true; return; }
+    const from = d.offsetHeight; d._a && d._a.cancel(); d.classList.remove('is-closing'); d.open = true;
+    const to = d.offsetHeight; d._a = d.animate({ height: [from + 'px', to + 'px'] }, { duration: DUR, easing: EASE });
+    d._a.onfinish = () => { d._a = null; }; };
+  items.forEach(d => d.querySelector('summary').addEventListener('click', e => { e.preventDefault();
+    if (d.open && !d.classList.contains('is-closing')) close(d); else open(d); }));
+})();
+</script>
+
 <section class="vx rvb" id="otzyvy-b" aria-label="Отзывы"><div class="vx__in"><div class="vx__head"><h2 class="vx__h">Отзывы клиентов</h2><p class="vx__lead">Владельцы бизнеса рассказывают о&nbsp;работе с&nbsp;Outline&nbsp;— на&nbsp;видео, своими словами.</p></div><div class="rvb__panel"><div class="rvb__in"><div class="rvb__track" id="rvb-track"></div><div class="rvb__bar"><a class="rvb__ya" href="#">Отзывы о&nbsp;нас на&nbsp;Яндекс Картах <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span><button type="button" data-d="-1" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" data-d="1" aria-label="Вперёд"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></span></div></div></div></div></section>
 
 <div class="vbar" data-for="faq" id="vbar-faq"><div class="vbar__in"><small>FAQ</small><button type="button" data-v="a" aria-pressed="true">А · Как сейчас</button><button type="button" data-v="b" aria-pressed="false">Б · Тёмный по центру</button><button type="button" data-v="c" aria-pressed="false">В · По темам</button></div></div>
@@ -4503,8 +4533,8 @@ html.rvs-lock { overflow: hidden; }
   const mo = (l, w, t, d) => `<span class="rmc__bar m" style="left:${l}%;width:${w}%;--d:${d}s">${t}<b style="--d:${(d + .3).toFixed(2)}s">${IC.doc}</b></span>`;
   const C = [
     `<span class="rmc__cap rmv__mono"><em></em>Старт</span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .1)}</div>`,
-    `<div class="rmc"><span class="rmc__ax"></span>${st(6, 82, 'plan', 'План и условия', .45)}</div>`,
-    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц, с&nbsp;отчётом</span><div class="rmc"><span class="rmc__ax"></span>${mo(6, 26, '1 мес', .8)}${mo(34, 26, '2 мес', .95)}${mo(62, 26, '3 мес', 1.1)}<span class="rmc__more" style="--d:1.4s"><i></i><i></i><i></i></span></div>
+    `<div class="rmc"><span class="rmc__ax"></span>${st(0, 84, 'plan', 'План и условия', .45)}</div>`,
+    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц, с&nbsp;отчётом</span><div class="rmc"><span class="rmc__ax"></span>${mo(0, 28, '1 мес', .8)}${mo(31, 28, '2 мес', .95)}${mo(62, 28, '3 мес', 1.1)}<span class="rmc__more" style="--d:1.4s"><i></i><i></i><i></i></span></div>
 `,
   ];
   cards.forEach((c, i) => { const r = c.querySelector('.rm6__ruler');
@@ -4592,6 +4622,14 @@ html.rvs-lock { overflow: hidden; }
 .rmc__bar > :not(b), .rmc__bar { }
 .rm6[data-v="c"] .rmc__bar .rmc__t { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .rmc__bar { clip-path: none !important; } }
+</style>
+<style>
+/* 03.11 (Никита): плашки шкалы начинаются с начала текста карточки (отступ 2,5rem), а не от её края; линия по-прежнему проходит через стыки */
+.rm6__card .rmv--c .rmc { left: 2.5rem; right: 2.5rem; }
+.rm6__card:first-child .rmv--c .rmc { left: 0; } .rm6__card:last-child .rmv--c .rmc { right: 0; }
+.rm6__card .rmv--c .rmc__ax { left: -2.625rem; right: -2.625rem; }
+.rm6__card:first-child .rmv--c .rmc__ax { left: 0; } .rm6__card:last-child .rmv--c .rmc__ax { right: 0; }
+@media (max-width: 1000px) { .rm6__card .rmv--c .rmc { left: 0; right: 0; } .rm6__card .rmv--c .rmc__ax { left: 0; right: 0; } }
 </style>
 
 <section class="vx csv-sec" id="keysy-v" aria-labelledby="csv-title">
