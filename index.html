@@ -4493,9 +4493,9 @@ html.rvs-lock { overflow: hidden; }
   const mo = (l, w, t, d) => `<span class="rmc__bar m" style="left:${l}%;width:${w}%;--d:${d}s">${t}<b style="--d:${(d + .45).toFixed(2)}s">${IC.doc}</b></span>`;
   const C = [
     `<span class="rmc__cap rmv__mono"><em></em>Старт</span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .2)}</div>`,
-    `<div class="rmc"><span class="rmc__ax"></span>${st(6, 82, 'plan', 'План и условия', .7)}</div>`,
-    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц</span><div class="rmc"><span class="rmc__ax"></span>${mo(6, 26, '1 мес', 1.2)}${mo(34, 26, '2 мес', 1.45)}${mo(62, 26, '3 мес', 1.7)}<span class="rmc__more" style="--d:2s"><i></i><i></i><i></i></span></div>
-      <span class="rmc__note rmv__mono"><b>${IC.doc}</b>в конце месяца — отчёт</span>`,
+    `<div class="rmc"><span class="rmc__ax"></span>${st(6, 82, 'plan', 'План и условия', .9)}</div>`,
+    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц, с&nbsp;отчётом</span><div class="rmc"><span class="rmc__ax"></span>${mo(6, 26, '1 мес', 1.6)}${mo(34, 26, '2 мес', 1.9)}${mo(62, 26, '3 мес', 2.2)}<span class="rmc__more" style="--d:2.7s"><i></i><i></i><i></i></span></div>
+`,
   ];
   cards.forEach((c, i) => { const r = c.querySelector('.rm6__ruler');
     r.insertAdjacentHTML('afterend', `<div class="rmv rmv--a" aria-hidden="true">${A[i]}</div><div class="rmv rmv--b" aria-hidden="true">${B[i]}</div><div class="rmv rmv--c" aria-hidden="true">${C[i]}</div>`); });
@@ -4559,6 +4559,20 @@ html.rvs-lock { overflow: hidden; }
 <style>
 .rmc__ax { left: -.125rem; right: -.125rem; background: #dcdee2; }   /* концы встречаются посередине зазора .25rem между карточками; сплошной цвет — без тёмной точки на стыке */
 .rm6__card:first-child .rmc__ax { left: 0; } .rm6__card:last-child .rmc__ax { right: 0; }
+</style>
+<style>
+/* шкала v4 (03.11, Никита: «анимация резкая», «две пометки спорят»): одна подпись над месяцами;
+   появление мягкое — растушёванный край маски едет слева направо, содержимое проявляется следом, значки отчёта — без отскока */
+.rmc__bar, .lt.is-in .rm6[data-v="c"] .rmc__bar { clip-path: none !important; }
+.rmc__bar { -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%); mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+  -webkit-mask-size: 260% 100%; mask-size: 260% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: 115% 0; mask-position: 115% 0; }
+.rmc__bar > * , .rmc__bar { }
+.lt.is-in .rm6[data-v="c"] .rmc__bar { -webkit-mask-position: 0 0; mask-position: 0 0;
+  transition: -webkit-mask-position 1.4s cubic-bezier(0.22, 1, 0.36, 1) var(--d), mask-position 1.4s cubic-bezier(0.22, 1, 0.36, 1) var(--d); }
+.rmc__bar.m b { transform: scale(.85) !important; }
+.lt.is-in .rm6[data-v="c"] .rmc__bar.m b { transform: none !important; transition: transform .7s cubic-bezier(0.22, 1, 0.36, 1) var(--d), opacity .5s ease var(--d); }
+.rmc__note { display: none; }
+@media (prefers-reduced-motion: reduce) { .rmc__bar { -webkit-mask-image: none; mask-image: none; } }
 </style>
 
 <section class="vx csv-sec" id="keysy-v" aria-labelledby="csv-title">
