@@ -2645,6 +2645,79 @@ html.rvs-lock { overflow: hidden; }
 }
 </style>
 <style>
+/* «Как начинаем» — варианты иллюстраций вместо линеек (03.11, Никита: «красивые, но непонятные»; выбирает на сайте).
+   А — маршрут через три шага с петлёй «каждый месяц»; Б — что клиент получает на каждом шаге; В — шкала: старт и дальше помесячно.
+   Сроков шагов нет (вопрос Ивану) — нигде не пишем дни и недели. Переключатель временный, убрать после выбора. */
+.rmsw { display: flex; justify-content: center; margin: 0 0 1.25rem; }
+.rmsw__in { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: .25rem; padding: .25rem; border-radius: 99px; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .08), 0 .5rem 1rem -.5rem rgb(15 21 29 / .25); }
+.rmsw small { align-self: center; padding: 0 .625rem 0 .875rem; font: 500 .75rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: rgb(15 21 29 / .45); }
+.rmsw button { height: 2.25rem; padding: 0 1rem; border: 0; border-radius: 99px; background: transparent; font: 500 .875rem/1 var(--f-body); color: rgb(15 21 29 / .6); cursor: pointer; }
+.rmsw button[aria-pressed="true"] { background: #0f151d; color: #fff; }
+
+.rmv { display: none; position: relative; height: 8.5rem; margin: 0 0 3rem; padding-top: 1.25rem; }
+.rm6:not([data-v="now"]) .rm6__ruler { display: none; }
+.rm6[data-v="a"] .rmv--a, .rm6[data-v="b"] .rmv--b, .rm6[data-v="c"] .rmv--c { display: block; }
+.rmv svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.rmv__mono { font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: rgb(15 21 29 / .45); }
+
+/* А · маршрут: линия через три карточки (продолжается от края до края), метка с номером на каждом шаге, на третьем — петля «каждый месяц» */
+.rmv--a { margin-left: -2.5rem; margin-right: -2.5rem; }
+.rm6__card:first-child .rmv--a { margin-left: 0; } .rm6__card:last-child .rmv--a { margin-right: 0; }
+.rmv--a .rt { fill: none; stroke: #ff6414; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.rmv--a .rt-bg { fill: none; stroke: rgb(15 21 29 / .08); stroke-width: 3; stroke-linecap: round; }
+.rmv--a .st { fill: none; stroke: rgb(15 21 29 / .06); stroke-width: 10; stroke-linecap: round; }
+.rmv--a .pin { opacity: 0; transform: translateY(-8px); transform-box: fill-box; transform-origin: 50% 100%; }
+.rmv--a .lp-txt { font: 500 11px/1 "Geist Mono", monospace; letter-spacing: .06em; fill: rgb(15 21 29 / .5); opacity: 0; }
+.lt.is-in .rm6[data-v="a"] .rt { transition: stroke-dashoffset 1s cubic-bezier(0.65, 0, 0.35, 1) var(--d); stroke-dashoffset: 0; }
+.lt.is-in .rm6[data-v="a"] .pin { transition: opacity .3s ease calc(var(--d) + .55s), transform .5s cubic-bezier(.34, 1.56, .64, 1) calc(var(--d) + .55s); opacity: 1; transform: none; }
+.lt.is-in .rm6[data-v="a"] .lp-txt { transition: opacity .4s ease calc(var(--d) + 1s); opacity: 1; }
+
+/* Б · что получите: листок разбора, план, месячный календарь */
+.rmb { position: absolute; left: 0; right: 0; bottom: 0; height: calc(100% + .5rem); padding: .875rem 1rem; border-radius: 1rem; background: #fafaf9; box-shadow: 0 0 0 1px rgb(15 21 29 / .06);
+  font: 500 .8125rem/1.2 var(--f-body); color: #0f151d; overflow: hidden; }
+.rmb__h { display: flex; justify-content: space-between; align-items: center; margin-bottom: .625rem; }
+.rmb ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4375rem; }
+.rmb li { display: flex; align-items: center; gap: .5rem; opacity: 0; transform: translateX(-6px); }
+.lt.is-in .rm6[data-v="b"] .rmb li { transition: opacity .35s ease var(--d), transform .45s cubic-bezier(0.23, 1, 0.32, 1) var(--d); opacity: 1; transform: none; }
+.rmb li i { display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: 50%; flex: none; font: 700 .625rem/1 var(--f-body); font-style: normal; color: #fff; }
+.rmb li i.ok { background: #30a46c; } .rmb li i.no { background: #e5484d; }
+.rmb li em { margin-left: auto; font-style: normal; color: rgb(15 21 29 / .45); font-size: .75rem; }
+.rmb__chips { display: flex; gap: .3125rem; flex-wrap: wrap; }
+.rmb__chips span { display: inline-flex; align-items: center; gap: .3125rem; height: 1.5rem; padding: 0 .5rem; border-radius: 99px; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .08); font-size: .75rem; }
+.rmb__chips span::before { content: ""; width: .4375rem; height: .4375rem; border-radius: 50%; background: var(--c); }
+.rmb__cal { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
+.rmb__cal i { aspect-ratio: 1.7; border-radius: 4px; background: rgb(15 21 29 / .05); opacity: 0; }
+.rmb__cal i.w { background: rgb(255 100 20 / .75); } .rmb__cal i.r { background: #2878ee; }
+.lt.is-in .rm6[data-v="b"] .rmb__cal i { transition: opacity .25s ease var(--d); opacity: 1; }
+.rmb__leg { display: flex; gap: .875rem; margin-top: .5rem; font-size: .6875rem; color: rgb(15 21 29 / .55); }
+.rmb__leg span { display: inline-flex; align-items: center; gap: .3125rem; } .rmb__leg span::before { content: ""; width: .5rem; height: .5rem; border-radius: 2px; background: var(--c); }
+
+/* В · шкала: общий горизонт через три карточки; старт — два коротких отрезка, дальше месяцы с отчётом в конце каждого */
+.rmv--c { margin-left: -2.5rem; margin-right: -2.5rem; }
+.rm6__card:first-child .rmv--c { margin-left: 0; } .rm6__card:last-child .rmv--c { margin-right: 0; }
+.rmc { position: absolute; left: 0; right: 0; top: 2.75rem; height: 3.25rem; }
+.rmc__ax { position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: rgb(15 21 29 / .12); }
+.rmc__bar { position: absolute; top: calc(50% - .9375rem); height: 1.875rem; border-radius: .625rem; display: flex; align-items: center; padding: 0 .75rem; font: 600 .75rem/1 var(--f-body); white-space: nowrap;
+  transform: scaleX(0); transform-origin: left; }
+.rmc__bar.s { background: #0f151d; color: #fff; } .rmc__bar.m { background: rgb(40 120 238 / .12); color: #1d4fa8; box-shadow: inset 0 0 0 1px rgb(40 120 238 / .2); }
+.rmc__bar.m b { margin-left: auto; width: .4375rem; height: .4375rem; border-radius: 50%; background: #2878ee; }
+.rmc__bar.f { background: repeating-linear-gradient(90deg, rgb(40 120 238 / .1) 0 .5rem, transparent .5rem .875rem); }
+.lt.is-in .rm6[data-v="c"] .rmc__bar { transition: transform .7s cubic-bezier(0.23, 1, 0.32, 1) var(--d); transform: none; }
+.rmc__cap { position: absolute; left: 0; top: 0; } .rmc__cap.r { left: auto; right: 0; }
+.rmc__foot { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; }
+.rm6__card:first-child .rmc__cap { left: 0; } .rmv--c .rmc__cap, .rmv--c .rmc__foot { padding: 0 2.5rem; } .rm6__card:first-child .rmv--c .rmc__cap, .rm6__card:first-child .rmv--c .rmc__foot { padding-left: 0; }
+.rm6__card:last-child .rmv--c .rmc__cap.r, .rm6__card:last-child .rmv--c .rmc__foot { padding-right: 0; }
+
+@media (prefers-reduced-motion: reduce) { .rmv * { transition: none !important; opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; } }
+@media (max-width: 1000px) {
+  .rmv { height: auto; min-height: 6rem; margin-bottom: 1.75rem; }
+  .rmv--a, .rmv--c, .rm6__card:first-child .rmv--a, .rm6__card:last-child .rmv--a, .rm6__card:first-child .rmv--c, .rm6__card:last-child .rmv--c { margin-left: 0; margin-right: 0; }
+  .rmv--a { height: 6rem; } .rmv--c { height: 7rem; }
+  .rmv--c .rmc__cap, .rmv--c .rmc__foot { padding: 0 !important; }
+  .rmb { position: relative; height: auto; }
+}
+</style>
+<style>
 /* Кейсы (02.11.2026, выбран вариант А): на экране один кейс, слева список клиентов — как на старом outlineagency.ru;
    карточка — ТОП, «сейчас / до», результаты, «Читать кейс»; справа iPhone в титане, как в «Услугах», с карточкой клиента в Яндекс Картах. */
 .csv-sec { padding: 6rem 0 4rem; }
@@ -2686,7 +2759,9 @@ html.rvs-lock { overflow: hidden; }
 .csv__tbl th { padding: 0 0 .5rem; text-align: right; font: 600 .625rem/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: var(--mut); border-bottom: 1px solid rgb(15 21 29 / .1); }
 .csv__tbl th:first-child { text-align: left; } .csv__tbl th.a { color: var(--blue); }
 .csv__tbl td { padding: .625rem 0; border-bottom: 1px solid rgb(15 21 29 / .07); text-align: right; color: var(--ink); }
-.csv__tbl td:first-child { text-align: left; color: rgb(15 21 29 / .75); } .csv__tbl td.n { font-family: var(--f-head); font-weight: 600; font-size: 1.125rem; white-space: nowrap; }
+.csv__tbl td:first-child { text-align: left; color: rgb(15 21 29 / .75); }
+/* «Было» — до начала работы: серым, уже «Сейчас»; где цифры нет — прочерк (ждём от Ивана) */
+.csv__tbl th.b, .csv__tbl td.b { width: 7.5rem; padding-right: 1.5rem; } .csv__tbl td.b { font-family: var(--f-head); font-size: 1.125rem; color: rgb(15 21 29 / .4); white-space: nowrap; } .csv__tbl td.n { font-family: var(--f-head); font-weight: 600; font-size: 1.125rem; white-space: nowrap; }
 .csv__ft { display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1.25rem; }
 .csv__more { display: inline-flex; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 1.25rem; border-radius: 99px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 500; font-size: .9375rem;
   transition: background-color 200ms ease, scale 225ms var(--sp); }
@@ -2755,6 +2830,7 @@ html.rvs-lock { overflow: hidden; }
   .csv__card { padding: .5rem; border-radius: 32px; } .csv__in { border-radius: 26px; }
   .csv__top { font-size: 3.5rem; }
   .csv__row { grid-template-columns: 2.25rem 2.25rem minmax(0, 1fr); } .csv__row .rt { display: none; }
+  .csv__tbl th.b, .csv__tbl td.b { width: 4.5rem; padding-right: .75rem; }
 }
 </style>
 <style>
@@ -3818,11 +3894,11 @@ html.rvs-lock { overflow: hidden; }
     { id: 'michurinsky', name: 'Ресторан на Мичуринском', niche: 'Кавказская кухня', city: 'Москва', period: 'с мая 2025', big: 'ТОП-1', cap: 'по ключевым запросам района полгода подряд', pos: 1, wasPos: 8, tbc: true,
       rows: [['Маршрутов в месяц', '5000+'], ['Просмотров профиля в месяц', '20 000+'], ['Цена целевого действия по рекламе', '8 ₽']] },
     { id: 'baza', name: 'The База', niche: 'Тату-салон', city: 'Московская область', period: 'янв 2023 — янв 2025', big: 'ТОП-1', cap: 'по ключевым запросам больше двух лет подряд', pos: 1, was: 'карточки не было — запуск с нуля',
-      rows: [['Заявок в месяц', '130+'], ['Звонков в месяц', '60–70'], ['Просмотров профиля в месяц', '5000+']] },
+      rows: [['Заявок в месяц', '130+', '0'], ['Звонков в месяц', '60–70', '0'], ['Просмотров профиля в месяц', '5000+', '0']] },
     { id: 'ucandles', name: 'Ucandles by Gor Maison', niche: 'Магазин ароматов', city: 'премиум-сегмент', period: 'с сентября 2025', big: 'ТОП-1', cap: 'обошли Летуаль и Золотое Яблоко рядом за 60 дней', pos: 1, wasPos: 6, tbc: true,
       rows: [['Рост трафика', '+330%'], ['Звонков', '×2'], ['Просмотров профиля в месяц', '3000+']] },
     { id: 'avtodush', name: '«Автодуш»', niche: 'Грузовая автомойка', city: 'Московская область', period: 'янв — июн 2025', big: 'ТОП-1', cap: 'по ключевым запросам больше полугода — с нуля', pos: 1, was: 'карточки не было — открытие с нуля',
-      rows: [['Клиентов в месяц', '350+'], ['Переходов в профиль в месяц', '4000+'], ['Маршрутов в месяц', '500+']] },
+      rows: [['Клиентов в месяц', '350+', '0'], ['Переходов в профиль в месяц', '4000+', '0'], ['Маршрутов в месяц', '500+', '0']] },
     { id: 'notarius', name: 'Нотариус', niche: 'Нотариальная контора', city: 'Москва', period: 'с января 2025', big: 'ТОП-3', cap: 'в радиусе 5 км больше года — без рекламы', pos: 3, wasPos: 9, tbc: true,
       rows: [['Записей за год', '×3'], ['Рейтинг на картах', '5,0'], ['Рост трафика в месяц', '+20%']] },
     { id: 'aviator', name: 'Aviator Boxing Club', niche: 'Боксёрский клуб', city: 'Пенза', period: 'с июня 2025', big: 'ТОП-1', cap: 'в Пензе по всем ключевым запросам', pos: 1, wasPos: 7, tbc: true,
@@ -4239,6 +4315,52 @@ html.rvs-lock { overflow: hidden; }
 @media (max-width: 900px) { .rvs__seg { left: 16px; right: 16px; top: calc(58dvh + 12px); } .rvs__body { padding-top: 1.75rem; } }
 </style>
 
+<script>
+(() => {
+  const tray = document.querySelector('#kak-nachinaem .rm6'); if (!tray) return;
+  const cards = [...tray.querySelectorAll('.rm6__card')]; if (cards.length !== 3) return;
+  /* А · маршрут. viewBox 300×100: линия по высоте 60, у первой карточки начинается в центре метки-старта, у третьей заканчивается петлёй */
+  const pin = (x, n, d) => `<g class="pin" style="--d:${d}s"><path d="M${x} 58c0-10-13-17-13-30a13 13 0 0 1 26 0c0 13-13 20-13 30Z" fill="#0f151d"/><text x="${x}" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Golos Text, sans-serif">${n}</text></g>`;
+  const streets = '<path class="st" d="M0 86 L300 86"/><path class="st" d="M70 0 L110 100"/><path class="st" d="M220 0 L190 100"/>';
+  const A = [
+    `<svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">${streets}<path class="rt-bg" d="M40 60 H300"/><path class="rt" pathLength="1" style="--d:0s" d="M40 60 H300"/>${pin(40, 1, 0)}</svg>`,
+    `<svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">${streets}<path class="rt-bg" d="M0 60 H300"/><path class="rt" pathLength="1" style="--d:.9s" d="M0 60 H300"/>${pin(150, 2, .7)}</svg>`,
+    `<svg viewBox="0 0 300 100" aria-hidden="true" preserveAspectRatio="xMinYMid meet">${streets}<path class="rt-bg" d="M0 60 H170 a32 32 0 1 1 0.1 0"/><path class="rt" pathLength="1" style="--d:1.8s" d="M0 60 H170 a32 32 0 1 1 0.1 0"/>${pin(80, 3, 1.6)}
+      <text class="lp-txt" style="--d:1.8s" x="250" y="24">КАЖДЫЙ</text><text class="lp-txt" style="--d:1.8s" x="250" y="38">МЕСЯЦ</text></svg>`,
+  ];
+  /* Б · что получите */
+  const li = (k, t, e, d) => `<li style="--d:${d}s"><i class="${k}">${k === 'ok' ? '✓' : '✕'}</i>${t}${e ? `<em>${e}</em>` : ''}</li>`;
+  const cal = (() => { const W = [2, 5, 9, 12, 16, 19, 23, 26]; return [...Array(30)].map((_, k) => `<i class="${k === 29 ? 'r' : W.includes(k) ? 'w' : ''}" style="--d:${(1.6 + k * .02).toFixed(2)}s"></i>`).join(''); })();
+  const B = [
+    `<div class="rmb"><div class="rmb__h"><span class="rmv__mono">Разбор карточки</span></div><ul>${li('ok', 'Категории и описание', '', .2)}${li('no', 'Нет часов работы', '', .35)}${li('no', 'Отзывы без ответов', '', .5)}${li('ok', 'Конкуренты рядом', '', .65)}</ul></div>`,
+    `<div class="rmb"><div class="rmb__h"><span class="rmv__mono">План работы</span></div><div class="rmb__chips"><span style="--c:#ff4433">Яндекс Карты</span><span style="--c:#1ba136">2ГИС</span><span style="--c:#4285f4">Google</span></div>
+      <ul style="margin-top:.625rem">${li('ok', 'Приоритеты', 'по разбору', 1)}${li('ok', 'Показатели', 'звонки, маршруты', 1.15)}</ul></div>`,
+    `<div class="rmb"><div class="rmb__h"><span class="rmv__mono">Каждый месяц</span></div><div class="rmb__cal">${cal}</div>
+      <div class="rmb__leg"><span style="--c:rgb(255 100 20 / .75)">работы по карточке</span><span style="--c:#2878ee">отчёт</span></div></div>`,
+  ];
+  /* В · шкала: проценты ширины — только порядок шагов, не сроки */
+  const bar = (cls, l, w, t, d) => `<span class="rmc__bar ${cls}" style="left:${l}%;width:${w}%;--d:${d}s">${t}</span>`;
+  const C = [
+    `<div class="rmc"><span class="rmc__ax"></span>${bar('s', 0, 70, 'Разбор', .2)}</div><span class="rmc__cap rmv__mono">Старт</span>`,
+    `<div class="rmc"><span class="rmc__ax"></span>${bar('s', 8, 62, 'План и условия', .7)}</div>`,
+    `<div class="rmc"><span class="rmc__ax"></span>${bar('m', 0, 31, '1 мес <b></b>', 1.2)}${bar('m', 33, 31, '2 мес <b></b>', 1.4)}${bar('m', 66, 24, '3 мес <b></b>', 1.6)}${bar('f', 91, 9, '', 1.8)}</div>
+      <span class="rmc__cap r rmv__mono">Дальше — каждый месяц</span><div class="rmc__foot"><span></span><span class="rmv__mono" style="display:inline-flex;align-items:center;gap:.375rem"><i style="width:.4375rem;height:.4375rem;border-radius:50%;background:#2878ee"></i>отчёт</span></div>`,
+  ];
+  cards.forEach((c, i) => { const r = c.querySelector('.rm6__ruler');
+    r.insertAdjacentHTML('afterend', `<div class="rmv rmv--a" aria-hidden="true">${A[i]}</div><div class="rmv rmv--b" aria-hidden="true">${B[i]}</div><div class="rmv rmv--c" aria-hidden="true">${C[i]}</div>`); });
+
+  const V = { now: 'Как сейчас', a: 'А · Маршрут', b: 'Б · Что получите', c: 'В · Шкала' };
+  tray.insertAdjacentHTML('beforebegin', `<div class="rmsw"><div class="rmsw__in"><small>Иллюстрации</small>${Object.entries(V).map(([k, t]) => `<button type="button" data-v="${k}" aria-pressed="${k === 'a'}">${t}</button>`).join('')}</div></div>`);
+  tray.dataset.v = 'a';
+  const sw = tray.previousElementSibling, sec = document.getElementById('kak-nachinaem');
+  sw.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    sw.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); tray.dataset.v = b.dataset.v;
+    /* перезапуск появления, чтобы было видно движение варианта */
+    if (sec.classList.contains('is-in')) { sec.classList.remove('is-in'); tray.offsetWidth; requestAnimationFrame(() => sec.classList.add('is-in')); }
+  }));
+})();
+</script>
+
 <section class="vx csv-sec" id="keysy-v" aria-labelledby="csv-title">
   <div class="vx__in"><div class="vx__head"><h2 class="vx__h" id="csv-title">Кейсы</h2><p class="vx__lead">Что было, что сделали и&nbsp;к&nbsp;чему пришли&nbsp;— по&nbsp;проектам в&nbsp;разных нишах.</p></div>
   <div class="csv csv--a" id="csv"></div></div>
@@ -4270,7 +4392,7 @@ html.rvs-lock { overflow: hidden; }
   const row = (c, now) => now
     ? `<div class="csv__row"><span class="p">${c.pos}<small>сейчас</small></span><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><em>${c.niche}</em></span><span class="rt">${RT[c.id][0]} ★<small>${RT[c.id][1]} ${plural(RT[c.id][1])}</small></span></div>`
     : c.was || c.wasPos ? `<div class="csv__row was"><span class="p">${c.wasPos || '—'}<small>до</small></span><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><em>${c.was || 'позиция до начала работы'}</em></span></div>` : '';
-  const tbl = c => `<table class="csv__tbl"><thead><tr><th>Показатели карточки</th><th class="a">Сейчас</th></tr></thead><tbody>${c.rows.map(r => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td></tr>`).join('')}</tbody></table>`;
+  const tbl = c => `<table class="csv__tbl"><thead><tr><th>Показатели карточки</th><th class="b">Было</th><th class="a">Сейчас</th></tr></thead><tbody>${c.rows.map(r => `<tr><td>${r[0]}</td><td class="b">${r[2] ?? '—'}</td><td class="n">${r[1]}</td></tr>`).join('')}</tbody></table>`;
   const body = c => `<div class="csv__body"><div class="csv__tags"><span class="n">${ico(c.id)}${c.niche}</span><span>${c.city}</span><span class="q">${c.period}</span></div><p class="csv__top">${top(c)}</p><p class="csv__cap">${c.cap}</p><div class="csv__rows">${row(c, 1)}${row(c, 0)}</div>${tbl(c)}<div class="csv__ft"><a class="csv__more" href="#">Читать кейс ${ARR}</a></div></div>`;
   const phone = c => `<button type="button" class="csv__ph" data-shot="${cur}" aria-label="Карточка ${c.name} в Яндекс Картах — открыть крупно"><span class="csv__dev"><span class="mph"><span class="mph__scr">${SB}<span class="mph__view"><img src="${YA[c.id]}" alt=""></span><span class="mph__home"></span></span></span></span><span class="cap">Карточка клиента в&nbsp;Яндекс Картах</span></button>`;
   const tab = (c, k) => `<button type="button" role="tab" class="csv__it" data-i="${k}" aria-selected="${k === cur}" aria-controls="csv-panel" tabindex="${k === cur ? 0 : -1}"><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><small>${c.niche} · ${c.city}</small></span></button>`;
