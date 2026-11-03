@@ -3026,6 +3026,12 @@ html.rvs-lock { overflow: hidden; }
 .fina__card .ft__phone { color: #fff !important; }
 .fina__card .olg { color: #fff; } .fina__card .olg .b { opacity: .22; }
 .fina { padding-bottom: 1.5rem; }
+
+/* 03.11 (Никита): карточка подвала прижата к низу страницы, нижние углы прямые */
+.fina { padding-bottom: 0 !important; }
+.fina__card { border-radius: 2.25rem 2.25rem 0 0 !important; box-shadow: inset 0 1px 0 rgb(255 255 255 / .06), 1px 0 0 rgb(255 255 255 / .07) inset, -1px 0 0 rgb(255 255 255 / .07) inset, 0 1px 0 rgb(255 255 255 / .07) inset, 0 -1.5rem 4rem -1.5rem rgb(0 0 0 / .6) !important; }
+.fina__card .olg { margin-bottom: 0 !important; }
+@media (max-width: 1000px) { .fina__card { border-radius: 1.5rem 1.5rem 0 0 !important; } }
 </style>
 <style>
 /* Кейсы (02.11.2026, выбран вариант А): на экране один кейс, слева список клиентов — как на старом outlineagency.ru;
