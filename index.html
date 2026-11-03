@@ -1886,7 +1886,7 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 </style>
 <style>
 /* Блоки 6–7 на светлой теме (28.10.2026) + обратный переход тёмное → светлое как у nomu.store (снято с сайта: секция 100vh на тёмном,
-   слои #ff8d69→#ff7448, #ffd9b0→#ff7448, #ffeacc→#fff6e8, последний — цвет страницы). Тексты — content.md (К — Иван, Н — одобрено). */
+   слои — графит → серый → светлый, последний — цвет страницы; монохром по правке Ивана 03.11). Тексты — content.md (К — Иван, Н — одобрено). */
 .wavel { position: relative; height: 80vh; background: #111317; overflow: hidden; margin-top: -1px; }
 .wavel svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
@@ -2025,6 +2025,15 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .pn6__in { position: relative; height: 100%; padding: 2rem 2rem 2.25rem; border-radius: 38px; border: 1px solid var(--line); box-shadow: inset 0 2px 4px rgb(0 0 0 / .04);
   background: radial-gradient(90% 70% at 100% 0%, rgb(255 100 20 / .1), transparent 60%), radial-gradient(70% 60% at 0% 100%, rgb(26 95 208 / .06), transparent 70%), rgb(37 37 37 / .025); overflow: hidden; }
 .pn6__in .nm__grid { opacity: .7; }
+/* одна панель: слева заголовок и кнопка, справа список (правка Ивана 03.11) */
+.panels6--one { grid-template-columns: 1fr; }
+.panels6--one .pn6__in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2.5rem; align-items: center; padding: 2.25rem 2.25rem 2.25rem 2.5rem;
+  background: rgb(37 37 37 / .025); }
+.panels6--one .pn6__side { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
+.panels6--one h3 { margin-bottom: .75rem; font-size: 1.75rem; }
+.pn6__note { margin: 0 0 1.75rem; color: var(--mut); font-size: 1rem; line-height: 1.45; max-width: 22rem; text-wrap: pretty; }
+@media (max-width: 1000px) { .panels6--one .pn6__in { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.75rem 1.25rem; } .panels6--one .pn6__side { display: contents; } .panels6--one h3 { order: 0; margin: 0; } .pn6__note { order: 1; margin: -.75rem 0 0; } .panels6--one ul { order: 2; } .panels6--one .btn6 { order: 3; position: relative; } }
+
 .pn6 h3 { position: relative; margin: 0 0 1.25rem; font-family: var(--f-head); font-weight: var(--head-w, 600); letter-spacing: -.03em; font-size: 1.5rem; }
 .pn6 h3 small { display: inline-block; margin-left: .5rem; padding: .1875rem .375rem; border-radius: .3125rem; box-shadow: inset 0 0 0 1px #0f151d; font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .04em; vertical-align: .3em; }
 .pn6 ul, .pn6 ol { position: relative; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; font-size: 1rem; }
@@ -3917,10 +3926,10 @@ html.rvs-lock { overflow: hidden; }
 <div class="wavex" id="wavex" aria-hidden="true">
   <svg viewBox="0 0 100 100" preserveAspectRatio="none">
     <defs>
-      <linearGradient id="wx-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffd9b0"/><stop offset="100%" stop-color="#ff7448"/></linearGradient>
-      <linearGradient id="wx-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff7448"/><stop offset="100%" stop-color="#ff8d69"/></linearGradient>
-      <linearGradient id="wx-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a2410"/><stop offset="100%" stop-color="#1f0f08"/></linearGradient>
-      <linearGradient id="wx-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1518"/><stop offset="100%" stop-color="#111317"/></linearGradient>
+      <linearGradient id="wx-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e4e6ea"/><stop offset="100%" stop-color="#c4c8ce"/></linearGradient>
+      <linearGradient id="wx-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9ba0a8"/><stop offset="100%" stop-color="#6c717a"/></linearGradient>
+      <linearGradient id="wx-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a3e45"/><stop offset="100%" stop-color="#24272d"/></linearGradient>
+      <linearGradient id="wx-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1c21"/><stop offset="100%" stop-color="#111317"/></linearGradient>
     </defs>
     <path fill="url(#wx-0)" d="M0 100H100Z"/><path fill="url(#wx-1)" d="M0 100H100Z"/><path fill="url(#wx-2)" d="M0 100H100Z"/><path fill="url(#wx-3)" d="M0 100H100Z"/>
   </svg>
@@ -3999,9 +4008,9 @@ html.rvs-lock { overflow: hidden; }
 <div class="wavel" id="wavel" aria-hidden="true">
   <svg viewBox="0 0 100 100" preserveAspectRatio="none">
     <defs>
-      <linearGradient id="wl-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8d69"/><stop offset="100%" stop-color="#ff7448"/></linearGradient>
-      <linearGradient id="wl-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffd9b0"/><stop offset="100%" stop-color="#ff7448"/></linearGradient>
-      <linearGradient id="wl-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffeacc"/><stop offset="100%" stop-color="#fff6e8"/></linearGradient>
+      <linearGradient id="wl-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2b2e34"/><stop offset="100%" stop-color="#3b3f46"/></linearGradient>
+      <linearGradient id="wl-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c4c8ce"/><stop offset="100%" stop-color="#6c717a"/></linearGradient>
+      <linearGradient id="wl-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e6e8eb"/><stop offset="100%" stop-color="#f3f4f5"/></linearGradient>
       <linearGradient id="wl-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fafafa"/><stop offset="100%" stop-color="#fafafa"/></linearGradient>
     </defs>
     <path fill="url(#wl-0)" d="M0 100H100Z"/><path fill="url(#wl-1)" d="M0 100H100Z"/><path fill="url(#wl-2)" d="M0 100H100Z"/><path fill="url(#wl-3)" d="M0 100H100Z"/>
@@ -4024,9 +4033,14 @@ html.rvs-lock { overflow: hidden; }
       <article class="rm6__card"><div class="rm6__ruler" aria-hidden="true" style="--n:10"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="on" style="--k:3"></i><i class="on" style="--k:4"></i><i class="on" style="--k:5"></i><i class="on" style="--k:6"></i><i class="on" style="--k:7"></i><i class="on" style="--k:8"></i><i class="on" style="--k:9"></i><b class="rm6__dot" style="--k:9"></b></div>
         <span class="rm6__lab">Шаг 3 · Регулярная работа</span><h3>Готовим карточки и&nbsp;переходим к&nbsp;регулярной работе</h3><p>Оформляем и&nbsp;обновляем профили, работаем с&nbsp;контентом и&nbsp;отзывами, сопровождаем рекламу. Каждый месяц анализируем динамику и&nbsp;уточняем приоритеты.</p></article>
     </div>
-    <div class="panels6">
+    <!-- 03.11: правка Ивана — «Что в разборе» и «После заявки» объединены в одну панель, список «После заявки» убран -->
+    <div class="panels6 panels6--one">
       <div class="pn6"><div class="pn6__in"><span class="nm__grid"></span>
-        <h3>Что в&nbsp;разборе <small>бесплатно</small></h3>
+        <div class="pn6__side">
+          <h3>Что в&nbsp;разборе <small>бесплатно</small></h3>
+          <p class="pn6__note">Ответим в&nbsp;рабочее время за&nbsp;5&nbsp;минут. Разбор ни&nbsp;к&nbsp;чему не&nbsp;обязывает.</p>
+          <a class="btn6" href="#razbor">Получить бесплатный разбор <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
         <ul>
           <li><span class="ck"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Что видит человек, когда ищет ваши услуги рядом</li>
           <li><span class="ck"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Данные, категории и&nbsp;услуги в&nbsp;карточке</li>
@@ -4034,17 +4048,6 @@ html.rvs-lock { overflow: hidden; }
           <li><span class="ck"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Кто из&nbsp;конкурентов рядом и&nbsp;чем их&nbsp;карточки сильнее</li>
           <li><span class="ck"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Что исправить в&nbsp;первую очередь</li>
         </ul>
-        <p class="fine">Разбор бесплатный и&nbsp;ни&nbsp;к&nbsp;чему не&nbsp;обязывает.</p>
-      </div></div>
-      <div class="pn6"><div class="pn6__in"><span class="nm__grid"></span>
-        <h3>После заявки</h3>
-        <ol>
-          <li><span>Ответим в&nbsp;рабочее время<span class="em5">за&nbsp;5&nbsp;минут</span></span></li>
-          <li>Уточним задачу и&nbsp;договоримся о&nbsp;следующем шаге</li>
-          <li>Сделаем разбор и&nbsp;покажем, что исправить первым</li>
-          <li>Если нужна работа&nbsp;— согласуем план и&nbsp;условия</li>
-        </ol>
-        <p class="fine" style="margin-top:1.75rem"><a class="btn6" href="#razbor">Получить бесплатный разбор <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
       </div></div>
     </div>
   </div>
