@@ -4472,11 +4472,11 @@ html.rvs-lock { overflow: hidden; }
     doc: '<svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg>',
   };
   const st = (l, w, ic, t, d) => `<span class="rmc__bar s" style="left:${l}%;width:${w}%;--d:${d}s"><i>${IC[ic]}</i>${t}</span>`;
-  const mo = (l, w, t, d) => `<span class="rmc__bar m" style="left:${l}%;width:${w}%;--d:${d}s">${t}<b style="--d:${(d + .45).toFixed(2)}s">${IC.doc}</b></span>`;
+  const mo = (l, w, t, d) => `<span class="rmc__bar m" style="left:${l}%;width:${w}%;--d:${d}s">${t}<b style="--d:${(d + .3).toFixed(2)}s">${IC.doc}</b></span>`;
   const C = [
-    `<span class="rmc__cap rmv__mono"><em></em>Старт</span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .2)}</div>`,
-    `<div class="rmc"><span class="rmc__ax"></span>${st(6, 82, 'plan', 'План и условия', .9)}</div>`,
-    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц, с&nbsp;отчётом</span><div class="rmc"><span class="rmc__ax"></span>${mo(6, 26, '1 мес', 1.6)}${mo(34, 26, '2 мес', 1.9)}${mo(62, 26, '3 мес', 2.2)}<span class="rmc__more" style="--d:2.7s"><i></i><i></i><i></i></span></div>
+    `<span class="rmc__cap rmv__mono"><em></em>Старт</span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .1)}</div>`,
+    `<div class="rmc"><span class="rmc__ax"></span>${st(6, 82, 'plan', 'План и условия', .45)}</div>`,
+    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц, с&nbsp;отчётом</span><div class="rmc"><span class="rmc__ax"></span>${mo(6, 26, '1 мес', .8)}${mo(34, 26, '2 мес', .95)}${mo(62, 26, '3 мес', 1.1)}<span class="rmc__more" style="--d:1.4s"><i></i><i></i><i></i></span></div>
 `,
   ];
   cards.forEach((c, i) => { const r = c.querySelector('.rm6__ruler');
@@ -4555,6 +4555,15 @@ html.rvs-lock { overflow: hidden; }
 .lt.is-in .rm6[data-v="c"] .rmc__bar.m b { transform: none !important; transition: transform .7s cubic-bezier(0.22, 1, 0.36, 1) var(--d), opacity .5s ease var(--d); }
 .rmc__note { display: none; }
 @media (prefers-reduced-motion: reduce) { .rmc__bar { -webkit-mask-image: none; mask-image: none; } }
+</style>
+<style>
+/* шкала v5 (03.11, Никита: «слишком медленно, блик некрасивый»): без растушёвки — чёткий край маски, как в первом варианте;
+   быстрее (0,6 с) и с мягким замедлением в конце (ease-out), шаги идут плотнее; текст и иконка проявляются следом */
+.rmc__bar { -webkit-mask-image: none !important; mask-image: none !important; clip-path: inset(0 100% 0 0 round .75rem) !important; }
+.lt.is-in .rm6[data-v="c"] .rmc__bar { clip-path: inset(0 0 0 0 round .75rem) !important; transition: clip-path .6s cubic-bezier(0.23, 1, 0.32, 1) var(--d) !important; }
+.rmc__bar > :not(b), .rmc__bar { }
+.rm6[data-v="c"] .rmc__bar .rmc__t { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .rmc__bar { clip-path: none !important; } }
 </style>
 
 <section class="vx csv-sec" id="keysy-v" aria-labelledby="csv-title">
