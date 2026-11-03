@@ -4339,19 +4339,27 @@ html.rvs-lock { overflow: hidden; }
       <div class="rmb__leg"><span style="--c:rgb(255 100 20 / .75)">работы по карточке</span><span style="--c:#2878ee">отчёт</span></div></div>`,
   ];
   /* В · шкала: проценты ширины — только порядок шагов, не сроки */
-  const bar = (cls, l, w, t, d) => `<span class="rmc__bar ${cls}" style="left:${l}%;width:${w}%;--d:${d}s">${t}</span>`;
+  /* В · шкала v2 (03.11, Никита: «нравится В, сделай покрасивее»): рельс через три карточки, старт — тёмные «таблетки» с иконкой,
+     дальше — месяцы со значком отчёта в конце каждого, продолжение растворяется. Ширины — порядок шагов, не сроки. */
+  const IC = {
+    search: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>',
+    plan: '<svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.2 1.2L7 5M3.5 12l1.2 1.2L7 11M3.5 18l1.2 1.2L7 17"/></svg>',
+    doc: '<svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg>',
+  };
+  const st = (l, w, ic, t, d) => `<span class="rmc__bar s" style="left:${l}%;width:${w}%;--d:${d}s"><i>${IC[ic]}</i>${t}</span>`;
+  const mo = (l, w, t, d) => `<span class="rmc__bar m" style="left:${l}%;width:${w}%;--d:${d}s">${t}<b style="--d:${(d + .45).toFixed(2)}s">${IC.doc}</b></span>`;
   const C = [
-    `<div class="rmc"><span class="rmc__ax"></span>${bar('s', 0, 70, 'Разбор', .2)}</div><span class="rmc__cap rmv__mono">Старт</span>`,
-    `<div class="rmc"><span class="rmc__ax"></span>${bar('s', 8, 62, 'План и условия', .7)}</div>`,
-    `<div class="rmc"><span class="rmc__ax"></span>${bar('m', 0, 31, '1 мес <b></b>', 1.2)}${bar('m', 33, 31, '2 мес <b></b>', 1.4)}${bar('m', 66, 24, '3 мес <b></b>', 1.6)}${bar('f', 91, 9, '', 1.8)}</div>
-      <span class="rmc__cap r rmv__mono">Дальше — каждый месяц</span><div class="rmc__foot"><span></span><span class="rmv__mono" style="display:inline-flex;align-items:center;gap:.375rem"><i style="width:.4375rem;height:.4375rem;border-radius:50%;background:#2878ee"></i>отчёт</span></div>`,
+    `<span class="rmc__cap rmv__mono"><em></em>Старт</span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .2)}</div>`,
+    `<div class="rmc"><span class="rmc__ax"></span>${st(6, 82, 'plan', 'План и условия', .7)}</div>`,
+    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц</span><div class="rmc"><span class="rmc__ax"></span>${mo(6, 26, '1 мес', 1.2)}${mo(34, 26, '2 мес', 1.45)}${mo(62, 26, '3 мес', 1.7)}<span class="rmc__more" style="--d:2s"><i></i><i></i><i></i></span></div>
+      <span class="rmc__note rmv__mono"><b>${IC.doc}</b>в конце месяца — отчёт</span>`,
   ];
   cards.forEach((c, i) => { const r = c.querySelector('.rm6__ruler');
     r.insertAdjacentHTML('afterend', `<div class="rmv rmv--a" aria-hidden="true">${A[i]}</div><div class="rmv rmv--b" aria-hidden="true">${B[i]}</div><div class="rmv rmv--c" aria-hidden="true">${C[i]}</div>`); });
 
   const V = { now: 'Как сейчас', a: 'А · Маршрут', b: 'Б · Что получите', c: 'В · Шкала' };
-  tray.insertAdjacentHTML('beforebegin', `<div class="rmsw"><div class="rmsw__in"><small>Иллюстрации</small>${Object.entries(V).map(([k, t]) => `<button type="button" data-v="${k}" aria-pressed="${k === 'a'}">${t}</button>`).join('')}</div></div>`);
-  tray.dataset.v = 'a';
+  tray.insertAdjacentHTML('beforebegin', `<div class="rmsw"><div class="rmsw__in"><small>Иллюстрации</small>${Object.entries(V).map(([k, t]) => `<button type="button" data-v="${k}" aria-pressed="${k === 'c'}">${t}</button>`).join('')}</div></div>`);
+  tray.dataset.v = 'c';   /* 03.11: выбран В — переключатель скрыт (.rmsw), варианты А и Б остаются в коде */
   const sw = tray.previousElementSibling, sec = document.getElementById('kak-nachinaem');
   sw.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     sw.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); tray.dataset.v = b.dataset.v;
@@ -4360,6 +4368,39 @@ html.rvs-lock { overflow: hidden; }
   }));
 })();
 </script>
+
+<style>
+/* В · шкала v2 */
+.rmsw { display: none !important; }
+.rmv--c { height: 8.5rem; padding-top: 0; }
+.rmc { top: 3.25rem; height: 2.75rem; }
+.rmc__ax { top: calc(50% - 3px); height: 6px; border-radius: 99px; background: linear-gradient(90deg, rgb(15 21 29 / .06), rgb(15 21 29 / .09)); box-shadow: inset 0 1px 1px rgb(15 21 29 / .06); }
+.rm6__card:last-child .rmc__ax { right: 0; -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+.rmc__bar { top: 0; height: 100%; gap: .5rem; padding: 0 .375rem 0 .375rem; border-radius: 99px; font: 600 .8125rem/1 var(--f-body); letter-spacing: -.005em; }
+.rmc__bar svg { width: .875rem; height: .875rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rmc__bar.s { padding-right: 1rem; color: #fff; background: linear-gradient(180deg, #2a2f37, #0f151d);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .14), 0 .625rem 1.25rem -.625rem rgb(15 21 29 / .55); }
+.rmc__bar.s i { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: rgb(255 255 255 / .12); }
+.rmc__bar.m { justify-content: space-between; padding-left: .875rem; color: #1d4fa8; background: linear-gradient(180deg, #f7faff, #e6eefc);
+  box-shadow: inset 0 0 0 1px rgb(40 120 238 / .22), inset 0 1px 0 #fff, 0 .5rem 1rem -.75rem rgb(40 120 238 / .5); }
+.rmc__bar.m b { display: grid; place-items: center; width: 2rem; height: 2rem; margin: 0; border-radius: 50%; background: #2878ee; color: #fff; box-shadow: 0 .25rem .5rem -.125rem rgb(40 120 238 / .55);
+  transform: scale(.4); opacity: 0; }
+.rmc__bar.m b svg { width: .875rem; height: .875rem; }
+.lt.is-in .rm6[data-v="c"] .rmc__bar.m b { transition: transform .5s cubic-bezier(.34, 1.56, .64, 1) var(--d), opacity .2s ease var(--d); transform: none; opacity: 1; }
+.rmc__more { position: absolute; left: 91%; top: 50%; display: flex; gap: .3125rem; transform: translateY(-50%); }
+.rmc__more i { width: .375rem; height: .375rem; border-radius: 50%; background: #2878ee; opacity: 0; }
+.lt.is-in .rm6[data-v="c"] .rmc__more i { transition: opacity .4s ease var(--d); }
+.lt.is-in .rm6[data-v="c"] .rmc__more i:nth-child(1) { opacity: .55; } .lt.is-in .rm6[data-v="c"] .rmc__more i:nth-child(2) { opacity: .3; transition-delay: calc(var(--d) + .1s); } .lt.is-in .rm6[data-v="c"] .rmc__more i:nth-child(3) { opacity: .14; transition-delay: calc(var(--d) + .2s); }
+.rmc__cap { top: .5rem; display: inline-flex; align-items: center; gap: .5rem; }
+.rmc__cap em { width: .5rem; height: .5rem; border-radius: 50%; background: #ff6414; box-shadow: 0 0 0 4px rgb(255 100 20 / .15); }
+.rmc__note { position: absolute; right: 0; bottom: .5rem; display: inline-flex; align-items: center; gap: .4375rem; }
+.rmc__note b { display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: 50%; background: #2878ee; color: #fff; }
+.rmc__note svg { width: .625rem; height: .625rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.rm6__card:not(:last-child) .rmv--c .rmc__cap, .rm6__card:first-child .rmv--c .rmc__cap { padding: 0; }
+.rm6__card:first-child .rmv--c .rmc__cap { left: 0; }
+@media (prefers-reduced-motion: reduce) { .rmc__bar.m b, .rmc__more i { opacity: 1 !important; transform: none !important; } }
+@media (max-width: 1000px) { .rmv--c { height: 7.5rem; } .rmc { top: 2.5rem; } .rmc__bar { font-size: .75rem; } .rmc__bar.m { padding-left: .625rem; } .rmc__bar.m b, .rmc__bar.s i { width: 1.75rem; height: 1.75rem; } .rmc__note { bottom: 0; } }
+</style>
 
 <section class="vx csv-sec" id="keysy-v" aria-labelledby="csv-title">
   <div class="vx__in"><div class="vx__head"><h2 class="vx__h" id="csv-title">Кейсы</h2><p class="vx__lead">Что было, что сделали и&nbsp;к&nbsp;чему пришли&nbsp;— по&nbsp;проектам в&nbsp;разных нишах.</p></div>
