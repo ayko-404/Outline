@@ -1473,8 +1473,10 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 /* ===== список услуг (Б) — стиль humbleops: вертикальная линия с точками, номер в рамке, заголовок с оранжевой точкой; прогресс — заполнение линии ===== */
 /* линия и её заполнение — фоном списка (список не позиционируем: от .svc3__in считается окно иллюстрации) */
 .svc3[data-v="b"] .svc3__in .svc3__grid { padding-left: 2rem; gap: 0; counter-reset: svc;
-  background: linear-gradient(#0f151d, #0f151d) no-repeat, linear-gradient(#e3e6eb, #e3e6eb) no-repeat;
-  background-size: 1.5px calc((100% - 2.5rem) * var(--gp, 0)), 1.5px calc(100% - 2.5rem); background-position: .3125rem 1.25rem, .3125rem 1.25rem; }
+  background: linear-gradient(#0f151d, #0f151d) no-repeat, linear-gradient(#e3e6eb, #e3e6eb) no-repeat,
+    radial-gradient(circle, color-mix(in srgb, #0f151d clamp(0%, calc((var(--gp, 0) - .985) * 6667%), 100%), #d5d9e0) 0 .25rem, transparent calc(.25rem + .5px)) no-repeat;   /* кружок на конце линии (03.11): цвет — как у линии в этот момент */
+  background-size: 1.5px calc((100% - 2.5rem) * var(--gp, 0)), 1.5px calc(100% - 2.5rem), .5rem .5rem;
+  background-position: .3125rem 1.25rem, .3125rem 1.25rem, calc(.3125rem + .75px - .25rem) calc(100% - 1.25rem); }
 .svc3[data-v="b"] .sv { counter-increment: svc; padding: min(.5rem, .7vh) 0 !important; }
 .svc3[data-v="b"] .sv::before { content: counter(svc, decimal-leading-zero); display: inline-block; margin-bottom: .375rem; padding: .1875rem .375rem; border-radius: .3125rem; box-shadow: inset 0 0 0 1px #d5d9e0;
   font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .04em; color: rgb(15 21 29 / .45); transition: color 200ms ease, box-shadow 200ms ease; }
