@@ -2773,7 +2773,10 @@ html.rvs-lock { overflow: hidden; }
    Снизу — превью всех отзывов и стрелки. Скриншотов карточек авторов нет (ждём от Ивана) — в шторке иллюстрация, как в окне истории (rv-case.html);
    появятся r.before / r.after — встанут они. Прежняя лента (#rvb-track) и окно истории остаются в коде, лента скрыта. */
 #otzyvy .rvb__track { display: none; }
-#otzyvy .rvb__in { padding: 1.25rem; }
+#otzyvy .rvb__in { padding: 1.25rem; isolation: isolate; background: rgb(37 37 37 / .035); }   /* без точек: фон панели — как у остальных блоков (.nm__in) */
+#otzyvy .rvb__in::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;   /* лёгкая сетка сайта (.nm__grid), растворяется к краям */
+  background-image: linear-gradient(to right, rgb(128 128 128 / .08) 1px, transparent 1px), linear-gradient(to bottom, rgb(128 128 128 / .08) 1px, transparent 1px); background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, #000 65%, transparent 100%); mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, #000 65%, transparent 100%); }
 #otzyvy .rvb__bar { padding: 1.25rem .5rem 0; }
 #otzyvy .rvb__bar > span { display: none; }
 
