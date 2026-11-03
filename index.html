@@ -4911,7 +4911,7 @@ html.rvs-lock { overflow: hidden; }
   };
 
   /* ===== А · живая карта (canvas) ===== */
-  const A = document.createElement('section'); A.className = 'fin fina'; A.dataset.v = 'a'; A.dataset.map = 'dark'; A.setAttribute('aria-label', 'Подвал');
+  const A = document.createElement('section'); A.className = 'fin fina'; A.dataset.v = 'a'; A.dataset.map = 'ya'; A.setAttribute('aria-label', 'Подвал');
   A.innerHTML = `<div class="fina__msw"><button type="button" data-t="ya" aria-pressed="true">Как в Яндексе</button><button type="button" data-t="dark" aria-pressed="false">Тёмная</button></div><canvas class="fina__map" aria-hidden="true"></canvas><div class="fina__in">
     <div class="fina__card"><div class="fina__cin"><span class="fina__grid" aria-hidden="true"></span><div class="ft__in">${colsHTML()}</div>${outline({ dark: true })}</div></div></div>`;
   /* ===== Б · чертёж ===== */
@@ -4939,7 +4939,7 @@ html.rvs-lock { overflow: hidden; }
     ya:   { bg: '#f8f7f6', block: '#efebe7', house: '#e6dfda', houseEdge: '#ddd4cd', park: '#dcf2c9', park2: '#cdecb2', water: '#94d4fa', road: '#ffffff', casing: 'rgba(149,153,161,.55)', majorCasing: 'rgba(149,153,161,.8)', car: ['rgba(40,120,238,.75)', 'rgba(255,100,20,.8)'], pin: '#8e949e', vignette: 'rgba(248,247,246,0)', poi: ['#ffa15e', '#8ad9cb', '#d38fec', '#94b7f0'] },
     dark: { bg: '#11141a', block: '#171b22', house: '#1f242d', houseEdge: '#262c36', park: '#16261d', park2: '#1a2e22', water: '#14253d', road: '#0b0d11', casing: 'rgba(255,255,255,.05)', majorCasing: 'rgba(255,255,255,.1)', car: ['rgba(210,225,255,.85)', 'rgba(255,160,90,.9)'], pin: 'rgba(200,210,225,.7)', vignette: 'rgba(13,16,20,.55)', poi: ['#c9773f', '#3f8f82', '#8a5ea0', '#4f73b0'] },
   };
-  let mapTheme = 'dark';   /* 03.11: Никита оставил тёмную; «Как в Яндексе» — в коде, переключатель скрыт */
+  let mapTheme = 'ya';   /* 03.11: Никита — светлая «Как в Яндексе», подвал на ней заметнее; тёмная — в коде, переключатель скрыт */
   (() => {
     const cv = A.querySelector('canvas'), cx = cv.getContext('2d'); let W = 0, H = 0, dpr = 1, base = null, U = [], V = [], cars = [], pins = [], route = null, vis = false, raf = 0, last = 0, th = MAPPAL.ya;
     let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -5507,9 +5507,9 @@ html.rvs-lock { overflow: hidden; }
   }
 
   /* шапка темнеет, когда под ней тёмный блок */
-  const darks = [...document.querySelectorAll('.nw, #wavex, #wavel, .fina')], B = document.body, hdr = document.querySelector('.hdr');
+  const darks = [...document.querySelectorAll('.nw, #wavex, #wavel, .fina__card')], B = document.body, hdr = document.querySelector('.hdr');
   const check = () => { const y = 32; let dark = false;
-    for (const el of darks) { const r = el.getBoundingClientRect(); if (el.id === 'wavex') { if (r.top < innerHeight * .1 && r.bottom > y) dark = true; } else if (el.id === 'wavel') { if (r.top <= y && r.bottom > y && el.dataset.done !== '1') dark = true; } else if (el.classList.contains('fina')) { if (!el.hidden && r.top <= (hdr ? hdr.getBoundingClientRect().top : 0) + 1 && r.bottom > y) dark = true; }   /* финал-карта: шапка темнеет, когда целиком над ней (верх карты прошёл верх шапки), 03.11 */
+    for (const el of darks) { const r = el.getBoundingClientRect(); if (el.id === 'wavex') { if (r.top < innerHeight * .1 && r.bottom > y) dark = true; } else if (el.id === 'wavel') { if (r.top <= y && r.bottom > y && el.dataset.done !== '1') dark = true; } else if (el.classList.contains('fina__card')) { if (!el.closest('.fin').hidden && r.top <= (hdr ? hdr.getBoundingClientRect().top : 0) + 1 && r.bottom > y) dark = true; }   /* тёмная карточка подвала: шапка темнеет, когда целиком над ней (карта светлая — над ней шапка светлая), 03.11 */
       else if (r.top <= y && r.bottom > y) dark = true; }
     B.classList.toggle('hdr-dark', dark); };
   addEventListener('scroll', check, { passive: true }); addEventListener('resize', check); check();
