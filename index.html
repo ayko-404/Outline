@@ -2680,7 +2680,8 @@ html.rvs-lock { overflow: hidden; }
    А — первая карточка широкая: видео + шторка «Было | Стало» рядом · Б — на первой карточке вместо обложки шторка, видео — по кнопке
    В — на первой карточке снизу плашка: две мини-карточки «Было → Стало».
    Скриншотов карточек авторов отзывов нет (ждём от Ивана) — пока иллюстрация карточки, как в окне истории (rv-case.html). */
-.rba-bar { position: relative; z-index: 30; display: flex; justify-content: center; padding: 1.5rem 0 0; }
+/* общие .vbar скрыты (b09) — этот показываем, пока Никита выбирает */
+.vbar.rba-bar { position: relative; z-index: 30; display: flex !important; justify-content: center; padding: 1.5rem 0 0; }
 
 /* мини-иллюстрация карточки — уменьшенная .ycm из rv-case */
 .rba-m { display: grid; place-items: center; }
@@ -2708,7 +2709,7 @@ html.rvs-lock { overflow: hidden; }
 .rba-p .rba-cmp { flex: 1; min-height: 0; margin-top: .75rem; }
 .rba-p .rba-m { --z: .7; }
 .rba-p b { display: block; margin-top: 1rem; font-family: var(--f-head); font-weight: var(--head-w, 500); font-size: 1.25rem; line-height: 1.15; letter-spacing: -.02em; color: #0f151d; text-wrap: balance; }
-.rba-p button { align-self: flex-start; display: inline-flex; align-items: center; gap: .375rem; margin-top: .875rem; height: 2.5rem; padding: 0 1rem; border: 0; border-radius: 99px; background: #0f151d; color: #fff; font: 500 .875rem/1 var(--f-body); cursor: pointer; transition: background-color 200ms ease; }
+.rba-p button { align-self: flex-start; margin-top: 1rem !important; display: inline-flex; align-items: center; gap: .375rem; margin-top: .875rem; height: 2.5rem; padding: 0 1rem; border: 0; border-radius: 99px; background: #0f151d; color: #fff; font: 500 .875rem/1 var(--f-body); cursor: pointer; transition: background-color 200ms ease; }
 .rba-p button:hover { background: #262c35; } .rba-p button svg { width: 1rem; height: 1rem; }
 .rba-w .rvb__chip { display: none; }
 
@@ -2740,6 +2741,13 @@ html.rvs-lock { overflow: hidden; }
 .rba-s__pair > svg { width: 1rem; height: 1rem; color: rgb(15 21 29 / .45); }
 .rba-s b { display: block; margin-top: .75rem; font-family: var(--f-head); font-weight: var(--head-w, 500); font-size: 1.0625rem; line-height: 1.15; letter-spacing: -.02em; text-wrap: balance; }
 .rba-s small { display: block; margin-top: .375rem; font-size: .8125rem; color: rgb(15 21 29 / .55); }
+
+/* у карточки ленты общее правило «.rvb__v div» ставит любой div в низ карточки — внутри наших вставок его снимаем */
+.rvb__v :is(.rba-cmp, .rba-s) div { position: relative; left: auto; right: auto; bottom: auto; z-index: auto; }
+.rvb__v .rba-cmp > .rba-m { position: absolute; inset: 0; }
+.rvb__v .ycm i { position: static; top: auto; right: auto; z-index: auto; width: auto; display: block; }   /* «.rvb__v i» — кнопка play */
+.rvb__v .ycm__ph i { height: auto; border-radius: 0; } .rvb__v .ycm__bt i { height: 1.375rem; border-radius: 7px; }
+.rvb__v .rba-s { position: absolute; z-index: 1; left: .5rem; right: .5rem; bottom: .5rem; }
 
 @media (max-width: 700px) {
   .rba-w { grid-column: span 1; grid-template-columns: 1fr; width: calc(100vw - 4rem); }
@@ -4432,7 +4440,7 @@ html.rvs-lock { overflow: hidden; }
 
   const V = {
     a: () => { const w = document.createElement('div'); w.className = 'rba-w'; first.before(w); w.append(first);
-      w.insertAdjacentHTML('beforeend', `<div class="rba-p"><small>Карточка в Яндекс Картах</small>${cmp(r, 1)}<b>${r.res}</b><button type="button">Смотреть историю ${ARR}</button></div>`);
+      w.insertAdjacentHTML('beforeend', `<div class="rba-p"><small>Карточка в Яндекс Картах</small>${cmp(r, 1)}<button type="button">Смотреть историю ${ARR}</button></div>`);
       drag(w.querySelector('.rba-cmp')); w.querySelector('.rba-p button').addEventListener('click', () => first.click());
       return () => { w.before(first); w.remove(); }; },
     b: () => { first.classList.add('rba-b');
