@@ -4321,7 +4321,7 @@ html.rvs-lock { overflow: hidden; }
   const cards = [...tray.querySelectorAll('.rm6__card')]; if (cards.length !== 3) return;
   /* А · маршрут. viewBox 300×100: линия по высоте 60, у первой карточки начинается в центре метки-старта, у третьей заканчивается петлёй */
   const pin = (x, n, d) => `<g class="pin" style="--d:${d}s"><path d="M${x} 58c0-10-13-17-13-30a13 13 0 0 1 26 0c0 13-13 20-13 30Z" fill="#0f151d"/><text x="${x}" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Golos Text, sans-serif">${n}</text></g>`;
-  const streets = '<path class="st" d="M0 86 L300 86"/><path class="st" d="M70 0 L110 100"/><path class="st" d="M220 0 L190 100"/>';
+  const streets = '';   /* 03.11: серые «улицы» убраны — выглядели как грязные штрихи и спорили с маршрутом */
   const A = [
     `<svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">${streets}<path class="rt-bg" d="M40 60 H300"/><path class="rt" pathLength="1" style="--d:0s" d="M40 60 H300"/>${pin(40, 1, 0)}</svg>`,
     `<svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">${streets}<path class="rt-bg" d="M0 60 H300"/><path class="rt" pathLength="1" style="--d:.9s" d="M0 60 H300"/>${pin(150, 2, .7)}</svg>`,
