@@ -3032,6 +3032,19 @@ html.rvs-lock { overflow: hidden; }
 .fina__card { border-radius: 2.25rem 2.25rem 0 0 !important; box-shadow: inset 0 1px 0 rgb(255 255 255 / .06), 1px 0 0 rgb(255 255 255 / .07) inset, -1px 0 0 rgb(255 255 255 / .07) inset, 0 1px 0 rgb(255 255 255 / .07) inset, 0 -1.5rem 4rem -1.5rem rgb(0 0 0 / .6) !important; }
 .fina__card .olg { margin-bottom: 0 !important; }
 @media (max-width: 1000px) { .fina__card { border-radius: 1.5rem 1.5rem 0 0 !important; } }
+
+/* 03.11 (Никита): карточка подвала — как «Одна точка / Несколько точек»: рамка #1a1c21 r58 + внутренняя панель r42 с обводкой и сеткой;
+   низ прижат к краю страницы, нижних скруглений нет. Сетка слабее, чем в карточках, и только вверху — чтобы не спорила с логотипом */
+.fina__card { padding: 1rem 1rem 0 !important; border-radius: 58px 58px 0 0 !important; background: #1a1c21 !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  box-shadow: 0 -1.5rem 4rem -1.5rem rgb(0 0 0 / .7) !important; }
+.fina__cin { position: relative; overflow: hidden; padding: 2.75rem 2.75rem 0; border-radius: 42px 42px 0 0; background: rgb(255 255 255 / .03);
+  border: 1px solid rgb(255 255 255 / .06); border-bottom: 0; box-shadow: inset 0 2px 4px rgb(0 0 0 / .3); }
+.fina__grid { position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(to right, rgb(255 255 255 / .03) 1px, transparent 1px), linear-gradient(to bottom, rgb(255 255 255 / .03) 1px, transparent 1px); background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); }
+.fina__cin > .ft__in, .fina__cin > .olg { position: relative; }
+.fina__card .olg { margin-top: 3rem !important; }
+@media (max-width: 1000px) { .fina__card { padding: .625rem .625rem 0 !important; border-radius: 2.25rem 2.25rem 0 0 !important; } .fina__cin { padding: 1.75rem 1.25rem 0; border-radius: 1.75rem 1.75rem 0 0; } }
 </style>
 <style>
 /* Кейсы (02.11.2026, выбран вариант А): на экране один кейс, слева список клиентов — как на старом outlineagency.ru;
@@ -4893,7 +4906,7 @@ html.rvs-lock { overflow: hidden; }
   /* ===== А · живая карта (canvas) ===== */
   const A = document.createElement('section'); A.className = 'fin fina'; A.dataset.v = 'a'; A.setAttribute('aria-label', 'Подвал');
   A.innerHTML = `<canvas class="fina__map" aria-hidden="true"></canvas><div class="fina__in">
-    <div class="fina__card"><div class="ft__in">${colsHTML()}</div>${outline({ dark: true })}</div></div>`;
+    <div class="fina__card"><div class="fina__cin"><span class="fina__grid" aria-hidden="true"></span><div class="ft__in">${colsHTML()}</div>${outline({ dark: true })}</div></div></div>`;
   /* ===== Б · чертёж ===== */
   const B = document.createElement('section'); B.className = 'fin finb'; B.dataset.v = 'b'; B.hidden = true; B.setAttribute('aria-label', 'Подвал');
   B.innerHTML = `<span class="finb__grid"></span><div class="finb__stage"><svg class="finb__svg" aria-hidden="true"></svg></div><div class="finb__card"><div class="ft__in">${colsHTML()}</div></div>`;
