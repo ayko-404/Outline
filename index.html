@@ -2841,6 +2841,18 @@ html.rvs-lock { overflow: hidden; }
   .rvf__ctl { justify-content: space-between; }
   .rvf .rvs__cmp .ycm { zoom: .8; }
 }
+
+/* «Что сделали» под результатом: подпись моно, 3 строки с синей галочкой; кнопка — под списком */
+.rvf__did { margin-top: 1.5rem; }
+.rvf__did small { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: rgb(15 21 29 / .45); }
+.rvf__did small em { padding: .1875rem .375rem; border-radius: .3125rem; box-shadow: inset 0 0 0 1px rgb(15 21 29 / .14); font-style: normal; letter-spacing: .04em; color: rgb(15 21 29 / .4); }
+.rvf__did ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .625rem; }
+.rvf__did li { display: flex; align-items: center; gap: .625rem; font-size: 1rem; line-height: 1.35; color: rgb(15 21 29 / .78); }
+.rvf__did li i { display: grid; place-items: center; flex: none; width: 1.375rem; height: 1.375rem; border-radius: 50%; background: rgb(40 120 238 / .12); color: #2878ee; }
+.rvf__did li i svg { width: .875rem; height: .875rem; }
+.rvf__txt .rvs__cta { margin-top: auto; }
+.rvf__did + .rvs__cta { margin-top: max(1.75rem, auto); }
+@media (max-width: 700px) { .rvf__did { margin-top: 1.125rem; } .rvf__did li { font-size: .9375rem; } }
 </style>
 <style>
 /* «Как начинаем» — варианты иллюстраций вместо линеек (03.11, Никита: «красивые, но непонятные»; выбирает на сайте).
@@ -4693,8 +4705,14 @@ html.rvs-lock { overflow: hidden; }
   const side = (r, after) => r.before && r.after ? `<img src="${after ? r.after : r.before}" alt="Карточка ${after ? 'после' : 'до'}">` : mock(r, after);
   let cur = 0, tm = 0, sweep = 0;
 
+  /* «Что сделали» — коротко, 3 пункта (03.11, Никита: «пустота смущает»). 🧪 ПРИМЕР: текст-заглушка по нише, пока нет кейса от Ивана —
+     заменить реальными работами по каждому клиенту (r.did) и убрать пометку «пример» */
+  const DID = {"marat": ["Оформили карточку и меню с ценами", "Обновили фото зала и напитков", "Отвечаем на каждый отзыв"], "viktoria": ["Заполнили услуги и программы", "Добавили фото групп и площадки", "Собираем отзывы родителей"], "sergey": ["Разложили услуги и модели по разделам", "Запустили рекламу на картах", "Отвечаем на отзывы"], "alena": ["Оформили курсы с ценами", "Обновили фото классов", "Собираем отзывы учеников"], "artem": ["Привели все точки к единому виду", "Обновили часы работы и цены", "Отвечаем на отзывы по всем точкам"], "roman": ["Оформили каталог и бренды", "Обновили фото зала и витрин", "Запустили рекламу в радиусе 5 км"]};
+  const CK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const did = r => { const list = r.did || DID[r.id]; if (!list) return '';
+    return `<div class="rvf__did"><small>Что сделали${r.did ? '' : '<em>пример</em>'}</small><ul>${list.map(t => `<li><i>${CK}</i>${t}</li>`).join('')}</ul></div>`; };
   const txt = r => `<div class="rvf__txt"><div class="rvf__who"><img src="${r.img}" alt=""><span><b>${r.name}</b><small>${r.biz}</small></span></div>
-    <h3 class="rvf__h">${r.res}</h3><a class="rvs__cta" href="#razbor">Хочу так же ${ARR}</a></div>`;
+    <h3 class="rvf__h">${r.res}</h3>${did(r)}<a class="rvs__cta" href="#razbor">Хочу так же ${ARR}</a></div>`;
   const cmp = r => `<div class="rvf__cmpw"><small>Карточка в Яндекс Картах</small><div class="rvs__cmp" role="slider" aria-label="Было и стало" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
     <div class="is-before">${side(r, 0)}</div><div class="is-after">${side(r, 1)}</div><span class="rvs__lbl l">Было</span><span class="rvs__lbl r">Стало</span><span class="rvs__knob"></span></div></div>`;
   const vid = r => `<img src="${r.img}" alt=""><button type="button" class="rvf__play" aria-label="Смотреть видеоотзыв: ${r.name}">${PLAY}</button>${r.dur ? `<span class="rvf__dur">${r.dur}</span>` : ''}`;
