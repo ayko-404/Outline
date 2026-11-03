@@ -2310,36 +2310,19 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 @media (max-width: 1000px) { .tm { grid-template-columns: repeat(3, 1fr) !important; } }
 @media (max-width: 760px) { .tm { grid-template-columns: repeat(2, 1fr) !important; gap: .875rem !important; } }
 
-/* ===== наведение — варианты в теме сайта (03.11, Никита: «пиксели прикольные, но не метчатся с темой сайта»); переключатель над командой временный ===== */
-.vbar.tm-vbar { display: flex !important; padding: 0 0 1.5rem; justify-content: flex-start; }   /* общие .vbar скрыты (b09), этот — пока Никита выбирает */
+/* ===== наведение (03.11, Никита): фото «сканируется» — из центра расходятся тонкие волны, как поиск на карте; микрофишка, без пестроты.
+   Волны идут всегда, но на паузе и невидимы; при наведении — плавно проявляются, при уходе — плавно гаснут, без скачка ===== */
 .tm__ph img { transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1); }
-.tm__sheet, .tm__pin, .tm__ink { pointer-events: none; }
-/* А · карточка как в Картах: снизу выезжает шторка с тем, чем человек занимается */
-.tm__sheet { position: absolute; z-index: 4; left: .375rem; right: .375rem; bottom: .375rem; padding: .875rem .875rem .75rem; border-radius: .75rem; background: rgb(255 255 255 / .96);
-  font-size: .8125rem; line-height: 1.35; color: #0f151d; transform: translateY(calc(100% + .5rem)); transition: transform 450ms cubic-bezier(0.32, 0.72, 0, 1); }
-.tm__sheet::before { content: ""; position: absolute; left: 50%; top: .3125rem; width: 1.75rem; height: .1875rem; margin-left: -.875rem; border-radius: 99px; background: rgb(15 21 29 / .16); }
-/* Б · метка: на фото падает метка карты, от неё расходится круг */
-.tm__pin { position: absolute; z-index: 4; right: 1rem; top: 1rem; width: 1.75rem; height: 1.75rem; opacity: 0; transform: translateY(-1.5rem); }
-.tm__pin::before { content: ""; position: absolute; inset: 0; border-radius: 50% 50% 50% 0; background: radial-gradient(circle at 50% 50%, #2878ee 0 28%, #fff 30%); rotate: -45deg; box-shadow: 0 .375rem .75rem -.25rem rgb(10 30 80 / .5); }
-.tm__pin::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1.5rem; height: .5rem; margin: .125rem 0 0 -.75rem; border-radius: 50%; border: 1.5px solid #fff; opacity: 0; }
-/* В · рукописный штрих под именем, как под «основе данных» */
-.tm__body h3 { position: relative; display: inline-block; }
-.tm__ink { position: absolute; left: -4%; bottom: -.3em; width: 108%; height: .5em; overflow: visible; }
-.tm__ink path { fill: none; stroke: #2878ee; stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 450ms cubic-bezier(0.23, 1, 0.32, 1); }
-@media (hover: hover) and (pointer: fine) {
-  .tm[data-hv="a"] .tm__card:hover .tm__ph img { transform: scale(1.04); }
-  .tm[data-hv="a"] .tm__card:hover .tm__sheet { transform: none; }
-  .tm[data-hv="b"] .tm__card:hover .tm__ph img { transform: scale(1.03); }
-  .tm[data-hv="b"] .tm__card:hover .tm__pin { opacity: 1; transform: none; transition: transform 764ms linear(0, 0.022, 0.078, 0.155, 0.242, 0.334, 0.425, 0.511, 0.59, 0.662, 0.725, 0.78, 0.827, 0.866, 0.899, 0.925, 0.947, 0.964, 0.977, 0.987, 0.994, 0.999, 1.003, 1.005, 1.007, 1.008, 1.008, 1.008, 1.007, 1.006, 1.006, 1.005, 1.004, 1.004, 1.003, 1.003, 1.002, 1.002, 1.001, 1), opacity 160ms ease; }
-  .tm[data-hv="b"] .tm__card:hover .tm__pin::after { animation: tm-ring 1400ms cubic-bezier(0.23, 1, 0.32, 1) 300ms infinite; }
-  .tm[data-hv="b"] .tm__card:hover h3 { color: #1a5fd0; }
-  .tm[data-hv="c"] .tm__card:hover .tm__ph img { transform: scale(1.04); }
-  .tm[data-hv="c"] .tm__card:hover .tm__ink path { stroke-dashoffset: 0; transition-duration: 700ms; }
+.tm__scan { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; pointer-events: none; opacity: 0; transition: opacity 400ms ease; }
+.tm__scan i { grid-area: 1 / 1; width: 150%; aspect-ratio: 1; border-radius: 50%; box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .55), inset 0 0 1.5rem rgb(255 255 255 / .08);
+  transform: scale(.04); opacity: 0; animation: tm-scan 2.7s cubic-bezier(0.23, 1, 0.32, 1) infinite paused; }
+.tm__scan i:nth-child(2) { animation-delay: -.9s; } .tm__scan i:nth-child(3) { animation-delay: -1.8s; }
+@keyframes tm-scan { 0% { transform: scale(.04); opacity: 0; } 12% { opacity: .9; } 100% { transform: scale(1); opacity: 0; } }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tm__card:hover .tm__scan { opacity: 1; transition-duration: 250ms; }
+  .tm__card:hover .tm__scan i { animation-play-state: running; }
+  .tm__card:hover .tm__ph img { transform: scale(1.03); }
 }
-.tm__pin { transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), opacity 160ms ease; }
-.tm__body h3 { transition: color 200ms ease; }
-@keyframes tm-ring { 0% { opacity: .9; transform: scale(.6); } 70%, 100% { opacity: 0; transform: scale(2.2); } }
-@media (prefers-reduced-motion: reduce) { .tm__ph img, .tm__sheet, .tm__pin, .tm__ink path { transition: opacity 200ms ease !important; } .tm__ph img { transform: none !important; } .tm__pin::after { animation: none !important; } }
 </style>
 <style>
 /* Блоки 11–14 (01.11.2026): отзывы, FAQ, форма разбора, подвал. Тексты — Иван (content.md); видео и обложки — канал Outline на Rutube.
@@ -4088,8 +4071,7 @@ html.rvs-lock { overflow: hidden; }
     </div>
     <div class="tm__nums" id="tm-nums"><div><b><i data-to="30">30</i><span>+</span></b><small>человек в&nbsp;команде</small></div><div><b>5–15</b><small>лет опыта работы в&nbsp;маркетинге</small></div><div><b><i data-to="300">300</i><span>+</span></b><small>успешных кейсов в&nbsp;портфолио</small></div></div>
     <div class="tm__top"><p class="tm__note">Знакомьтесь с&nbsp;частью команды<svg viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13.5c6.5-4.2 15.8-6.9 23.6-4.1 6.3 2.3 8.7 9.6 3.9 12.6-4.4 2.8-9.6-1.4-6.9-6.2 3.6-6.4 15.4-5.6 22.4-1.2 9.3 5.9 15.6 17.4 18.8 30.6"/><path d="M57.2 39.6c2.6 2.5 5 5.4 7.8 7.6.5-4 1.6-8.1 3.4-11.5"/></svg></p></div>
-    <div class="vbar tm-vbar" id="vbar-tm"><div class="vbar__in"><small>Наведение</small><button type="button" data-v="a" aria-pressed="true">А · Шторка</button><button type="button" data-v="b" aria-pressed="false">Б · Метка</button><button type="button" data-v="c" aria-pressed="false">В · Штрих</button></div></div>
-    <div class="tm" id="tm-grid" data-hv="a"></div>
+    <div class="tm" id="tm-grid"></div>
   </div>
 </section>
 <script>
@@ -4108,8 +4090,8 @@ html.rvs-lock { overflow: hidden; }
   const rnd = (a, b) => (a + Math.random() * (b - a)).toFixed(2);
   // фильтры каналов для помех — один раз на страницу
   document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="tm-red"><feColorMatrix values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter><filter id="tm-blue"><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter></svg>');
-  grid.innerHTML = T.map((p, i) => `<article class="tm__card"><div class="tm__ph" style="--rd:${rnd(8, 15)}s;--rl:-${rnd(0, 15)}s;--gd:-${rnd(0, 1.2)}s"><img src="${p.img}" alt="${p.name}, ${p.role.toLowerCase()}" loading="lazy"><span class="tm__sheet" aria-hidden="true">${p.about}</span><span class="tm__pin" aria-hidden="true"></span></div>
-    <div class="tm__body"><h3>${p.name}<svg class="tm__ink" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 8.5c14-3.6 30-5.2 47-4.6 15 .5 30 1.9 49 .6"/></svg></h3><p class="tm__role">${p.role}</p>
+  grid.innerHTML = T.map((p, i) => `<article class="tm__card"><div class="tm__ph" style="--rd:${rnd(8, 15)}s;--rl:-${rnd(0, 15)}s;--gd:-${rnd(0, 1.2)}s"><img src="${p.img}" alt="${p.name}, ${p.role.toLowerCase()}" loading="lazy"><span class="tm__scan" aria-hidden="true"><i></i><i></i><i></i></span></div>
+    <div class="tm__body"><h3>${p.name}</h3><p class="tm__role">${p.role}</p>
     </div></article>`).join('');
   /* цифры набираются при появлении */
   const nums = document.getElementById('tm-nums');
@@ -4117,10 +4099,6 @@ html.rvs-lock { overflow: hidden; }
     nums.querySelectorAll('i[data-to]').forEach((el, k) => { const to = +el.dataset.to, t0 = performance.now() + k * 120;
       const st = now => { const q = Math.min(1, Math.max(0, (now - t0) / 1100)); el.textContent = Math.round(to * (1 - Math.pow(1 - q, 3))); if (q < 1) requestAnimationFrame(st); }; requestAnimationFrame(st); }); }), { threshold: .5 }).observe(nums);
 
-  /* наведение: варианты А, Б, В — переключатель над командой (временный, до выбора Никиты) */
-  const vb = document.getElementById('vbar-tm');
-  vb.addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return; grid.dataset.hv = b.dataset.v;
-    vb.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: .45 });
   grid.querySelectorAll('.tm__card').forEach(c => io.observe(c));
 })();
