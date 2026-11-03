@@ -2429,7 +2429,8 @@ body .ft__brand .lg { --H: 1.375rem; }
 @media (max-width: 1000px) { .fq { grid-template-columns: 1fr; row-gap: 2rem; } .fq__side { padding-right: 0; } }
 
 /* FAQ (03.11, Никита): открыт только один вопрос; раскрытие и закрытие — плавно по высоте (JS ниже), плюс/минус поворачиваются в такт */
-.fq__it { overflow: hidden; transition: box-shadow .35s ease; }
+.fq__it { overflow: hidden; transition: box-shadow .35s ease; overflow-anchor: none; }
+#faq { overflow-anchor: none; }   /* своё удержание вместо якоря браузера — иначе они спорят с Lenis */
 .fq__it p { opacity: 0; transform: translateY(-.25rem); transition: opacity .35s ease .05s, transform .45s cubic-bezier(0.22, 1, 0.36, 1); }
 .fq__it[open]:not(.is-closing) p { opacity: 1; transform: none; }
 .fq__it summary i, .fq__it summary i::after { transition-duration: .45s !important; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important; }
@@ -4274,18 +4275,27 @@ html.rvs-lock { overflow: hidden; }
   /* FAQ: один открытый вопрос, плавная высота (WAAPI). Закрытие: анимируем до высоты заголовка, потом снимаем open */
   const items = [...document.querySelectorAll('#faq .fq__it')]; if (!items.length) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, EASE = 'cubic-bezier(0.22, 1, 0.36, 1)', DUR = 480;
-  const head = d => d.querySelector('summary').offsetHeight;
+  /* высоты дробные (getBoundingClientRect) — с целыми пикселями в конце анимации карточка «доскакивала» */
+  const H = el => el.getBoundingClientRect().height, head = d => H(d.querySelector('summary'));
   const close = d => { if (!d.open || d.classList.contains('is-closing')) return;
     if (reduce) { d.open = false; return; }
     d.classList.add('is-closing'); d._a && d._a.cancel();
-    d._a = d.animate({ height: [d.offsetHeight + 'px', head(d) + 'px'] }, { duration: DUR * .85, easing: EASE });
+    d._a = d.animate({ height: [H(d) + 'px', head(d) + 'px'] }, { duration: DUR, easing: EASE });
     d._a.onfinish = () => { d.open = false; d.classList.remove('is-closing'); d._a = null; };
     d._a.oncancel = () => d.classList.remove('is-closing'); };
-  const open = d => { items.forEach(x => x !== d && close(x));
+  /* если закрывается вопрос выше — страница сдвигает открываемый вверх; держим его заголовок на месте до конца анимации */
+  const hold = d => { const s = d.querySelector('summary'), y0 = s.getBoundingClientRect().top, t0 = performance.now();
+    const step = now => { const dy = s.getBoundingClientRect().top - y0;
+      if (Math.abs(dy) > .5) { window.scrollTo({ top: scrollY + dy, behavior: 'instant' });   /* instant: на html стоит плавная прокрутка, иначе сдвиг растягивается и опаздывает */ const L = window.__lenis; L && L.scrollTo(scrollY, { immediate: true, force: true }); }   /* сначала нативно — Lenis догонял с задержкой; потом синхронизируем его цель */
+      if (now - t0 < DUR + 80) requestAnimationFrame(step); };
+    requestAnimationFrame(step); };
+  const open = d => { const above = items.some(x => x !== d && x.open && x.compareDocumentPosition(d) & Node.DOCUMENT_POSITION_FOLLOWING);
+    items.forEach(x => x !== d && close(x));
     if (reduce) { d.open = true; return; }
-    const from = d.offsetHeight; d._a && d._a.cancel(); d.classList.remove('is-closing'); d.open = true;
-    const to = d.offsetHeight; d._a = d.animate({ height: [from + 'px', to + 'px'] }, { duration: DUR, easing: EASE });
-    d._a.onfinish = () => { d._a = null; }; };
+    const from = H(d); d._a && d._a.cancel(); d.classList.remove('is-closing'); d.open = true;
+    const to = H(d); d._a = d.animate({ height: [from + 'px', to + 'px'] }, { duration: DUR, easing: EASE });
+    d._a.onfinish = () => { d._a = null; };
+    if (above) hold(d); };
   items.forEach(d => d.querySelector('summary').addEventListener('click', e => { e.preventDefault();
     if (d.open && !d.classList.contains('is-closing')) close(d); else open(d); }));
 })();
@@ -5002,6 +5012,7 @@ html.rvs-lock { overflow: hidden; }
   /* плавная прокрутка — Lenis, как у humble; без reduce-motion */
   if (!reduce && window.Lenis) {
     const lenis = new Lenis({ lerp: .1, wheelMultiplier: 1, anchors: { offset: -80 } });
+    window.__lenis = lenis;   /* нужен FAQ: держать открываемый вопрос на месте, пока закрывается вопрос выше (03.11) */
     const raf = t => { lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf);
     window.__lenis = lenis;
   }
