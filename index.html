@@ -4542,6 +4542,22 @@ html.rvs-lock { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .rmc__bar.m b, .rmc__more i { opacity: 1 !important; transform: none !important; } }
 @media (max-width: 1000px) { .rmv--c { height: 7.5rem; } .rmc { top: 2.5rem; } .rmc__bar { font-size: .75rem; } .rmc__bar.m { padding-left: .625rem; } .rmc__bar.m b, .rmc__bar.s i { width: 1.75rem; height: 1.75rem; } .rmc__note { bottom: 0; } }
 </style>
+<style>
+/* В · шкала v3 (03.11, Никита): скругления плашек не 100% — как в первом варианте; появление «из-под маски» (clip-path, без растяжения);
+   линия тонкая, без скруглённых концов, проходит через стыки карточек без шва */
+.rmc__bar { border-radius: .75rem; transform: none !important; clip-path: inset(0 100% 0 0 round .75rem); }
+.lt.is-in .rm6[data-v="c"] .rmc__bar { transition: clip-path .8s cubic-bezier(0.65, 0, 0.35, 1) var(--d); clip-path: inset(0 0 0 0 round .75rem); }
+.rmc__bar.s i, .rmc__bar.m b { border-radius: .5rem; }
+.rmc__ax { top: calc(50% - .75px); height: 1.5px; border-radius: 0; background: rgb(15 21 29 / .14); box-shadow: none; left: -.25rem; right: -.25rem; }
+.rm6__card:first-child .rmc__ax { left: 0; }
+.rm6__card:last-child .rmc__ax { right: 0; }
+.rm6__card:has(.rmv--c) { overflow: visible; }
+@media (prefers-reduced-motion: reduce) { .rmc__bar { clip-path: none !important; } }
+</style>
+<style>
+.rmc__ax { left: -.125rem; right: -.125rem; background: #dcdee2; }   /* концы встречаются посередине зазора .25rem между карточками; сплошной цвет — без тёмной точки на стыке */
+.rm6__card:first-child .rmc__ax { left: 0; } .rm6__card:last-child .rmc__ax { right: 0; }
+</style>
 
 <section class="vx csv-sec" id="keysy-v" aria-labelledby="csv-title">
   <div class="vx__in"><div class="vx__head"><h2 class="vx__h" id="csv-title">Кейсы</h2><p class="vx__lead">Что было, что сделали и&nbsp;к&nbsp;чему пришли&nbsp;— по&nbsp;проектам в&nbsp;разных нишах.</p></div>
