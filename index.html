@@ -1165,6 +1165,11 @@ body[data-hdr="plate"]:is([data-glass="1"], [data-glass="2"]) .hdr .plate { filt
 
 /* появление как у humble: заголовки — по словам из размытия; лиды, кнопки, карточки — из размытия со сдвигом */
 .rw { display: inline-block; }
+/* 10.11.2026 (Никита: «тексты появляются криво, с миганием»): элемент скрыт с самого начала (.rv-x) и появляется CSS-переходом (.rv-on).
+   Раньше подзаголовки .lt__lead и пункты .panels6 были видны до появления, гасли в момент входа в экран и проявлялись заново */
+.rv .rv-x { opacity: 0 !important; transform: translateY(12px); }
+.rv .rv-x.rv-f { transform: none; }
+.rv .rv-x.rv-on { opacity: 1 !important; transform: none; transition: opacity .7s cubic-bezier(0.23, 1, 0.32, 1), transform .7s cubic-bezier(0.23, 1, 0.32, 1); }
 .rv :is(.clients__title, .svc3__title, .nw__title, .nw-sub h3, .lt__title) { opacity: 0; }
 /* 02.11: заголовок обложки появляется вместе с подзаголовком и кнопками (CSS-анимация .rise с разметки), а не после загрузки всех 3,6 МБ —
    раньше он ждал скрипт в конце файла, и на секунду обложка была без заголовка */
@@ -3575,7 +3580,70 @@ html.rvs-lock { overflow: hidden; }
 
   /* команда */
   .tm__nums { margin-bottom: 2rem; }
+  /* ===== 10.11.2026 — правки Никиты по мобиле ===== */
+  /* обложка: заголовок крупнее; кнопки во всю ширину, одной высоты; подпись — сразу под оранжевой кнопкой, стрелка смотрит на неё */
+  #top.hero { display: flex !important; flex-direction: column; }
+  #top .h1 { font-size: 2.25rem !important; line-height: 1.08 !important; }
+  #top .lead { font-size: 1rem !important; }
+  #top .ctas { display: contents !important; }
+  #top .ctas .btn { order: 3; width: 100%; height: 3.5rem !important; min-height: 3.5rem !important; padding: 0 1.25rem !important; font-size: 1rem !important; justify-content: center; margin-top: 1.5rem; }
+  #top .ctas .btn--soft { order: 5; margin-top: .75rem; }
+  #top .hero-note { order: 4; margin: 1.5rem 0 .75rem 3.25rem !important; max-width: calc(100% - 3.25rem) !important; }
+  #top .hero-note svg { left: -3rem !important; top: -1.5rem !important; transform: rotate(18deg); }
+
+  /* карта под обложкой: окно одной высоты — карточка поднимается над картой, ничего не прыгает и не наезжает на следующий блок */
+  .win, .win:not(.has-profile) { height: 38rem !important; }
+  .win:not(.has-profile) { grid-template-rows: 11.5rem 26.5rem !important; }
+  .win.has-profile { grid-template-rows: 27rem 11rem !important; }
+
+  /* услуги: выпадающие пункты, по нажатию открываются описание и анимация */
+  .svc3[data-v="b"] .sv { cursor: pointer; padding: 1rem 0 !important; }
+  .svc3[data-v="b"] .sv__in { position: relative; display: flex; flex-direction: column; padding-right: 2.5rem; }
+  .svc3[data-v="b"] .sv__in h3 { order: 1; }
+  .svc3[data-v="b"] .sv__in p { order: 2; }
+  .svc3[data-v="b"] .sv__in .sv__pic { order: 3; }
+  .svc3[data-v="b"] .sv__in::after { content: ""; position: absolute; right: .25rem; top: .25rem; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: rgb(15 21 29 / .06) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f151d' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 6v12M6 12h12'/%3E%3C/svg%3E") center / 1rem no-repeat; transition: transform .3s cubic-bezier(.23,1,.32,1); }
+  .svc3[data-v="b"] .sv.is-act .sv__in::after { transform: rotate(45deg); }
+  .svc3[data-v="b"] .sv:not(.is-act) p { display: none !important; }
+  .svc3[data-v="b"] .sv.is-act .sv__pic, .svc3[data-v="b"] .sv.is-act .sv__pic:has(.xph) { display: grid !important; position: relative !important; inset: auto !important; height: auto !important; min-height: 15rem; margin: 1rem -2.5rem 0 0; padding: 1rem !important; opacity: 1 !important; clip-path: none !important; transform: none !important; border-radius: 1.25rem; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06); overflow: hidden; }
+  .svc3[data-v="b"] .sv.is-act .sv__pic > :not(.xw) { transform: none !important; }
+  .svc3[data-v="b"] .sv.is-act .sv__pic:has(.xph) { display: flex !important; flex-direction: column; align-items: center; gap: 1rem; container-type: normal; padding: 1.25rem 1rem !important; }
+  .svc3[data-v="b"] .sv.is-act .sv__pic > .xph { width: 11.5rem !important; margin: 0 auto !important; justify-self: center; }
+  .svc3[data-v="b"] .sv.is-act .sv__pic > .obs { display: flex !important; flex-direction: column; align-items: stretch !important; gap: .5rem !important; position: static !important; inset: auto !important; width: 100%; transform: none !important; }
+  .svc3[data-v="b"] .sv.is-act .sv__pic .ob { max-width: none !important; }
+  #top .h1 { font-size: 2rem !important; }
+
+  /* «Выберите направление»: стрелка вниз, к карточкам */
+  .nw-sub .nw-note { margin-left: 2.75rem !important; }
+  .nw-sub .nw-note svg { left: -2.75rem !important; top: .5rem !important; width: 2.25rem !important; height: 2.25rem !important; transform: rotate(-120deg) !important; }
+
+  /* «Управляем продвижением»: подпись ровно слева, стрелка вверх, к карточке */
+  .note7 { width: auto !important; max-width: calc(100% - 3rem) !important; margin: 2rem 0 0 3rem !important; text-align: left !important; font-size: 1.375rem !important; line-height: 1.1 !important; }
+  .note7 svg { left: -3rem !important; top: -1.75rem !important; width: 2.5rem !important; height: 2.5rem !important; transform: rotate(30deg) !important; }
+
+  /* «Как начинаем»: шкала в карточке проигрывается, когда карточка в экране */
+  .lt.is-in .rm6[data-v="c"] .rm6__card:not(.is-vis) .rmc__bar { clip-path: inset(0 100% 0 0 round .75rem) !important; transition: none !important; }
+  .lt.is-in .rm6[data-v="c"] .rm6__card:not(.is-vis) .rmc__bar.m b { transform: scale(.85) !important; opacity: 0 !important; transition: none !important; }
+  .lt.is-in .rm6[data-v="c"] .rm6__card:not(.is-vis) .rmc__more i { opacity: 0 !important; transition: none !important; }
+  .lt.is-in .pn6:not(.is-vis) li { animation: none !important; opacity: 0 !important; }
+  .lt.is-in .pn6:not(.is-vis) .ck { animation: none !important; }
+
+  /* отзывы: воздух между заголовком и подзаголовком, поля карточки, кнопка не прилипает к списку */
+  #otzyvy .vx__head { row-gap: 1rem !important; margin-bottom: 2rem !important; }
+  #otzyvy .rvb__in { padding: 1.25rem !important; }
+  #otzyvy .rvf__txt .rvs__cta { margin-top: 1.5rem !important; }
+  #otzyvy .rvb__bar { padding: 1.25rem 0 0 !important; }
+
+  /* отступы между блоками — один шаг 3rem сверху и снизу */
+  :is(#klienty, #uslugi, #analitika, #keysy, #tarify, #komanda, #otzyvy, #faq) { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+  #ploshadki { padding-top: 0 !important; padding-bottom: 3rem !important; }
+  #kak-nachinaem { padding-bottom: 3rem !important; }
+
+  /* подвал: карточка во всю ширину экрана */
+  .fina__in { margin-left: 0 !important; margin-right: 0 !important; }
+  .fina .ft__in { padding-left: 0 !important; padding-right: 0 !important; }
 }
+
 </style>
 <style>
 /* Мост главной к дизайн-системе (05.11.2026): старые переменные блоков теперь берут значения из site/ds/tokens.css.
@@ -4016,13 +4084,15 @@ body { font-family: var(--font-body); }
   });
   const activate = i => { if (i === act) return; act = i; cards.forEach((c, k) => c.classList.toggle('is-act', k === i)); num.textContent = String(i + 1).padStart(2, '0'); sec.querySelectorAll('.svc3__seg i').forEach((x, k) => x.classList.toggle('on', k <= i)); runCounters(cards[i]); };
   const onScroll = () => {
-    if (!pinned()) { activate(Math.max(act, 0)); return; }
+    if (!pinned()) { if (!matchMedia('(max-width: 760px)').matches) activate(Math.max(act, 0)); return; }   // 10.11: на телефоне пункты — выпадающие, сами не открываются
     const total = sec.offsetHeight - innerHeight, prog = Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / total));
     const f = prog * N, i = Math.min(N - 1, Math.floor(f));
     activate(i); cards[i].style.setProperty('--p', Math.min(1, f - i).toFixed(3)); sec.querySelector('.svc3__grid').style.setProperty('--gp', prog.toFixed(4));
   };
   cards.forEach((c, i) => c.addEventListener('click', () => {
-    if (!pinned()) { activate(i); return; }
+    if (!pinned()) {
+      if (matchMedia('(max-width: 760px)').matches && i === act) { act = -1; c.classList.remove('is-act'); return; }   // повторное нажатие — закрыть
+      activate(i); return; }
     const total = sec.offsetHeight - innerHeight;
     scrollTo({ top: sec.getBoundingClientRect().top + scrollY + total * (i + .5) / N, behavior: 'smooth' });
   }));
@@ -4424,6 +4494,11 @@ body { font-family: var(--font-body); }
     if (!dev || reduceLb) return;
     lbAnim.forEach(a => a.cancel());
     const fly = onScreen(lbSrc);
+    if (matchMedia('(max-width: 760px)').matches) {   // 10.11: на телефоне — плавно, без пружины с перелётом и без поворота
+      lbAnim = [lbPh.animate(fly ? [{ transform: fromSrc(lbSrc, lbPh) }, { transform: 'none' }] : [{ transform: 'translateY(24px) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 480, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' })];
+      if (fly) lbSrc.style.visibility = 'hidden';
+      lbAnim[0].finished.then(() => { if (lbSrc) lbSrc.style.visibility = ''; }, () => {});
+      return; }
     lbAnim = [
       // полёт: из карточки в центр, посадка на пружине
       lbPh.animate(fly ? [{ transform: fromSrc(lbSrc, lbPh) }, { transform: 'none' }] : [{ transform: 'translateY(40px) scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 764, easing: SPRING }),
@@ -5455,6 +5530,13 @@ body { font-family: var(--font-body); }
 })();
 </script>
 
+<script>
+/* 10.11.2026: на телефоне карточки «Как начинаем» и список «Что в разборе» анимируются, когда сами попадают в экран */
+(() => { if (!matchMedia('(max-width: 760px)').matches) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-vis'); io.unobserve(e.target); } }), { threshold: .45 });
+  document.querySelectorAll('#kak-nachinaem .rm6__card, #kak-nachinaem .pn6').forEach(el => io.observe(el));
+})();
+</script>
 
 
 <div class="vsw" hidden style="display:none"><span hidden><button type="button" data-h="now">текущий</button></span></div>
@@ -5550,22 +5632,15 @@ body { font-family: var(--font-body); }
     });
     walk(el); el.dataset.split = 1; return [...el.querySelectorAll('.rw')];
   };
-  const words = (el, delay = 0) => {
-    const ws = split(el); el.style.opacity = 1; el.style.visibility = 'visible';
-    if (reduce) return;
-    // 29.10, «перегружено»: заголовок появляется целиком, без размытия по словам
-    el.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 600, easing: EO, delay, fill: 'both' });
+  const show = (el, delay = 0, f = false) => {
+    if (reduce) { el.classList.remove('rv-x', 'rv-f'); el.style.opacity = 1; el.style.visibility = 'visible'; return; }
+    el.classList.add('rv-x'); if (f) el.classList.add('rv-f'); el.style.opacity = ''; el.style.visibility = 'visible'; void el.offsetWidth;
+    el.style.transitionDelay = delay + 'ms'; el.classList.add('rv-on');
+    clearTimeout(el.__rvT); el.__rvT = setTimeout(() => { el.classList.remove('rv-x', 'rv-f', 'rv-on'); el.style.transitionDelay = ''; el.style.opacity = 1; }, delay + 800);
   };
-  const rise = (els, delay = 0) => els.forEach((el, i) => {
-    el.style.opacity = 1; if (reduce) return;
-    el.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }],
-      { duration: 700, easing: EO, delay: delay + i * 60, fill: 'backwards' });
-  });
-
-  /* только прозрачность, без сдвига: transform на списке «Услуг» делал его опорой для окна с телефоном (оно позиционировано от .svc3__in) —
-     пока шла анимация, окно сжималось до ширины списка и телефон стоял крошечным посреди текста (02.11) */
-  const fade = (el, delay = 0) => { el.style.opacity = 1; if (reduce) return;
-    el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, easing: EO, delay, fill: 'backwards' }); };
+  const words = (el, delay = 0) => { split(el); show(el, delay); };
+  const rise = (els, delay = 0) => els.forEach((el, i) => show(el, delay + i * 60));
+  const fade = (el, delay = 0) => show(el, delay, true);
 
   /* обложка — сразу */
   const h1 = document.querySelector('.hero .h1'); if (h1) split(h1);   // появление — CSS .rise; скрипт только делит на слова для смены заголовка
@@ -5579,6 +5654,8 @@ body { font-family: var(--font-body); }
     ['.nw-sub h3', el => words(el)], ['.lt__title', el => words(el)], ['.lt__lead', el => rise([el], 250)], ['.panels6', el => rise([...el.children], 100)], ['.nw-niches', el => rise([...el.querySelectorAll('.nc')], 100)], ['.nw-cta', el => rise([el])],
   ];
   const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); e.target.__rv(e.target); }), { threshold: .15, rootMargin: '0px 0px -8% 0px' });
+  const pre = { '.svc3__grid': '.sv h3, .sv p', '.nw-two': '.nw-card', '.panels6': ':scope > *', '.nw-niches': '.nc' };
+  if (!reduce) groups.forEach(([sel]) => document.querySelectorAll(sel).forEach(el => { (pre[sel] ? el.querySelectorAll(pre[sel]) : [el]).forEach(x => x.classList.add('rv-x')); if (sel === '.svc3__grid') el.classList.add('rv-x', 'rv-f'); }));
   groups.forEach(([sel, fn]) => document.querySelectorAll(sel).forEach(el => { el.__rv = fn; io.observe(el); }));
 
   /* переключатели оформления */
