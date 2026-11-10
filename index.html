@@ -3592,9 +3592,16 @@ html.rvs-lock { overflow: hidden; }
   #top .hero-note svg { left: -3rem !important; top: -1.5rem !important; transform: rotate(18deg); }
 
   /* карта под обложкой: окно одной высоты — карточка поднимается над картой, ничего не прыгает и не наезжает на следующий блок */
-  .win, .win:not(.has-profile) { height: 38rem !important; }
-  .win:not(.has-profile) { grid-template-rows: 11.5rem 26.5rem !important; }
-  .win.has-profile { grid-template-rows: 27rem 11rem !important; }
+  .win, .win:not(.has-profile) { height: 40rem !important; }
+  .win:not(.has-profile) { grid-template-rows: 25rem 15rem !important; }
+  .win.has-profile { grid-template-rows: 27rem 13rem !important; }
+  /* 10.11 (Никита: «таббар теряется, выдача сильно обрезается»): в выдаче видно три места, а не одно; вкладки — сеткой 2×2 над окном, все видны */
+  .list { height: 20.5rem !important; }
+  .demo-plane:not([data-phase="profile"]) .f-route { top: 25.75rem !important; }
+  #tabs { position: relative !important; top: auto !important; display: grid !important; grid-template-columns: 1fr 1fr; gap: .375rem !important; overflow: visible !important; -webkit-mask-image: none !important; mask-image: none !important; margin: 0 0 1rem !important; padding: .375rem !important; }
+  #tabs .tab { height: 2.75rem !important; font-size: .9375rem !important; justify-content: center; padding-inline: .5rem !important; }
+  #tabs .tab-ind { display: none !important; }
+  #tabs .tab.on { background: #0f151d !important; color: #fff !important; }
 
   /* услуги: выпадающие пункты, по нажатию открываются описание и анимация */
   .svc3[data-v="b"] .sv { cursor: pointer; padding: 1rem 0 !important; }
