@@ -267,6 +267,7 @@ body { margin: 0; font-family: var(--font-body); font-size: var(--fs-base); line
 .o-row { display: grid; grid-template-columns: 1.625rem 1fr; gap: var(--space-3); align-items: center; padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2); border-radius: var(--radius-md); background: var(--surface-row); box-shadow: var(--shadow-row); line-height: 1.4; }
 .o-check { display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--bg-accent); color: var(--orange-600); }
 .o-check svg { width: .75rem; height: .75rem; }
+.o-check--n { background: var(--surface-subtle); color: var(--text-default); font: 500 var(--fs-caption)/1 var(--font-mono); }
 
 /* ── Метки ─────────────────────────────────────────── */
 .o-badge { display: inline-flex; align-items: center; height: 1.5625rem; padding: 0 .75rem; border-radius: var(--radius-pill); font: 600 var(--fs-caption)/1 var(--font-body); background: var(--surface-subtle); color: var(--text-default); }
@@ -298,16 +299,27 @@ body { margin: 0; font-family: var(--font-body); font-size: var(--fs-base); line
 .o-faq__it p { margin: 0; padding: 0 4.5rem 1.375rem var(--space-6); line-height: 1.6; color: var(--text-muted); }
 
 /* ── Форма ─────────────────────────────────────────── */
-.o-form { display: flex; flex-direction: column; gap: var(--space-3-5); padding: 1.75rem; border-radius: 1.75rem; background: var(--paper-0); color: var(--ink-950); }
-.o-field { height: 3.5rem; width: 100%; padding: 0 var(--space-4); border: 1px solid rgb(15 21 29 / .12); border-radius: var(--radius-md); background: #f7f7f8; font: 400 var(--fs-base) var(--font-body); color: var(--ink-950); outline: none; transition: border-color 160ms ease, background-color 160ms ease; }
-.o-field:focus { border-color: var(--border-focus); background: var(--paper-0); }
-.o-field::placeholder { color: rgb(15 21 29 / .6); }
+/* форма всегда светлая: в тёмной секции ставим ей data-theme="light" — токены перекрашиваются обратно */
+.o-form { display: flex; flex-direction: column; gap: var(--space-3-5); padding: var(--space-8); border-radius: var(--radius-xl); background: var(--surface-frame); color: var(--text-default); }
+.o-field { height: 3.5rem; width: 100%; padding: 0 var(--space-4); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--paper-100); font: 400 var(--fs-base) var(--font-body); color: var(--text-default); outline: none; transition: border-color 160ms ease, background-color 160ms ease; }
+.o-field:focus { border-color: var(--border-focus); background: var(--surface-frame); }
+.o-field::placeholder { color: var(--text-muted); }
 .o-field--error { border-color: var(--red-500); }
-.o-check-field { display: flex; align-items: flex-start; gap: var(--space-2-5); font-size: var(--fs-caption); line-height: 1.4; color: rgb(15 21 29 / .65); cursor: pointer; }
-.o-check-field input { -webkit-appearance: none; appearance: none; flex: none; display: grid; place-items: center; width: 1.25rem; height: 1.25rem; margin: -.0625rem 0 0; border-radius: .4375rem; background: var(--paper-0); box-shadow: inset 0 0 0 1.5px rgb(15 21 29 / .25); transition: background-color var(--dur-fast) ease; cursor: pointer; }
-.o-check-field input::after { content: ""; width: .75rem; height: .75rem; background: var(--paper-0); clip-path: polygon(14% 52%, 0 66%, 38% 100%, 100% 22%, 85% 8%, 37% 70%); scale: .4; opacity: 0; transition: scale 260ms var(--ease-spring), opacity 160ms ease; }
+.o-check-field { display: flex; align-items: center; gap: var(--space-2-5); font-size: var(--fs-caption); line-height: 1.4; color: var(--text-muted); cursor: pointer; }
+.o-check-field input { -webkit-appearance: none; appearance: none; flex: none; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; margin: 0; border-radius: var(--radius-xs); background: var(--surface-frame); box-shadow: inset 0 0 0 1.5px var(--border-strong); transition: background-color var(--dur-fast) ease; cursor: pointer; }
+.o-check-field input::after { content: ""; width: .875rem; height: .875rem; background: var(--paper-0); clip-path: polygon(14% 52%, 0 66%, 38% 100%, 100% 22%, 85% 8%, 37% 70%); scale: .4; opacity: 0; transition: scale 260ms var(--ease-spring), opacity 160ms ease; }
 .o-check-field input:checked { background: var(--blue-500); box-shadow: inset 0 0 0 1.5px var(--blue-500); }
 .o-check-field input:checked::after { scale: 1; opacity: 1; }
+
+/* ── Форма: кто ответит и запасной канал (на главной — .cx__who, .cx__tg) ── */
+.o-form__who { display: flex; align-items: center; gap: var(--space-3); }
+.o-form__av { position: relative; flex: none; width: 3rem; height: 3rem; }
+.o-form__av img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: var(--blue-photo); }
+.o-form__av::after { content: ""; position: absolute; right: -.0625rem; bottom: -.0625rem; width: .875rem; height: .875rem; border-radius: 50%; background: var(--green-700); box-shadow: 0 0 0 2.5px var(--paper-0); }
+.o-form__who b { display: block; font-size: var(--fs-sm); font-weight: 600; }
+.o-form__who small { display: block; margin-top: .125rem; font-size: var(--fs-caption); color: var(--text-muted); }
+.o-form__tg { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 2.75rem; color: var(--blue-600); text-decoration: none; font-size: var(--fs-sm); font-weight: 500; }
+.o-form__tg svg { width: 1.125rem; height: 1.125rem; }
 
 /* ── Тариф ─────────────────────────────────────────── */
 .o-price { display: flex; flex-direction: column; gap: var(--space-5); height: 100%; }
@@ -321,24 +333,73 @@ body { margin: 0; font-family: var(--font-body); font-size: var(--fs-base); line
 .o-stat + .o-stat { padding-left: var(--space-8); border-left: 1px solid var(--border-default); }
 .o-stat p { margin: var(--space-2) 0 0; font-size: var(--fs-caption); color: var(--text-muted); }
 
-/* ── Шапка ─────────────────────────────────────────── */
-.o-hdr { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; height: 4rem; padding: 0 var(--space-5) 0 var(--space-6); background: var(--surface-page); border-bottom: 1px solid var(--border-default); transition: background-color 250ms ease, border-color 250ms ease; }
-.o-hdr__logo { display: block; height: 1.375rem; }
-.o-hdr__logo img { display: block; height: 100%; }
-.o-hdr__nav { display: flex; gap: var(--space-1); }
-.o-hdr__nav a { display: inline-flex; align-items: center; height: 2.5rem; padding: 0 var(--space-3); color: var(--text-default); text-decoration: none; font: 500 var(--fs-sm)/1 var(--font-body); letter-spacing: -.005em; transition: opacity var(--dur-fast) ease; }
-@media (hover: hover) and (pointer: fine) { .o-hdr__nav:hover a { opacity: .45; } .o-hdr__nav a:hover { opacity: 1; } }
+/* ── Шапка: полная (10.11.2026, со второй страницей) ── */
+.o-hdr { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); height: 4rem; padding: 0 var(--space-5) 0 var(--space-6); background: var(--surface-page); border-bottom: 1px solid var(--border-default); transition: background-color 250ms ease, border-color 250ms ease; }
+.o-hdr__logo { display: flex; align-items: center; height: 2.5rem; flex: none; }
+.o-hdr__logo img { display: block; height: 1.375rem; width: auto; }
+.o-hdr__nav { position: absolute; left: 50%; top: 50%; translate: -50% -50%; display: flex; align-items: center; gap: var(--space-1); }
+.o-hdr__link { display: inline-flex; align-items: center; gap: var(--space-1); height: 2.5rem; padding: 0 var(--space-3); border: 0; background: none; color: var(--text-default); text-decoration: none; font: 500 var(--fs-sm)/1 var(--font-body); letter-spacing: -.005em; cursor: pointer; transition: opacity var(--dur-fast) ease, color var(--dur-fast) ease; }
+.o-hdr__link svg { width: .625rem; height: .625rem; transition: rotate var(--dur-base) var(--ease-out); }
+.o-hdr__link[aria-current="page"] { color: var(--text-default); }
+@media (hover: hover) and (pointer: fine) { .o-hdr__nav:hover .o-hdr__link { opacity: .45; } .o-hdr__nav .o-hdr__link:hover, .o-hdr__dd.is-open > .o-hdr__link { opacity: 1; } }
+.o-hdr__dd { position: relative; }
+.o-hdr__dd.is-open > .o-hdr__link svg { rotate: 180deg; }
+.o-hdr__panel { position: absolute; left: 50%; top: calc(100% + var(--space-3)); z-index: 2; min-width: 21rem; padding: var(--space-2); border-radius: var(--radius-lg); background: var(--surface-frame); box-shadow: var(--shadow-card-open), var(--shadow-frame);
+  opacity: 0; visibility: hidden; translate: -50% -.375rem; transition: opacity var(--dur-fast) ease, translate var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-fast); }
+.o-hdr__panel::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: var(--space-3); }
+.o-hdr__dd.is-open .o-hdr__panel { opacity: 1; visibility: visible; translate: -50% 0; transition: opacity var(--dur-fast) ease, translate var(--dur-base) var(--ease-out), visibility 0s; }
+.o-hdr__panel--cols { display: grid; grid-template-columns: 1fr 1fr; min-width: 30rem; }
+.o-hdr__item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2-5) var(--space-3); border-radius: var(--radius-md); color: var(--text-default); text-decoration: none; font-size: var(--fs-sm); line-height: 1.3; transition: background-color var(--dur-fast) ease; }
+.o-hdr__item img { flex: none; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-sm); box-shadow: 0 0 0 1px var(--border-default); }
+.o-hdr__item b { display: block; font-weight: 600; }
+.o-hdr__item small { display: block; margin-top: .125rem; font-size: var(--fs-caption); color: var(--text-muted); }
+.o-hdr__item:hover, .o-hdr__item[aria-current="page"] { background: var(--surface-subtle); }
 .o-hdr__contacts { display: flex; align-items: center; gap: var(--space-2); }
+.o-hdr__phone { display: inline-flex; align-items: center; gap: var(--space-1-5); height: 2.5rem; padding: 0 var(--space-4) 0 var(--space-1); border-radius: var(--radius-pill); background: var(--action-primary); border: 1.5px solid var(--action-primary-border); box-shadow: var(--shadow-btn-primary); color: var(--text-on-action); text-decoration: none; font: 600 var(--fs-sm)/1 var(--font-body); font-variant-numeric: tabular-nums; white-space: nowrap; transition: background-color var(--dur-fast) ease, scale 225ms var(--spring-press); }
+.o-hdr__phone > span { display: grid; place-items: center; width: 1.875rem; height: 1.875rem; }
+.o-hdr__phone svg { width: 1.125rem; height: 1.125rem; }
+.o-hdr__tg { display: grid; place-items: center; flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--action-contact); border: 1.5px solid var(--action-contact-border); box-shadow: var(--shadow-btn-contact); color: var(--text-on-action); transition: background-color var(--dur-fast) ease, scale 225ms var(--spring-press); }
+.o-hdr__tg svg { width: 1.25rem; height: 1.25rem; margin-left: -.125rem; }
+.o-hdr__phone:active, .o-hdr__tg:active, .o-hdr__burger:active { scale: .94; }
+@media (hover: hover) and (pointer: fine) { .o-hdr__phone:hover { background: var(--action-primary-hover); } .o-hdr__tg:hover { background: var(--action-contact-hover); } }
+.o-hdr__burger { display: none; position: relative; width: 2.5rem; height: 2.5rem; border: 0; border-radius: 50%; background: var(--surface-subtle); color: var(--text-default); cursor: pointer; transition: scale 225ms var(--spring-press); }
+.o-hdr__burger i, .o-hdr__burger i::before { position: absolute; left: 50%; top: 50%; width: 1rem; height: 1.5px; margin-left: -.5rem; border-radius: var(--radius-pill); background: currentColor; transition: translate var(--dur-base) var(--ease-out), rotate var(--dur-base) var(--ease-out); }
+.o-hdr__burger i { translate: 0 -.1875rem; }
+.o-hdr__burger i::before { content: ""; left: 0; top: 0; margin: 0; translate: 0 .375rem; }
+.o-hdr__burger[aria-expanded="true"] i { translate: 0 0; rotate: 45deg; }
+.o-hdr__burger[aria-expanded="true"] i::before { translate: 0 0; rotate: -90deg; }
+/* тёмная: когда шапка целиком над тёмной карточкой (data-hdr-dark) */
+.o-hdr.is-dark { background: var(--ink-900); border-bottom-color: rgb(255 255 255 / .08); }
+.o-hdr.is-dark .o-hdr__link { color: var(--paper-0); }
+.o-hdr__logo .is-dark-only, .o-hdr.is-dark .o-hdr__logo .is-light-only { display: none; }
+.o-hdr.is-dark .o-hdr__logo .is-dark-only { display: block; }
+
+/* Меню на телефоне: лист под шапкой */
+.o-menu { position: fixed; inset: 4rem 0 0; z-index: 49; overflow: auto; overscroll-behavior: contain; padding: var(--space-4) var(--gutter-mobile) var(--space-10); background: var(--surface-page);
+  opacity: 0; visibility: hidden; translate: 0 -.5rem; transition: opacity var(--dur-fast) ease, translate var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-fast); }
+.o-menu.is-open { opacity: 1; visibility: visible; translate: 0 0; transition: opacity var(--dur-fast) ease, translate var(--dur-base) var(--ease-out), visibility 0s; }
+.o-menu__group { padding: var(--space-4) 0; border-bottom: 1px solid var(--border-default); }
+.o-menu__group .o-label { margin: 0 0 var(--space-2) var(--space-3); }
+.o-menu__links { display: grid; grid-template-columns: 1fr 1fr; }
+.o-menu__links a, .o-menu__main a { display: flex; align-items: center; min-height: 2.75rem; padding: 0 var(--space-3); border-radius: var(--radius-md); color: var(--text-default); text-decoration: none; font-size: var(--fs-sm); }
+.o-menu__main { display: flex; flex-direction: column; padding: var(--space-4) 0; }
+.o-menu__main a { font: 600 var(--fs-h6)/1.2 var(--font-head); letter-spacing: -.02em; }
+.o-menu .o-hdr__item { padding-inline: var(--space-3); }
+.o-menu__cta { display: flex; flex-direction: column; gap: var(--space-2-5); padding-top: var(--space-6); }
+html.o-lock { overflow: hidden; }
 
 /* ── Адаптив ───────────────────────────────────────── */
 @media (max-width: 1000px) {
   .o-head, .o-split, .o-grid-3, .o-tray { grid-template-columns: 1fr; }
   .o-head { row-gap: var(--space-4); margin-bottom: var(--space-8); }
   .o-hdr__nav { display: none; }
+  .o-hdr__burger { display: block; }
+  .o-hdr__phone { width: 2.5rem; padding: 0; justify-content: center; }
+  .o-hdr__phone > b { display: none; }
 }
 @media (max-width: 700px) {
   .o-container { width: auto; padding-inline: var(--gutter-mobile); }
-  .o-section { padding-block: var(--space-22); }
+  .o-section { padding-block: var(--space-12); }
   .o-h1 { font-size: 2.25rem; }
   .o-h2 { font-size: 2.25rem; }
   .o-h3 { font-size: var(--fs-h4); }
@@ -350,11 +411,160 @@ body { margin: 0; font-family: var(--font-body); font-size: var(--fs-base); line
   .o-tray { border-radius: var(--radius-xl); padding: var(--space-2); }
   .o-tray__card { padding: var(--space-8) var(--space-6); border-radius: var(--radius-inner-sm); }
   .o-btn { white-space: normal; text-align: center; }
+  .o-btn--lg { padding: 0 var(--space-5); font-size: var(--fs-base); white-space: nowrap; }
+  .o-field { padding: 0 var(--space-3); }
   .o-stats { grid-template-columns: 1fr; }
   .o-stat + .o-stat { padding-left: 0; border-left: 0; border-top: 1px solid var(--border-default); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ════════ Добавлено со второй страницей «Яндекс Карты» (10.11.2026) ════════ */
+
+/* ── Хлебные крошки ────────────────────────────────── */
+.o-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-6); padding: 0; list-style: none; font-size: var(--fs-caption); color: var(--text-muted); }
+.o-crumbs li + li::before { content: "/"; margin-right: var(--space-2); color: var(--text-subtle); }
+.o-crumbs a { display: inline-flex; align-items: center; min-height: 1.5rem; color: var(--text-muted); text-decoration: none; transition: color var(--dur-fast) ease; }
+.o-crumbs a:hover { color: var(--text-default); }
+
+/* ── Ряд логотипов клиентов ────────────────────────── */
+.o-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8) var(--space-10); }
+.o-logos img { display: block; max-width: 9rem; height: var(--h, 2.25rem); object-fit: contain; filter: grayscale(1) contrast(1.15); opacity: .55; mix-blend-mode: multiply; }
+
+/* ── Подпись от руки со стрелкой ───────────────────── */
+.o-hand { display: flex; align-items: flex-start; gap: var(--space-2); color: var(--text-muted); }
+.o-hand svg { flex: none; width: 3.25rem; height: 3.25rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.o-hand svg path { stroke-width: 1.7; } .o-hand svg path:last-child { stroke-width: 1.1; opacity: .7; }
+.o-hand span { padding-top: var(--space-6); font-family: var(--font-script); font-size: var(--fs-h6); line-height: 1.15; rotate: -3deg; }
+
+/* ── Снимок экрана в окне браузера (макет) ─────────── */
+.o-shot { overflow: hidden; border-radius: var(--radius-lg); background: var(--surface-frame); box-shadow: 0 0 0 1px var(--border-default), var(--shadow-frame); }
+.o-shot__bar { display: flex; align-items: center; gap: var(--space-1-5); height: 2.25rem; padding: 0 var(--space-3-5); border-bottom: 1px solid var(--border-default); }
+.o-shot__bar i { width: .625rem; height: .625rem; border-radius: 50%; background: var(--paper-400); }
+.o-shot__url { margin-left: var(--space-3); padding: var(--space-1) var(--space-3); border-radius: var(--radius-pill); background: var(--surface-subtle); font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .02em; color: var(--text-muted); }
+.o-shot img { display: block; width: 100%; height: auto; }
+
+/* ── Телефон с живым снимком (макет; на главной — .mph) ── */
+.o-phone { position: relative; width: 100%; padding: .4375rem; border-radius: 3.25rem; background: #0b0b0c;
+  box-shadow: 0 0 0 1.5px #3b3d42, 0 0 0 3px #1c1d20, 0 0 0 3.5px rgb(255 255 255 / .1), 0 2.5rem 4.5rem -2rem rgb(15 21 29 / .5), 0 1rem 2rem -1.25rem rgb(15 21 29 / .35); }
+.o-phone::before { content: ""; position: absolute; left: -.3125rem; top: 22%; width: .1875rem; height: 3.5rem; border-radius: 2px 0 0 2px; background: linear-gradient(90deg, #2a2b2e, #4a4c51); box-shadow: 0 4.5rem 0 #3a3c40; }
+.o-phone::after { content: ""; position: absolute; right: -.3125rem; top: 28%; width: .1875rem; height: 5rem; border-radius: 0 2px 2px 0; background: linear-gradient(90deg, #4a4c51, #2a2b2e); }
+.o-phone__scr { position: relative; overflow: hidden; border-radius: 2.75rem; aspect-ratio: 9 / 19; background: #fff; }
+.o-phone__sb { position: absolute; z-index: 3; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; align-items: center; height: 2.375rem; padding: .25rem 1.625rem 0 1.875rem; background: #fff; font: 600 .875rem/1 -apple-system, "SF Pro Text", var(--font-body); color: #0b0b0c; }
+.o-phone__sb i { position: absolute; left: 50%; top: .5rem; width: 5.75rem; height: 1.5rem; margin-left: -2.875rem; border-radius: 99px; background: #0b0b0c; }
+.o-phone__sb svg { height: .6875rem; width: auto; }
+.o-phone__view { position: absolute; inset: 2.375rem 0 0; overflow: hidden; }
+.o-phone__view img { position: absolute; left: 0; top: 0; display: block; width: 100%; height: auto; opacity: 0; transition: opacity var(--dur-base) ease; }
+.o-phone__view img.is-on { opacity: 1; }
+.o-phone__home { position: absolute; z-index: 3; left: 50%; bottom: .5rem; width: 7.5rem; height: .3125rem; margin-left: -3.75rem; border-radius: 99px; background: rgb(11 11 12 / .85); }
+
+/* ── Вкладки: список слева, макет справа; на телефоне — выпадающие пункты ── */
+.o-tabs { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-5); align-items: center; }
+.o-tabs__list { display: flex; flex-direction: column; gap: var(--space-1); }
+.o-tabs__tab { display: grid; grid-template-columns: 2.5rem 1fr; gap: var(--space-3); width: 100%; padding: var(--space-5) var(--space-6); border: 0; border-radius: var(--radius-lg); background: transparent; color: var(--text-default); text-align: left; font: inherit; cursor: pointer; transition: background-color var(--dur-base) ease, box-shadow var(--dur-base) ease; }
+.o-tabs__tab[aria-selected="true"] { background: var(--surface-row); box-shadow: var(--shadow-card); cursor: default; }
+.o-tabs__n { padding-top: .3125rem; font: 500 var(--fs-caption)/1 var(--font-mono); color: var(--text-muted); }
+.o-tabs__tab[aria-selected="true"] .o-tabs__n { color: var(--text-accent); }
+.o-tabs__t { display: flex; flex-direction: column; }
+.o-tabs__t b { font: 600 var(--fs-h6)/1.25 var(--font-head); letter-spacing: -.02em; color: var(--text-muted); transition: color var(--dur-base) ease; }
+.o-tabs__tab[aria-selected="true"] .o-tabs__t b, .o-tabs__tab:hover .o-tabs__t b { color: var(--text-default); }
+.o-tabs__d { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur-slow) var(--ease-out); }
+.o-tabs__d > span { overflow: hidden; color: var(--text-muted); line-height: 1.55; }
+.o-tabs__d > span::before { content: ""; display: block; height: var(--space-2); }
+.o-tabs__tab[aria-selected="true"] .o-tabs__d { grid-template-rows: 1fr; }
+.o-tabs__stage { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
+.o-tabs__stage .o-phone { width: 19.5rem; }
+
+/* ── Воронка: этапы от интереса к записи ───────────── */
+.o-funnel { display: flex; flex-direction: column; gap: var(--space-5); margin: 0; padding: 0; list-style: none; }
+.o-funnel li { display: flex; flex-direction: column; gap: var(--space-2); }
+.o-funnel__h { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+.o-funnel__h b { font-weight: 600; }
+.o-funnel__h small { font: 500 var(--fs-label)/1.3 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); text-align: right; }
+.o-funnel__bar { height: 2.25rem; border-radius: var(--radius-sm); background: var(--surface-subtle); overflow: hidden; }
+.o-funnel__bar i { display: block; width: var(--w, 100%); height: 100%; border-radius: inherit; background: var(--text-subtle); transform-origin: 0 50%; }
+.o-funnel li:last-child .o-funnel__bar i { background: var(--text-default); }
+
+/* ── Кейс: снимок карточки, итог, три числа ────────── */
+.o-case { display: flex; flex-direction: column; padding: var(--space-3); border-radius: var(--radius-xl); background: var(--surface-frame); box-shadow: var(--shadow-card); }
+.o-case__shot { overflow: hidden; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); background: var(--surface-subtle); }
+.o-case__shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% var(--y, 10%); }
+.o-case__body { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-5) var(--space-3) var(--space-3); }
+.o-case__top { display: flex; align-items: baseline; gap: var(--space-3); }
+.o-case__top .o-num { font-size: var(--fs-h3); }
+.o-case__rows { margin: 0; display: flex; flex-direction: column; border-top: 1px solid var(--border-default); }
+.o-case__rows div { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-2-5) 0; border-bottom: 1px solid var(--border-default); font-size: var(--fs-sm); }
+.o-case__rows dt { color: var(--text-muted); }
+.o-case__rows dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ── Портрет сотрудника ────────────────────────────── */
+.o-person { display: flex; flex-direction: column; gap: var(--space-1); margin: 0; }
+.o-person img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; margin-bottom: var(--space-2); border-radius: var(--radius-lg); background: var(--blue-photo); }
+.o-person b { font-weight: 600; }
+.o-person span { font-size: var(--fs-caption); line-height: 1.35; color: var(--text-muted); }
+
+/* ── Конец страницы над картой подвала ─────────────── */
+.o-end { position: relative; z-index: 2; border-radius: 0 0 var(--radius-frame-dark) var(--radius-frame-dark); box-shadow: 0 1.5rem 3rem -1.5rem rgb(0 0 0 / .35); }
+
+/* ── Подвал: карта во всю ширину, тёмная карточка, логотип контуром (на главной — .fina) ── */
+.o-footer { position: relative; margin-top: calc(var(--radius-frame-dark) * -1); padding-top: var(--radius-frame-dark); background: var(--map-ground); overflow: hidden; }
+.o-footer::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 80% at 50% 0%, transparent 55%, rgb(0 0 0 / .08) 100%); }
+.o-footer__map { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.o-footer__in { position: relative; z-index: 1; width: var(--container); margin: 0 auto; padding-top: clamp(14rem, 26vw, 23rem); }
+.o-footer__card { padding: var(--space-4) var(--space-4) 0; border-radius: var(--radius-frame-dark) var(--radius-frame-dark) 0 0; background: var(--ink-800); box-shadow: 0 -1.5rem 4rem -1.5rem rgb(0 0 0 / .7); }
+.o-footer__cin { position: relative; overflow: hidden; padding: var(--space-12) var(--space-12) 0; border-radius: var(--radius-frame-dark-in) var(--radius-frame-dark-in) 0 0; background: var(--surface-inset); border: 1px solid var(--border-default); border-bottom: 0; box-shadow: var(--shadow-inset); }
+.o-footer__grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px); background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); }
+.o-footer__cin > :not(.o-footer__grid) { position: relative; }
+.o-footer__top { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: var(--space-8); font-size: var(--fs-sm); }
+.o-footer__brand img { display: block; height: 1.75rem; width: auto; }
+.o-footer__brand p { margin: var(--space-4) 0 0; max-width: 16rem; line-height: 1.5; color: var(--text-muted); }
+.o-footer h4 { margin: 0 0 var(--space-4); font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.o-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+.o-footer a { display: inline-flex; align-items: center; min-height: 1.5rem; color: var(--text-muted); text-decoration: none; transition: color var(--dur-fast) ease; }
+.o-footer a:hover { color: var(--text-default); }
+.o-footer__phone { font: 600 var(--fs-h6)/1.2 var(--font-head); color: var(--text-default) !important; white-space: nowrap; }
+.o-footer__bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4) var(--space-8); margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--border-strong); font-size: var(--fs-caption); color: var(--text-muted); }
+.o-footer__bot a { display: inline-flex; min-height: 1.5rem; }
+/* логотип контуром с «фонариком» */
+.o-olg { position: relative; display: block; width: 100%; height: auto; margin-top: var(--space-12); overflow: visible; touch-action: pan-y; color: var(--paper-0); }
+.o-olg path { fill: none; }
+.o-olg .b path { stroke: currentColor; stroke-width: calc(var(--u, 1) * 1px); }
+.o-olg .b { opacity: .22; }
+.o-olg .h path { stroke-width: calc(var(--u, 1) * 2.25px); } .o-olg .h path.t { stroke-width: calc(var(--u, 1) * 1px); }
+.o-olg .draw path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.o-olg.is-in .draw path { stroke-dashoffset: 0; transition: stroke-dashoffset 2.2s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--i, 0) * 90ms); }
+.o-olg .h { opacity: 0; transition: opacity .5s cubic-bezier(0, 0, .2, 1); } .o-olg.is-lit .h { opacity: 1; }
+
+/* ── Появление при прокрутке: элемент скрыт заранее, проявляется по классу ── */
+.o-js .o-rv { opacity: 0; translate: 0 .75rem; transition: opacity var(--dur-reveal) var(--ease-out), translate var(--dur-reveal) var(--ease-out); transition-delay: calc(var(--d, 0) * 80ms); }
+.o-js .o-rv.is-in { opacity: 1; translate: 0 0; }
+
+@media (max-width: 1000px) {
+  .o-tabs { grid-template-columns: 1fr; }
+  .o-tabs__stage { display: none; }
+  .o-tabs__tab[aria-selected="true"] + .o-tabs__stage { display: flex; padding: var(--space-2) 0 var(--space-6); }
+  .o-tabs__stage .o-phone { width: 17rem; }
+  .o-footer__top { grid-template-columns: 1fr 1fr; }
+  .o-footer__in { padding-top: 15rem; }
+  .o-footer__card { padding: var(--space-2-5) var(--space-2-5) 0; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+  .o-footer__cin { padding: var(--space-8) var(--space-5) 0; border-radius: var(--radius-inner-sm) var(--radius-inner-sm) 0 0; }
+}
+@media (max-width: 700px) {
+  .o-end { border-radius: 0 0 var(--radius-xl) var(--radius-xl); }
+  .o-footer { margin-top: calc(var(--radius-xl) * -1); padding-top: var(--radius-xl); }
+  .o-footer__in { width: 100%; }
+  .o-footer__brand { grid-column: 1 / -1; }
+  .o-logos { justify-content: center; gap: var(--space-6) var(--space-8); }
+  .o-logos img { max-width: 7rem; height: calc(var(--h, 2.25rem) * .8); }
+  .o-tabs__tab { padding: var(--space-4); }
+  .o-hand span { font-size: var(--fs-base); }
+  .o-footer__phone { font-size: var(--fs-lead); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .o-js .o-rv { opacity: 1; translate: none; }
+  .o-olg .draw path { stroke-dashoffset: 0; }
 }
 </style>
 <style>
@@ -667,27 +877,50 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
     <div class="o-faq" style="max-width: 44rem"><details class="o-faq__it" open><summary>Можно обратиться, если карточки ещё нет?<i></i></summary><p>Да. Поможем с&nbsp;созданием и&nbsp;оформлением карточки.</p></details><details class="o-faq__it"><summary>Работаете ли вы в&nbsp;нашем регионе?<i></i></summary><p>Открыт один вопрос за раз. Страницу из кода не прокручиваем.</p></details></div></div>
 
   <div class="ds-sub"><h3>Форма <span class="o-badge o-badge--success ds-st">в ките</span> <span class="ds-code">.o-form</span>, <span class="ds-code">.o-field</span>, <span class="ds-code">.o-check-field</span></h3>
-    <div class="ds-demo" data-theme="dark" style="background: var(--surface-page)"><form class="o-form" style="max-width: 24rem" onsubmit="return false"><input class="o-field" placeholder="Телефон" inputmode="tel"><input class="o-field o-field--error" placeholder="Поле с ошибкой"><label class="o-check-field"><input type="checkbox">Согласен на&nbsp;обработку персональных данных</label><button class="o-btn o-btn--primary o-btn--lg o-btn--block" type="submit">Получить бесплатный разбор</button></form></div>
+    <div class="ds-demo" data-theme="dark" style="background: var(--surface-page)"><form class="o-form" data-theme="light" style="max-width: 24rem" onsubmit="return false"><input class="o-field" placeholder="Телефон" inputmode="tel"><input class="o-field o-field--error" placeholder="Поле с ошибкой"><label class="o-check-field"><input type="checkbox">Согласен на&nbsp;обработку персональных данных</label><button class="o-btn o-btn--primary o-btn--lg o-btn--block" type="submit">Получить бесплатный разбор</button></form></div>
     <ul class="ds-rules"><li>Форма всегда на белой карточке, в том числе в тёмной секции. Поле 56, фокус — синей обводкой.</li><li>Галочку согласия заранее <b>не отмечаем</b>: отмеченная по умолчанию — риск по 152-ФЗ (юридически не проверено). На главной сейчас отмечена — это в списке блокеров запуска.</li></ul></div>
 
-  <div class="ds-sub"><h3>Шапка упрощённая <span class="o-badge o-badge--success ds-st">в ките</span> <span class="ds-code">.o-hdr</span></h3><p class="o-text">Шапка этой страницы — она и есть. 64 px, фон страницы, линия снизу. Над тёмной секцией темнеет сама. Полная шапка с меню пока в блоке главной.</p></div>
+  <div class="ds-sub"><h3>Шапка полная <span class="o-badge o-badge--success ds-st">в ките с 10.11</span> <span class="ds-code">.o-hdr</span> · меню телефона <span class="ds-code">.o-menu</span></h3>
+    <ul class="ds-rules"><li>64 px, фон страницы, линия снизу, липкая. Логотип слева, меню по центру, справа телефон (оранжевая пилюля) и Telegram (синий круг 40). Кнопки «Получить разбор» в шапке нет.</li>
+    <li>«Услуги» и «Кому помогаем» — выпадающие панели: наведение на десктопе, нажатие везде, Esc и клик мимо закрывают. Текущая страница — <span class="ds-code">aria-current="page"</span>.</li>
+    <li>До 1000 px: меню прячется в бургер, телефон — круг 40. Меню — лист под шапкой: площадки с иконками, ниши в две колонки, разделы, оранжевая кнопка разбора.</li>
+    <li>Темнеет, когда целиком над карточкой с <span class="ds-code">data-hdr-dark</span> (карточка подвала). Поведение — <span class="ds-code">site/ds/site.js</span>, разметка — <span class="ds-code">site/src/pages/_header.html</span>. Анимация логотипа пока только на главной.</li></ul></div>
+
+  <div class="ds-sub"><h3>Подвал <span class="o-badge o-badge--success ds-st">в ките с 10.11</span> <span class="ds-code">.o-footer</span> · логотип контуром <span class="ds-code">.o-olg</span></h3>
+    <ul class="ds-rules"><li>Живая карта «как в Яндексе» на canvas во всю ширину, поверх — тёмная двойная рамка, прижата к низу. Внизу логотип контуром с «фонариком». Колонки: бренд, Услуги, Кому помогаем, Агентство, Связаться; ниже реквизиты ИП.</li>
+    <li>Секция перед подвалом получает <span class="ds-code">.o-end</span> — нижние углы скругляются и карта видна под ними. Разметка — <span class="ds-code">site/src/pages/_footer.html</span>.</li></ul></div>
+
+  <div class="ds-sub"><h3>Новое со страницы «Яндекс Карты» <span class="o-badge o-badge--success ds-st">в ките с 10.11</span></h3>
+    <div class="ds-wrap"><table class="ds-tbl"><thead><tr><th>Компонент</th><th>Класс</th><th>Правило</th></tr></thead><tbody>
+      <tr><td>Хлебные крошки</td><td><span class="ds-code">.o-crumbs</span></td><td>Над заголовком первого экрана внутренних страниц. Последний пункт без ссылки</td></tr>
+      <tr><td>Ряд логотипов</td><td><span class="ds-code">.o-logos</span></td><td>Серые, высота у каждого своя через <span class="ds-code">--h</span> (как на главной). Только реальные клиенты</td></tr>
+      <tr><td>Подпись от руки</td><td><span class="ds-code">.o-hand</span></td><td>Стрелка упирается в кнопку или объект. На телефоне скрыть, если некуда указать</td></tr>
+      <tr><td>Окно браузера</td><td><span class="ds-code">.o-shot</span></td><td>Настоящий снимок экрана, адрес в строке. Подпись под снимком — чей он</td></tr>
+      <tr><td>Телефон</td><td><span class="ds-code">.o-phone</span></td><td>Как <span class="ds-code">.mph</span> на главной: титан, свой статус-бар, снимок на всю ширину. Несколько снимков — переключаются прозрачностью</td></tr>
+      <tr><td>Вкладки</td><td><span class="ds-code">.o-tabs</span></td><td>Список слева, макет справа. На телефоне — выпадающие пункты, макет под открытым, повторное нажатие закрывает</td></tr>
+      <tr><td>Воронка</td><td><span class="ds-code">.o-funnel</span></td><td>Этапы от интереса к записи и источник данных у каждого. Без цифр — подпись «длина полос условная». Последний этап светлее</td></tr>
+      <tr><td>Кейс</td><td><span class="ds-code">.o-case</span></td><td>Снимок карточки клиента, ниша и город, итог крупно, три числа, период. Цифры — только из кейсов</td></tr>
+      <tr><td>Портрет</td><td><span class="ds-code">.o-person</span></td><td>Фото на синем фоне, имя, роль. Сетка 3 × 2, на телефоне 2 колонки</td></tr>
+      <tr><td>Номер в строке</td><td><span class="ds-code">.o-check--n</span></td><td>Нейтральный кружок с цифрой — когда в списке не «входит», а порядок или перечень</td></tr>
+      <tr><td>Форма: кто ответит</td><td><span class="ds-code">.o-form__who</span>, <span class="ds-code">.o-form__tg</span></td><td>Фото, имя, «ответит за 5 минут», зелёная точка. В тёмной секции форме ставим <span class="ds-code">data-theme="light"</span></td></tr>
+      <tr><td>Появление</td><td><span class="ds-code">.o-rv</span></td><td>Скрыт заранее (класс <span class="ds-code">o-js</span> на html), проявляется при прокрутке, задержка <span class="ds-code">--d</span> × 80 мс</td></tr>
+    </tbody></table></div>
+    <div class="ds-demo"><ol class="o-crumbs"><li><a href="#top">Главная</a></li><li><a href="#top">Услуги</a></li><li aria-current="page">Яндекс Карты</li></ol>
+      <ol class="o-funnel" style="max-width: 28rem"><li><span class="o-funnel__h"><b>Увидели карточку</b><small>Статистика карт</small></span><span class="o-funnel__bar"><i style="--w:100%"></i></span></li><li><span class="o-funnel__h"><b>Нажали на телефон</b><small>Карты, Метрика</small></span><span class="o-funnel__bar"><i style="--w:55%"></i></span></li><li><span class="o-funnel__h"><b>Записались</b><small>Учёт бизнеса</small></span><span class="o-funnel__bar"><i style="--w:22%"></i></span></li></ol></div>
+  </div>
 </section>
 
 <!-- ═════════ ПОКА В БЛОКАХ ГЛАВНОЙ ═════════ -->
 <section class="ds-sec" id="legacy">
   <header><span class="o-label">10 · Кит</span><h2 class="o-h2">Пока в блоках главной</h2>
-  <p class="o-lead">Эти компоненты живут только в коде главной. При первом повторном использовании — перенести в кит, затем подключать. Копировать их CSS из <span class="ds-code">site/src/</span> напрямую нельзя.</p></header>
+  <p class="o-lead">Шапка, подвал с картой, контакты, телефон и портрет перенесены в кит 10.11 со страницей «Яндекс Карты». Остальное живёт только в коде главной. При первом повторном использовании — перенести в кит, затем подключать. Копировать их CSS из <span class="ds-code">site/src/</span> напрямую нельзя.</p></header>
   <div class="ds-wrap"><table class="ds-tbl"><thead><tr><th>Компонент</th><th>Классы</th><th>Правило</th></tr></thead><tbody>
-    <tr><td>Полная шапка</td><td><span class="ds-code">.hdr</span>, <span class="ds-code">.plate__nav</span></td><td>Выпадающие меню, бургер, анимация логотипа. Вынести первым делом при старте второй страницы</td></tr>
-    <tr><td>Подвал</td><td><span class="ds-code">.ft</span>, <span class="ds-code">.fina__card</span></td><td>Тёмная двойная рамка, логотип контуром с «фонариком». На телефоне — во всю ширину экрана</td></tr>
-    <tr><td>Контакты в шапке</td><td><span class="ds-code">.contact</span></td><td>Телефон оранжевый, Telegram — синий круг 40. Кнопки «Получить разбор» в шапке нет</td></tr>
     <tr><td>Логотип</td><td><span class="ds-code">.lg</span></td><td>∞ + utline, вектор в <span class="ds-code">assets/logo-vec/</span></td></tr>
     <tr><td>Выделенный тариф</td><td><span class="ds-code">.tf__card--pop</span></td><td>Синяя плашка «Выбирают чаще всего», рамка-градиент — единственное допустимое цветное свечение</td></tr>
     <tr><td>График</td><td><span class="ds-code">.ch7</span>, <span class="ds-code">.stg7</span></td><td>Линия или столбики на тёмной панели. Числа — примеры, подпись «расчётно» обязательна</td></tr>
-    <tr><td>Телефон</td><td><span class="ds-code">.mph</span></td><td>iPhone в титане, свой статус-бар. Всё в cqw — уменьшать только <span class="ds-code">transform: scale</span>, не <span class="ds-code">zoom</span> (Safari)</td></tr>
+    <tr><td>Телефон с анимацией</td><td><span class="ds-code">.mph</span></td><td>Статичный — в ките (<span class="ds-code">.o-phone</span>), прокрутка и подсветка — пока здесь. iPhone в титане, свой статус-бар. Всё в cqw — уменьшать только <span class="ds-code">transform: scale</span>, не <span class="ds-code">zoom</span> (Safari)</td></tr>
     <tr><td>Подсветка на снимке</td><td><span class="ds-code">.mph-spot</span></td><td>Показывает, что сделали. Рамка повторяет элемент</td></tr>
     <tr><td>Окно карт</td><td><span class="ds-code">.win</span>, <span class="ds-code">.demo-plane</span></td><td>Анимация поиска на первом экране. Окно постоянной высоты, в выдаче видно три места</td></tr>
-    <tr><td>Карта на canvas</td><td><span class="ds-code">.fina</span></td><td>Улицы сеткой, маршрут лесенкой по улицам, метка бизнеса оранжевая, конкуренты серые</td></tr>
     <tr><td>Переход волнами</td><td><span class="ds-code">.wavex</span>, <span class="ds-code">.wavel</span></td><td>4 слоя, монохром. Только на смене светлой и тёмной темы</td></tr>
     <tr><td>До / после</td><td><span class="ds-code">.rvs__cmp</span></td><td>Слайдер двух карточек</td></tr>
     <tr><td>Лента логотипов</td><td><span class="ds-code">.clients__band</span></td><td>Наклонная полоса, логотипы серые</td></tr>
@@ -718,6 +951,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
     <tr><td>Частые вопросы</td><td>FAQ, заголовок слева, вопросы от оси</td></tr>
     <tr><td>Главное действие и контакт</td><td>Тёмная рамка с белой формой</td></tr>
   </tbody></table></div>
+  <div class="ds-sub"><h3>Посадочная услуги — площадка или ниша <span class="o-badge ds-st">с 10.11</span></h3>
+    <p class="o-text">Образец — страница «Яндекс Карты» (<span class="ds-code">site/src/pages/prodvizhenie-na-yandex-kartah.html</span>). Порядок: крошки и первый экран (иконка площадки, H1, «Получить бесплатный разбор» + «Сколько стоит», подпись от руки, снимок карточки клиента) → логотипы → ситуации в лотке → вкладки с телефоном → аналитика: тёмная рамка с воронкой → кейсы → цена тарифа на странице → команда → FAQ → заявка → подвал. Цену показываем на странице: по Вордстату 10.11 про цену — 141 запрос в месяц из 1 306.</p></div>
   <ul class="ds-rules">
     <li><b>Смена темы:</b> светлая секция → волна → тёмная → волна → светлая. Монохром. Тёмных секций немного — это пауза, а не фон.</li>
     <li><b>Ось:</b> список в панели «Что в разборе» начинается там же, где описание следующей секции (Никита, 04.11).</li>
