@@ -3611,7 +3611,12 @@ html.rvs-lock { overflow: hidden; }
   .svc3[data-v="b"] .sv.is-act .sv__pic > .xph { width: 11.5rem !important; margin: 0 auto !important; justify-self: center; }
   .svc3[data-v="b"] .sv.is-act .sv__pic > .obs { display: flex !important; flex-direction: column; align-items: stretch !important; gap: .5rem !important; position: static !important; inset: auto !important; width: 100%; transform: none !important; }
   .svc3[data-v="b"] .sv.is-act .sv__pic .ob { max-width: none !important; }
-  #top .h1 { font-size: 2rem !important; }
+  #top .h1 { font-size: min(2rem, 8.2vw) !important; }
+  /* 10.11 (Никита): подпись со стрелкой на телефоне не показываем; иконки площадок — над заголовком, чтобы «на картах» не переносилось отдельно */
+  #top .hero-note { display: none !important; }
+  #top .h1 { position: relative; padding-top: 3.5rem; }
+  #top .h1 .platforms { position: absolute !important; top: 0; left: 50%; transform: translateX(-50%); display: flex !important; gap: .5rem; margin: 0 !important; }
+  #top .h1 .platform-icon { width: 2.5rem !important; height: 2.5rem !important; }
 
   /* «Выберите направление»: стрелка вниз, к карточкам */
   .nw-sub .nw-note { margin-left: 2.75rem !important; }
