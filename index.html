@@ -3598,8 +3598,9 @@ html.rvs-lock { overflow: hidden; }
   /* 10.11 (Никита: «таббар теряется, выдача сильно обрезается»): в выдаче видно три места, а не одно; вкладки — сеткой 2×2 над окном, все видны */
   .list { height: 20.5rem !important; }
   .demo-plane:not([data-phase="profile"]) .f-route { top: 25.75rem !important; }
-  #tabs { position: relative !important; top: auto !important; display: grid !important; grid-template-columns: 1fr 1fr; gap: .375rem !important; overflow: visible !important; -webkit-mask-image: none !important; mask-image: none !important; margin: 0 0 1rem !important; padding: .375rem !important; }
-  #tabs .tab { height: 2.75rem !important; font-size: .9375rem !important; justify-content: center; padding-inline: .5rem !important; }
+  /* 10.11 (Никита): вкладки — одной строкой над окном, уходят за правый край экрана (листаются), панель контрастна к фону страницы */
+  #tabs { position: relative !important; top: auto !important; left: auto !important; right: auto !important; display: flex !important; flex-wrap: nowrap; gap: .25rem !important; width: auto !important; max-width: none !important; margin: 0 calc(50% - 50vw) 1rem 0 !important; padding: .3125rem !important; overflow-x: auto !important; -webkit-mask-image: none !important; mask-image: none !important; border-radius: 99px 0 0 99px !important; background: #fff !important; box-shadow: 0 0 0 1px rgb(15 21 29 / .1), 0 .5rem 1.25rem -.5rem rgb(15 21 29 / .18) !important; scrollbar-width: none; }
+  #tabs > .tab { flex: none; height: 2.5rem !important; font-size: .9375rem !important; padding-inline: 1rem !important; background: transparent !important; color: #0f151d !important; }
   #tabs .tab-ind { display: none !important; }
   #tabs .tab.on { background: #0f151d !important; color: #fff !important; }
 
@@ -3615,7 +3616,16 @@ html.rvs-lock { overflow: hidden; }
   .svc3[data-v="b"] .sv.is-act .sv__pic, .svc3[data-v="b"] .sv.is-act .sv__pic:has(.xph) { display: grid !important; position: relative !important; inset: auto !important; height: auto !important; min-height: 15rem; margin: 1rem -2.5rem 0 0; padding: 1rem !important; opacity: 1 !important; clip-path: none !important; transform: none !important; border-radius: 1.25rem; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06); overflow: hidden; }
   .svc3[data-v="b"] .sv.is-act .sv__pic > :not(.xw) { transform: none !important; }
   .svc3[data-v="b"] .sv.is-act .sv__pic:has(.xph) { display: flex !important; flex-direction: column; align-items: center; gap: 1rem; container-type: normal; padding: 1.25rem 1rem !important; }
-  .svc3[data-v="b"] .sv.is-act .sv__pic > .xph { width: 11.5rem !important; margin: 0 auto !important; justify-self: center; }
+  .svc3[data-v="b"] .sv.is-act .sv__pic > .xph { width: 19.5rem !important; zoom: .62; margin: 0 auto !important; justify-self: center; }   /* телефон в настольном размере, уменьшен целиком — подписи внутри не раздуваются */
+  .svc3[data-v="b"] .sv h3::before { left: -1.5rem !important; }   /* точки — ровно на линии (у списка на телефоне отступ 1,5rem) */
+  /* «Как начинаем»: шкала мягче и медленнее */
+  .lt.is-in .rm6[data-v="c"] .rm6__card.is-vis .rmc__bar { transition: clip-path 1.2s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--d) * 1.4 + .2s) !important; }
+  .lt.is-in .rm6[data-v="c"] .rm6__card.is-vis .rmc__bar.m b { transition: transform .8s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--d) * 1.4 + .6s), opacity .6s ease calc(var(--d) * 1.4 + .6s) !important; }
+  /* кнопки: текст в одну строку, поле внутри меньше поля карточки */
+  .btn6 { height: 3.5rem !important; padding: 0 1.25rem !important; font-size: 1rem !important; white-space: nowrap !important; gap: .5rem; }
+  .cta8__btn { font-size: .9375rem !important; padding: 0 1rem !important; white-space: nowrap; }
+  .cta8__form { padding: 1.5rem !important; }
+  .cta8__box .cx__in { padding-left: .75rem !important; padding-right: .75rem !important; }
   .svc3[data-v="b"] .sv.is-act .sv__pic > .obs { display: flex !important; flex-direction: column; align-items: stretch !important; gap: .5rem !important; position: static !important; inset: auto !important; width: 100%; transform: none !important; }
   .svc3[data-v="b"] .sv.is-act .sv__pic .ob { max-width: none !important; }
   #top .h1 { font-size: min(2rem, 8.2vw) !important; }
