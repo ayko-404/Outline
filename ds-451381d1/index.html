@@ -566,6 +566,86 @@ html.o-lock { overflow: hidden; }
   .o-js .o-rv { opacity: 1; translate: none; }
   .o-olg .draw path { stroke-dashoffset: 0; }
 }
+
+/* ════════ Блоки главной, перенесённые в кит со второй версией страницы «Яндекс Карты» (10.11.2026) ════════ */
+
+/* ── Обложка по центру (на главной — .hero): иконки площадок в строке заголовка, рукописное слово, кнопки по центру ── */
+.o-hero { position: relative; padding-block: var(--space-10) var(--space-16); text-align: center; }
+.o-hero__in { position: relative; max-width: 60rem; margin: 0 auto; }
+.o-hero .o-crumbs { justify-content: center; }
+.o-hero .o-h1 { position: relative; margin: 0 auto; max-width: 52rem; line-height: 1.04; }
+.o-hero .o-lead { max-width: 39rem; margin: var(--space-6) auto 0; }
+.o-hero__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-10); }
+.o-hero .o-hand { justify-content: center; margin: var(--space-4) 0 0 var(--space-28); text-align: left; }
+.o-hero__pf { display: inline-flex; gap: .1em; vertical-align: -.07em; margin-inline: .08em; }
+.o-hero__pf img { display: block; width: .84em; height: .84em; border-radius: .22em; background: var(--paper-0); box-shadow: 0 0 0 1px rgb(32 32 32 / .06), 0 .025em .05em rgb(32 32 32 / .04); }
+/* рукописное слово с росчерком снизу */
+.o-ink { position: relative; display: inline-block; white-space: nowrap; }
+.o-ink svg { position: absolute; left: -2%; bottom: -.1em; width: 104%; height: .26em; overflow: visible; }
+.o-ink path { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.o-js .o-ink.is-in path, .o-ink.is-in path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.1s var(--ease-out) .5s; }
+
+/* ── Летающие карточки вокруг обложки (на главной — .flo): макеты элементов карт, параллакс от мыши ── */
+.o-flo { position: absolute; z-index: 2; width: var(--w, 13rem); pointer-events: none; transform: translate3d(var(--mx, 0), var(--my, 0), 0); transition: transform .9s cubic-bezier(.22, .8, .24, 1); }
+.o-flo__bob { animation: o-flo-bob var(--t, 7s) ease-in-out infinite; animation-delay: var(--dl, 0s); }
+@keyframes o-flo-bob { 50% { transform: translateY(-6px); } }
+.o-flo__card { pointer-events: auto; padding: 6px; border-radius: 24px; background: #fff; border: 1px solid rgb(0 0 0 / .05); box-shadow: 0 8px 24px -8px rgb(0 0 0 / .25); transform: rotate(var(--r, 0deg)); transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), box-shadow .35s; text-align: left; color: #0f151d; font-size: .8125rem; line-height: 1.35; }
+.o-flo__card:hover { transform: rotate(0deg) translateY(-6px) scale(1.06); box-shadow: 0 24px 48px -12px rgb(0 0 0 / .28); }
+.o-flo__in { overflow: hidden; border-radius: 18px; background: #fff; }
+.o-flo b { font-weight: 600; } .o-flo small { color: rgb(15 21 29 / .55); }
+.o-flo__pic { display: block; height: 7.25rem; overflow: hidden; border-radius: 18px; } .o-flo__pic img, .o-flo__pic svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.o-flo__body { display: flex; flex-direction: column; gap: .1875rem; padding: .625rem .75rem .75rem; } .o-flo__body b { font-size: .9375rem; }
+.o-flo__star { color: #f5a524; font-style: normal; }
+.o-flo__ok { display: inline-flex; align-items: center; gap: .3125rem; color: #15803d; } .o-flo__ok::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: #22c55e; }
+.o-flo__rev { display: flex; flex-direction: column; gap: .4375rem; padding: .75rem .875rem; } .o-flo__rev p { margin: 0; line-height: 1.4; }
+.o-flo__who { display: flex; align-items: center; gap: .5rem; }
+.o-flo__av { display: grid; place-items: center; width: 1.625rem; height: 1.625rem; border-radius: 50%; background: #eef3fd; color: #1a5fd0; font-size: .6875rem; font-weight: 600; }
+.o-flo__stars { margin-left: auto; color: #f5a524; letter-spacing: .05em; }
+.o-flo__ans { align-self: flex-start; padding: .1875rem .5rem; border-radius: 99px; background: #fff3ec; color: #c2410c; font-size: .75rem; font-weight: 600; }
+.o-flo__route { display: flex; align-items: center; gap: .5rem; padding: .625rem .75rem; }
+.o-flo__route i { display: grid; place-items: center; flex: none; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: #ff6414; color: #fff; } .o-flo__route i svg { width: .875rem; height: .875rem; }
+.o-flo__serp { display: flex; flex-direction: column; gap: .3125rem; padding: .625rem; font-size: .75rem; }
+.o-flo__q { display: flex; align-items: center; gap: .375rem; height: 1.875rem; padding: 0 .625rem; border-radius: .625rem; background: #f3f6fb; color: rgb(15 21 29 / .7); } .o-flo__q svg { width: .75rem; height: .75rem; }
+.o-flo__r { display: flex; align-items: center; gap: .5rem; height: 2.125rem; padding: 0 .5rem; border-radius: .625rem; }
+.o-flo__r span { width: 1.125rem; text-align: center; color: rgb(15 21 29 / .45); font-variant-numeric: tabular-nums; }
+.o-flo__r u { height: .4375rem; border-radius: 99px; background: #e4e9f2; }
+.o-flo__r.is-me { background: #fff6f0; box-shadow: inset 0 0 0 1.5px #ffc7a3; } .o-flo__r.is-me span { color: #c2410c; font-weight: 700; } .o-flo__r.is-me em { margin-left: auto; font-style: normal; font-weight: 600; color: #f5a524; }
+
+/* ── Наклонная лента логотипов (на главной — .clients__band): бежит, тянется мышью и пальцем ── */
+.o-band-sec { overflow: hidden; padding-block: var(--space-16) var(--space-22); }
+.o-band-sec .o-label { text-align: center; }
+.o-band { position: relative; margin: var(--space-10) -5% 0; rotate: -3deg; background: var(--paper-100); border-block: 1px solid var(--border-default); }
+.o-band__mq { overflow: hidden; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
+.o-band__mq.is-drag { cursor: grabbing; }
+.o-band__track { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; will-change: transform; }
+.o-band__track li { flex: none; display: grid; place-items: center; width: 15rem; height: 7rem; }
+.o-band__track img { display: block; max-width: 10rem; height: var(--h, 2.25rem); object-fit: contain; pointer-events: none; filter: grayscale(1) contrast(1.15); opacity: .55; mix-blend-mode: multiply; transition: filter .45s, opacity .45s; }
+.o-band__mq:not(.is-drag) li:hover img { filter: none; opacity: 1; }
+.o-band__wm { font: 600 var(--fs-h6)/1 var(--font-body); letter-spacing: -.03em; white-space: nowrap; color: var(--text-default); opacity: .5; }
+.o-band__hint { position: absolute; right: 8%; top: -2.75rem; display: flex; align-items: center; gap: var(--space-1-5); rotate: 3deg; font: 500 var(--fs-h6)/1 var(--font-script); color: var(--text-muted); pointer-events: none; transition: opacity .6s; }
+.o-band__hint svg { width: 2.75rem; height: 1rem; }
+.o-band-sec.is-touched .o-band__hint { opacity: 0; }
+
+/* ── Переход волнами между светлой и тёмной секцией (на главной — .wavex, .wavel): 4 слоя, монохром ── */
+.o-wave { position: relative; height: 34vh; overflow: hidden; background: var(--paper-50); }
+.o-wave--up { background: var(--ink-900); }
+.o-wave svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.o-section[data-theme="dark"] { background: var(--ink-900); }
+
+@media (max-width: 1100px) { .o-flo { display: none; } }
+@media (max-width: 700px) {
+  .o-hero { padding-block: var(--space-4) var(--space-12); }
+  .o-hero .o-h1 { padding-top: 5.5rem; }
+  .o-hero__pf { position: absolute; left: 50%; top: 0; translate: -50% 0; gap: var(--space-3); }
+  .o-hero__pf img { width: 4.25rem; height: 4.25rem; border-radius: 1.25rem; }
+  .o-hero__cta .o-btn { width: 100%; }
+  .o-hero .o-hand { display: none; }
+  .o-band-sec { padding-block: var(--space-12); }
+  .o-band__track li { width: 11rem; height: 5.5rem; }
+  .o-band__hint { display: none; }
+  .o-wave { height: 24vh; }
+}
+@media (prefers-reduced-motion: reduce) { .o-flo { transition: none; } .o-flo__bob { animation: none; } .o-ink path { stroke-dashoffset: 0; } }
 </style>
 <style>
 /* ── раскладка документа (только токены) ── */
@@ -903,6 +983,10 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
       <tr><td>Портрет</td><td><span class="ds-code">.o-person</span></td><td>Фото на синем фоне, имя, роль. Сетка 3 × 2, на телефоне 2 колонки</td></tr>
       <tr><td>Номер в строке</td><td><span class="ds-code">.o-check--n</span></td><td>Нейтральный кружок с цифрой — когда в списке не «входит», а порядок или перечень</td></tr>
       <tr><td>Форма: кто ответит</td><td><span class="ds-code">.o-form__who</span>, <span class="ds-code">.o-form__tg</span></td><td>Фото, имя, «ответит за 5 минут», зелёная точка. В тёмной секции форме ставим <span class="ds-code">data-theme="light"</span></td></tr>
+      <tr><td>Обложка по центру</td><td><span class="ds-code">.o-hero</span>, <span class="ds-code">.o-ink</span></td><td>Как обложка главной: иконка площадки в строке H1, рукописное слово с росчерком, кнопки по центру</td></tr>
+      <tr><td>Летающие карточки</td><td><span class="ds-code">.o-flo</span></td><td>Макеты элементов карт вокруг обложки, параллакс от мыши. До 1100 px скрыты</td></tr>
+      <tr><td>Лента логотипов</td><td><span class="ds-code">.o-band</span></td><td>Наклонная, бежит и тянется — как на главной</td></tr>
+      <tr><td>Волны</td><td><span class="ds-code">.o-wave</span>, <span class="ds-code">--up</span></td><td>Только на смене светлой и тёмной темы, монохром</td></tr>
       <tr><td>Появление</td><td><span class="ds-code">.o-rv</span></td><td>Скрыт заранее (класс <span class="ds-code">o-js</span> на html), проявляется при прокрутке, задержка <span class="ds-code">--d</span> × 80 мс</td></tr>
     </tbody></table></div>
     <div class="ds-demo"><ol class="o-crumbs"><li><a href="#top">Главная</a></li><li><a href="#top">Услуги</a></li><li aria-current="page">Яндекс Карты</li></ol>
@@ -921,9 +1005,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
     <tr><td>Телефон с анимацией</td><td><span class="ds-code">.mph</span></td><td>Статичный — в ките (<span class="ds-code">.o-phone</span>), прокрутка и подсветка — пока здесь. iPhone в титане, свой статус-бар. Всё в cqw — уменьшать только <span class="ds-code">transform: scale</span>, не <span class="ds-code">zoom</span> (Safari)</td></tr>
     <tr><td>Подсветка на снимке</td><td><span class="ds-code">.mph-spot</span></td><td>Показывает, что сделали. Рамка повторяет элемент</td></tr>
     <tr><td>Окно карт</td><td><span class="ds-code">.win</span>, <span class="ds-code">.demo-plane</span></td><td>Анимация поиска на первом экране. Окно постоянной высоты, в выдаче видно три места</td></tr>
-    <tr><td>Переход волнами</td><td><span class="ds-code">.wavex</span>, <span class="ds-code">.wavel</span></td><td>4 слоя, монохром. Только на смене светлой и тёмной темы</td></tr>
     <tr><td>До / после</td><td><span class="ds-code">.rvs__cmp</span></td><td>Слайдер двух карточек</td></tr>
-    <tr><td>Лента логотипов</td><td><span class="ds-code">.clients__band</span></td><td>Наклонная полоса, логотипы серые</td></tr>
     <tr><td>Портрет команды</td><td><span class="ds-code">.tm__card</span></td><td>Синий фон, сканирующая полоса при наведении</td></tr>
     <tr><td>Карточка разбора</td><td><span class="ds-code">.cx__rep</span></td><td>Наклон −5°, иконка Яндекс Карт, кольцо без градиента</td></tr>
     <tr><td>Подпись от руки</td><td><span class="ds-code">.annotation</span>, <span class="ds-code">.note7</span></td><td>Стрелка упирается в объект. Нарисована от руки, неровная</td></tr>
