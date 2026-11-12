@@ -2393,6 +2393,13 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 @media (max-width: 1000px) { .tf { padding-block: 0; } .tf .tf__card--pop { margin-block: 0 !important; } .tf { grid-template-columns: 1fr; } }
 .tf__sub { margin: -.25rem 0 0; font-size: .875rem; color: var(--text-muted, rgb(15 21 29 / .6)); }
 .tf__card--pop .tf__sub { color: rgb(255 255 255 / .72); }
+/* 12.11 (Никита): иконки площадок в тарифах крупнее */
+.tf .tf__pf { height: 3.25rem; }
+.tf .tf__pf span { width: 3.25rem; height: 3.25rem; border-radius: 1rem; box-shadow: 0 0 0 3px #fff, 0 .25rem .75rem -.25rem rgb(15 21 29 / .25); }
+.tf .tf__pf span + span { margin-left: -.75rem; }
+.tf .tf__pf img, .tf .tf__pf svg { width: 70%; height: 70%; }
+.tf .tf__pf .is-2gis img { width: 100%; height: 100%; }
+@media (max-width: 760px) { .tf .tf__pf, .tf .tf__pf span { height: 2.75rem; } .tf .tf__pf span { width: 2.75rem; border-radius: .875rem; } }
 </style>
 <style>
 /* Блок 10 · Команда (28.10.2026). Тексты — Иван (content.md); навыки — по его описаниям ролей + один шуточный (образец, согласовать с Иваном).
