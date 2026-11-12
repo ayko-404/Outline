@@ -4732,16 +4732,16 @@ html.p-lock { overflow: hidden; }
 .iv[data-ivs="k1"] .iq-list li::before { counter-increment: iqn; content: "0" counter(iqn); position: absolute; top: 1.25rem; left: 1.25rem; font: 500 .6875rem/1 var(--font-mono, "Geist Mono", monospace); color: rgb(255 255 255 / .45); }
 @media (hover: hover) and (pointer: fine) { .iv[data-ivs="k1"] .iq-list li:hover { translate: 0 -.25rem; background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 138 77 / .35); } }
 /* K2 — веер: карточки внахлёст под разными углами, на наведении выпрямляются и выходят вперёд */
-.iv[data-ivs="k2"] .iq-list { gap: 0; padding: .75rem .5rem 1rem; }
-.iv[data-ivs="k2"] .iq-list li { background: #2b2f37; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09), 0 1.25rem 2rem -1rem rgb(0 0 0 / .7); }
-.iv[data-ivs="k2"] .iq-list li:nth-child(1) { rotate: -4deg; z-index: 1; }
-.iv[data-ivs="k2"] .iq-list li:nth-child(2) { rotate: 1.5deg; translate: 0 .5rem; margin-left: -.75rem; z-index: 2; }
-.iv[data-ivs="k2"] .iq-list li:nth-child(3) { rotate: 5deg; margin-left: -.75rem; z-index: 1; }
-.iv[data-ivs="k2"] .iq-list i { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: .75rem; background: rgb(255 100 20 / .16); color: #ff8a4d; }
-.iv[data-ivs="k2"] .iq-list svg { width: 1.125rem; height: 1.125rem; }
-.iv[data-ivs="k2"] .iq-list li::before { counter-increment: iqn; content: "0" counter(iqn); position: absolute; top: .875rem; right: 1rem; font: 600 1.75rem/1 var(--f-head, var(--font-head)); letter-spacing: -.03em; color: rgb(255 255 255 / .1); }
-@media (hover: hover) and (pointer: fine) { .iv[data-ivs="k2"] .iq-list li:hover { rotate: 0deg; translate: 0 -.5rem; z-index: 3; box-shadow: inset 0 0 0 1px rgb(255 138 77 / .4), 0 1.5rem 2.5rem -1rem rgb(0 0 0 / .8); } }
-@media (max-width: 700px) { .iv[data-ivs="k2"] .iq-list li { rotate: 0deg !important; translate: 0 !important; margin-left: 0 !important; } }
+.iv[data-ivs^="k2"] .iq-list { gap: 0; padding: .75rem .5rem 1rem; }
+.iv[data-ivs^="k2"] .iq-list li { background: #2b2f37; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09), 0 1.25rem 2rem -1rem rgb(0 0 0 / .7); }
+.iv[data-ivs^="k2"] .iq-list li:nth-child(1) { rotate: -4deg; z-index: 1; }
+.iv[data-ivs^="k2"] .iq-list li:nth-child(2) { rotate: 1.5deg; translate: 0 .5rem; margin-left: -.75rem; z-index: 2; }
+.iv[data-ivs^="k2"] .iq-list li:nth-child(3) { rotate: 5deg; margin-left: -.75rem; z-index: 1; }
+.iv[data-ivs^="k2"] .iq-list i { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: .75rem; background: rgb(255 100 20 / .16); color: #ff8a4d; }
+.iv[data-ivs^="k2"] .iq-list svg { width: 1.125rem; height: 1.125rem; }
+.iv[data-ivs^="k2"] .iq-list li::before { counter-increment: iqn; content: "0" counter(iqn); position: absolute; top: .875rem; right: 1rem; font: 600 1.75rem/1 var(--f-head, var(--font-head)); letter-spacing: -.03em; color: rgb(255 255 255 / .1); }
+@media (hover: hover) and (pointer: fine) { .iv[data-ivs^="k2"] .iq-list li:hover { rotate: 0deg; translate: 0 -.5rem; z-index: 3; box-shadow: inset 0 0 0 1px rgb(255 138 77 / .4), 0 1.5rem 2.5rem -1rem rgb(0 0 0 / .8); } }
+@media (max-width: 700px) { .iv[data-ivs^="k2"] .iq-list li { rotate: 0deg !important; translate: 0 !important; margin-left: 0 !important; } }
 /* K3 — статус, как в карточке на картах: «Скоро открытие» · «Открыто» · «Сеть филиалов»; иконка справа */
 .iv[data-ivs="k3"] .iq-list li { padding-top: 3rem; }
 .iv[data-ivs="k3"] .iq-list li::before { position: absolute; top: .875rem; left: .875rem; display: inline-flex; align-items: center; gap: .375rem; padding: .3125rem .625rem .3125rem .5rem; border-radius: 99px; font: 500 .75rem/1 var(--f-body, "Geist", sans-serif); background: rgb(var(--st) / .14); color: rgb(var(--st)); }
@@ -4814,6 +4814,14 @@ html.p-lock { overflow: hidden; }
 .p-st__form { display: flex; flex-direction: column; gap: .625rem; } .p-st__form small { text-align: center; font-size: .8125rem; color: var(--text-muted); }
 .p-st__field { display: flex; align-items: center; height: 3.5rem; padding: 0 1.25rem; border-radius: 1rem; background: #f2f4f7; box-shadow: inset 0 0 0 1px rgb(15 21 29 / .06); color: var(--text-muted); text-decoration: none; font-size: 1rem; }
 @media (max-width: 800px) { .p-st__steps, .p-st__b, .p-st__card { grid-template-columns: 1fr; } .p-st__steps::before { display: none; } }
+/* 12.11 · «веер»: новые наборы иконок — витрины (k2s) и мини-карты (k2m); в остальных вариантах — прежние линейные */
+.iv .iq-list i svg.ic-s, .iv .iq-list i svg.ic-m { display: none; fill: none; stroke: none; }
+.iv[data-ivs="k2s"] .iq-list i > svg:first-child, .iv[data-ivs="k2m"] .iq-list i > svg:first-child { display: none; }
+.iv[data-ivs="k2s"] .iq-list i { width: 3.5rem; height: 3.5rem; border-radius: 1.125rem; background: linear-gradient(150deg, #3a2c25, #262a31 70%); box-shadow: inset 0 0 0 1px rgb(255 138 77 / .22), 0 .5rem 1rem -.5rem rgb(0 0 0 / .6); }
+.iv[data-ivs="k2s"] .iq-list i svg.ic-s { display: block; width: 2.5rem; height: 2.5rem; }
+.iv[data-ivs="k2m"] .iq-list i { width: 5.5rem; height: 3.85rem; border-radius: .875rem; background: none; overflow: hidden; box-shadow: 0 .5rem 1rem -.5rem rgb(0 0 0 / .6); }
+.iv[data-ivs="k2m"] .iq-list i svg.ic-m { display: block; width: 100%; height: 100%; }
+.nw__head--sub { margin-top: clamp(4rem, 8vw, 7rem); }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
