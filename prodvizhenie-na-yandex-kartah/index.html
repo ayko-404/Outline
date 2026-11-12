@@ -4360,6 +4360,24 @@ html.o-lock { overflow: hidden; }
 #kak-nachinaem { display: none !important; }
 #uslugi { position: relative; z-index: 1; margin-top: -2px !important; }
 @media (max-width: 760px) { #wavel { height: 30vh !important; } }
+
+/* ── Обложка: появление (12.11.2026) — телефон поднимается и выпрямляется, следом метки, в конце стрелка дорисовывается и проявляется подпись ── */
+@media (prefers-reduced-motion: no-preference) {
+  .o-js .p-cva__dev > .csv__dev { opacity: 0; transform: translateY(2.5rem) rotate(5deg) scale(.94); transform-origin: 50% 100%;
+    transition: opacity .6s var(--ease-out) .15s, transform 1.1s cubic-bezier(.22, 1, .36, 1) .15s; }
+  .o-js .p-cva__vis.is-in .p-cva__dev > .csv__dev { opacity: 1; transform: none; }
+  .o-js .p-cva__dev .mph__view img { transform: translateY(6%); transition: transform 1.6s cubic-bezier(.22, 1, .36, 1) .5s; }
+  .o-js .p-cva__dev .mph__view .p-ph { transform: translateY(6%) scale(1.3); }
+  .o-js .p-cva__vis.is-in .p-cva__dev .mph__view .p-sh { transform: none; }
+  .o-js .p-cva__vis.is-in .p-cva__dev .mph__view .p-ph { transform: scale(1.3); }
+  .o-js .p-tag { transition-delay: calc(var(--d) * 200ms + 900ms) !important; }
+  .o-js .p-tag .p-ok { transition-delay: calc(var(--d) * 200ms + 1150ms) !important; }
+  .o-js .p-cva__note span { opacity: 0; translate: 0 .5rem; transition: opacity .6s var(--ease-out) 2.3s, translate .6s var(--ease-out) 2.3s; }
+  .o-js .p-cva__note svg path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .o-js .p-cva__vis.is-in .p-cva__note span { opacity: 1; translate: 0 0; }
+  .o-js .p-cva__vis.is-in .p-cva__note svg path { stroke-dashoffset: 0; transition: stroke-dashoffset .9s var(--ease-out) 1.9s; }
+  .o-js .p-cva__vis.is-in .p-cva__note svg path + path { transition-delay: 2.6s; }
+}
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -4409,7 +4427,7 @@ html.o-lock { overflow: hidden; }
         <span class="p-tag" style="--y:45%; --d:2"><i class="p-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Кнопка на&nbsp;сайт</span>
         <span class="p-tag" style="--y:65%; --d:3"><i class="p-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Товары с&nbsp;ценами в&nbsp;сторис</span>
       </div>
-      <p class="p-cva__note"><svg viewBox="0 0 120 70" aria-hidden="true"><path d="M6 60c14 4 34 2 52-8 18-10 30-24 40-40"/><path d="M84 13c6-2 11-3 16-5 0 6-1 12-2 17"/><path d="M86 15c5-2 9-3 12-4"/></svg><span>карточка нашего клиента&nbsp;—<br>магазин ароматов Ucandles</span></p>
+      <p class="p-cva__note"><svg viewBox="0 0 120 70" aria-hidden="true"><path pathLength="1" d="M6 60c14 4 34 2 52-8 18-10 30-24 40-40"/><path pathLength="1" d="M84 13c6-2 11-3 16-5 0 6-1 12-2 17"/><path pathLength="1" d="M86 15c5-2 9-3 12-4"/></svg><span>карточка нашего клиента&nbsp;—<br>магазин ароматов Ucandles</span></p>
     </div>
   </div>
 </section>
