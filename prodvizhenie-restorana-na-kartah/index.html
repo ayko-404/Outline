@@ -2961,6 +2961,7 @@ html.rvs-lock { overflow: hidden; }
 
 .rvf__main { display: flex; flex-direction: column; min-width: 0; padding-top: .5rem; }
 .rvf__top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 23rem); gap: 2rem; flex: 1; }
+.rvf__top:not(:has(.rvf__cmpw)) { grid-template-columns: minmax(0, 1fr); }
 .rvf__txt { display: flex; flex-direction: column; min-width: 0; }
 .rvf__top > .is-out { opacity: 0; transition: opacity 120ms ease; }
 .rvf__top > .is-in { animation: rvf-in 420ms cubic-bezier(0.23, 1, 0.32, 1) both; }
@@ -3764,6 +3765,16 @@ html.mn-lock { overflow: hidden; }
 @media (max-width: 760px) { .mn-dd { display: none; } }
 @media (min-width: 761px) { .mn-sheet { display: none; } }
 @media (prefers-reduced-motion: reduce) { .mn-dd, .mn-sheet { transition: none; } }
+</style>
+<style>
+/* 12.11 (Никита): ссылки на страницы, которых ещё нет, — тултип «Скоро» на наведении, переход не происходит */
+.soon-tip { position: fixed; z-index: 2000; left: 0; top: 0; padding: .375rem .625rem; border-radius: .5rem; background: #0f151d; color: #fff;
+  font: 500 .75rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; pointer-events: none;
+  opacity: 0; translate: -50% calc(-100% - 2px); scale: .96; transition: opacity .16s ease, scale .16s ease, translate .16s ease; box-shadow: 0 .5rem 1rem -.5rem rgb(0 0 0 / .5); }
+.soon-tip::after { content: ""; position: absolute; left: 50%; bottom: -4px; width: 8px; height: 8px; background: inherit; translate: -50% 0; rotate: 45deg; border-radius: 1px; }
+.soon-tip.on { opacity: 1; scale: 1; translate: -50% calc(-100% - 8px); }
+a.is-soon { cursor: default; }
+@media (prefers-reduced-motion: reduce) { .soon-tip { transition: none; } }
 </style>
 
 <script>document.documentElement.classList.add('o-js')</script><style>/* ── Сетка ─────────────────────────────────────────── */
@@ -5568,10 +5579,11 @@ html.p-lock { overflow: hidden; }
   const DID = {"marat": ["Оформили карточку и меню с ценами", "Обновили фото зала и напитков", "Отвечаем на каждый отзыв"], "viktoria": ["Заполнили услуги и программы", "Добавили фото групп и площадки", "Собираем отзывы родителей"], "sergey": ["Разложили услуги и модели по разделам", "Запустили рекламу на картах", "Отвечаем на отзывы"], "alena": ["Оформили курсы с ценами", "Обновили фото классов", "Собираем отзывы учеников"], "artem": ["Привели все точки к единому виду", "Обновили часы работы и цены", "Отвечаем на отзывы по всем точкам"], "roman": ["Оформили каталог и бренды", "Обновили фото зала и витрин", "Запустили рекламу в радиусе 5 км"]};
   const CK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const did = r => { const list = r.did || DID[r.id]; if (!list) return '';
-    return `<div class="rvf__did"><small>Что сделали${r.did ? '' : '<em>пример</em>'}</small><ul>${list.map(t => `<li><i>${CK}</i>${t}</li>`).join('')}</ul></div>`; };
+    return `<div class="rvf__did"><small>Что сделали</small><ul>${list.map(t => `<li><i>${CK}</i>${t}</li>`).join('')}</ul></div>`; };
   const txt = r => `<div class="rvf__txt"><div class="rvf__who"><img src="${r.img}" alt=""><span><b>${r.name}</b><small>${r.biz}</small></span></div>
     <h3 class="rvf__h">${r.res}</h3>${did(r)}<a class="rvs__cta" href="#razbor">Хочу так же ${ARR}</a></div>`;
-  const cmp = r => `<div class="rvf__cmpw"><small>Карточка в Яндекс Картах${r.before ? "" : " · пример"}</small><div class="rvs__cmp" role="slider" aria-label="Было и стало" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+  /* 12.11 (Никита): шторку «Было | Стало» показываем, только когда у отзыва есть настоящие скриншоты до/после (r.before, r.after) */
+  const cmp = r => !(r.before && r.after) ? '' : `<div class="rvf__cmpw"><small>Карточка в Яндекс Картах${r.before ? "" : " · пример"}</small><div class="rvs__cmp" role="slider" aria-label="Было и стало" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
     <div class="is-before">${side(r, 0)}</div><div class="is-after">${side(r, 1)}</div><span class="rvs__lbl l">Было</span><span class="rvs__lbl r">Стало</span><span class="rvs__knob"></span></div></div>`;
   const vid = r => `<img src="${r.img}" alt=""><button type="button" class="rvf__play" aria-label="Смотреть видеоотзыв: ${r.name}">${PLAY}</button>${r.dur ? `<span class="rvf__dur">${r.dur}</span>` : ''}`;
 
@@ -5585,7 +5597,7 @@ html.p-lock { overflow: hidden; }
 
   /* шторка: тянуть мышью или пальцем, стрелки на клавиатуре; при смене отзыва — короткий проход, чтобы было видно, что её можно двигать */
   const bindCmp = () => {
-    const c = box.querySelector('.rvs__cmp'); let drag = false;
+    const c = box.querySelector('.rvs__cmp'); if (!c) return; let drag = false;
     const set = p => { p = Math.max(4, Math.min(96, p)); c.style.setProperty('--x', p + '%'); c.setAttribute('aria-valuenow', Math.round(p)); };
     const at = e => { const b = c.getBoundingClientRect(); set((e.clientX - b.left) / b.width * 100); };
     c.addEventListener('pointerdown', e => { drag = true; cancelAnimationFrame(sweep); c.setPointerCapture(e.pointerId); at(e); });
@@ -6284,6 +6296,24 @@ html.p-lock { overflow: hidden; }
     sh.querySelectorAll('a').forEach(x => x.addEventListener('click', () => set(false)));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { set(false); close(); } });
   }
+})();
+</script>
+
+<script>
+(() => {
+  /* «Скоро»: href="#", пустой, или якорь на блок, которого на странице нет (кроме окон разбора и тарифов) */
+  const OK = new Set(['razbor', 'tarify', 'top']);
+  const soon = a => { const h = a.getAttribute('href'); if (h == null) return false; if (h === '' || h === '#') return true;
+    if (h[0] === '#') { const id = h.slice(1); return !OK.has(id) && !document.getElementById(id); } return false; };
+  const tip = document.createElement('span'); tip.className = 'soon-tip'; tip.textContent = 'Скоро'; tip.setAttribute('aria-hidden', 'true');
+  let cur = null, tm = 0;
+  const show = a => { if (!tip.isConnected) document.body.append(tip); const r = a.getBoundingClientRect();
+    tip.style.left = (r.left + r.width / 2) + 'px'; tip.style.top = r.top + 'px'; tip.classList.add('on'); cur = a; };
+  const hide = () => { tip.classList.remove('on'); cur = null; };
+  document.addEventListener('mouseover', e => { const a = e.target.closest('a'); if (a && a !== cur && soon(a)) { a.classList.add('is-soon'); show(a); } else if (!a && cur) hide(); });
+  document.addEventListener('mouseout', e => { if (cur && !cur.contains(e.relatedTarget)) hide(); });
+  document.addEventListener('click', e => { const a = e.target.closest('a'); if (!a || !soon(a)) return; e.preventDefault(); show(a); clearTimeout(tm); tm = setTimeout(hide, 1400); }, true);
+  addEventListener('scroll', () => cur && hide(), { passive: true });
 })();
 </script>
 
