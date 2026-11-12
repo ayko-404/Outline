@@ -4472,6 +4472,12 @@ html.o-lock { overflow: hidden; }
 .cx__h em { font-family: var(--font-script); font-style: normal; font-weight: 400; color: var(--blue-300); }
 
 .nw-two.p-intro { grid-template-columns: 1fr !important; }
+
+/* подпись под кнопкой (строка Ивана) — от руки, со стрелкой к кнопке */
+.p-cvs .p-cta__hand { margin: var(--space-3) 0 0 var(--space-16); }
+.p-cvs .p-cta__hand span { max-width: 20rem; padding-top: var(--space-5); font-size: var(--fs-h5); }
+.p-cvs .p-cta__hand svg { width: 3.75rem; height: 3.75rem; }
+@media (max-width: 700px) { .p-cvs .p-cta__hand { display: flex; margin-left: var(--space-6); } .p-cvs .p-cta__hand span { font-size: var(--fs-h6); padding-top: var(--space-4); } .p-cvs .p-cta__hand svg { width: 2.5rem; height: 2.5rem; } }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -4506,7 +4512,7 @@ html.o-lock { overflow: hidden; }
         <a class="o-btn o-btn--primary o-btn--lg" href="#razbor">Получить бесплатный разбор <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="o-btn o-btn--lg" href="#tarify">Сколько стоит</a>
       </div>
-      <p class="p-cta__sub o-rv" style="--d:4">Для отдельного заведения и&nbsp;сети.</p>
+      <p class="o-hand p-cta__hand o-rv" style="--d:4"><svg viewBox="0 0 64 65" aria-hidden="true"><path d="M58.6 54.2C52.4 56.6 43.1 56.9 38.2 51.6C33.6 46.6 35.4 38.4 41.6 38.1C47.9 37.8 47.2 47.9 40.3 50.4C31.8 53.4 25.6 45.3 23.4 37.2C21.6 30.6 18.2 22.8 9.6 13.4"/><path d="M19.8 13.9C16.1 13.1 12.4 12.6 8.7 12.3C9.3 15.9 10.1 19.6 10.9 23.6"/><path d="M18.6 15.2C15.4 14.4 12.3 13.9 9.9 13.8"/></svg><span>Для отдельного заведения и&nbsp;сети.</span></p>
     </div>
     <div class="p-cva__vis p-cl" aria-hidden="true">
       <div class="p-cl__stage">
