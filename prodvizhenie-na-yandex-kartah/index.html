@@ -6541,6 +6541,26 @@ html.p-lock { overflow: hidden; }
       e.preventDefault(); e.stopPropagation(); open(d);
     }, true);
   })();
+
+  /* 2ГИС: варианты блока «Карточка, по которой удобно выбрать компанию» (на время выбора) */
+  const iv = $('.iv');
+  if (iv) {
+    const bs = [...document.querySelectorAll('.p-vsw button')];
+    let tq = 0, qk = -1;
+    const runQ = () => { clearInterval(tq); const qs = [...iv.querySelectorAll('.iq-q')], rs = [...iv.querySelectorAll('.iq .iq-r')]; qk = -1;
+      const step = () => { qk = (qk + 1) % qs.length; qs.forEach((q, k) => q.classList.toggle('is-on', k === qk)); rs.forEach(r => r.classList.toggle('is-on', +r.dataset.q === qk)); };
+      step(); if (!reduce) tq = setInterval(step, 1600); };
+    const setV = v => { iv.dataset.ivCur = v; bs.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v))); try { localStorage.setItem('gis-iv', v); } catch (e) {} if (v === 'a') runQ(); else clearInterval(tq);
+      if (v === 'b') { iv.querySelectorAll('.it-sc.is-on .xi-svg *').forEach(x => { x.style.animation = 'none'; void x.offsetWidth; x.style.animation = ''; }); } };
+    bs.forEach(b => b.addEventListener('click', () => { setV(b.dataset.v); iv.scrollIntoView({ block: 'center' }); }));
+    let sv = null; try { sv = localStorage.getItem('gis-iv'); } catch (e) {} setV(sv || 'a');
+    const tabs = [...iv.querySelectorAll('.it-tabs button')], scs = [...iv.querySelectorAll('.it-sc')], ind = iv.querySelector('.it-tabs');
+    tabs.forEach((b, k) => b.addEventListener('click', () => { tabs.forEach((x, j) => x.setAttribute('aria-selected', String(j === k))); scs.forEach((x, j) => x.classList.toggle('is-on', j === k)); ind.style.setProperty('--k', k);
+      const sc = scs[k]; sc.querySelectorAll('[class*="a-"]').forEach(x => { x.style.animation = 'none'; void x.getBoundingClientRect(); x.style.animation = ''; }); }));
+    const rng = iv.querySelector('.ib-range'), wrap = iv.querySelector('.ib-wrap');
+    if (rng) { rng.addEventListener('input', () => wrap.style.setProperty('--x', rng.value + '%'));
+      if (!reduce) seen([wrap], () => { let t0 = performance.now(); const go = now => { const k = Math.min(1, (now - t0) / 1600), x = 50 + Math.sin(k * Math.PI * 2) * 30 * (1 - k); wrap.style.setProperty('--x', x + '%'); rng.value = x; if (k < 1) requestAnimationFrame(go); }; requestAnimationFrame(go); }, .5); }
+  }
 })();
 </script>
 </body>

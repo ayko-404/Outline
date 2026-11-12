@@ -4540,6 +4540,57 @@ html.p-lock { overflow: hidden; }
 
 /* рукописное слово в H2 страниц услуг */
 .p-work .o-h2 em, .p-txt .o-h2 em, .p-prc .o-h2 em { font-family: var(--font-script); font-style: normal; font-weight: 400; letter-spacing: 0; font-size: calc(1em * var(--script-k)); line-height: .9; color: var(--text-script); }
+
+/* ════ 2ГИС, «Карточка, по которой удобно выбрать компанию» — 3 варианта (12.11.2026) ════ */
+.p-vsw { position: fixed; z-index: 1000; left: 50%; bottom: var(--space-4); translate: -50% 0; display: flex; align-items: center; gap: var(--space-3); max-width: calc(100vw - var(--space-8)); overflow-x: auto; padding: var(--space-1-5) var(--space-1-5) var(--space-1-5) var(--space-4); border-radius: var(--radius-pill); background: rgb(17 19 23 / .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 1rem 2rem -1rem rgb(0 0 0 / .5); color: var(--paper-0); scrollbar-width: none; }
+.p-vsw__t { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: rgb(255 255 255 / .72); white-space: nowrap; }
+.p-vsw__g { display: inline-flex; gap: var(--space-1); }
+.p-vsw button { height: 2.25rem; padding: 0 var(--space-4); border: 0; border-radius: var(--radius-pill); background: transparent; color: rgb(255 255 255 / .72); font: 600 var(--fs-caption)/1 var(--font-body); white-space: nowrap; cursor: pointer; }
+.p-vsw button[aria-pressed="true"] { background: var(--paper-0); color: var(--ink-950); }
+.iv [data-iv] { display: none; } .iv[data-iv-cur="a"] [data-iv="a"], .iv[data-iv-cur="b"] [data-iv="b"], .iv[data-iv-cur="c"] [data-iv="c"] { display: flex; }
+.iv-win { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.iv-win > [data-iv] { position: absolute; inset: 0; align-items: center; justify-content: center; }
+/* общая карточка (условная, в духе карточки геосервиса) */
+.iq-card { position: relative; width: 19rem; padding: .625rem; border-radius: 1.125rem; background: #fff; color: #0f151d; box-shadow: 0 1.5rem 3rem -1rem rgb(0 0 0 / .6); font: 400 .8125rem/1.3 var(--f-body, "Geist", sans-serif); text-align: left; }
+.iq-ph { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: .25rem; height: 4.5rem; margin-bottom: .625rem; }
+.iq-ph i { border-radius: .5rem; background: var(--c); } .iq-card.is-empty .iq-ph { background: repeating-linear-gradient(45deg, #f1f2f4 0 8px, #e9ebee 8px 16px); border-radius: .5rem; }
+.iq-hd { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; } .iq-hd img { width: 2rem; height: 2rem; border-radius: .5rem; }
+.iq-hd b { display: block; font-size: .9375rem; } .iq-hd small { display: block; color: rgb(15 21 29 / .55); font-size: .75rem; }
+.iq-r { display: flex; justify-content: space-between; gap: .75rem; padding: .5rem .625rem; margin-top: .25rem; border-radius: .625rem; background: #f4f5f7; transition: background-color .4s ease, box-shadow .4s ease; }
+.iq-r span { color: rgb(15 21 29 / .55); } .iq-r b { font-weight: 600; text-align: right; }
+.iq-card.is-empty .iq-r b { color: rgb(15 21 29 / .35); font-weight: 500; }
+.iq-note { position: absolute; right: 1rem; bottom: 1.5rem; font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: rgb(255 255 255 / .35); }
+/* A · вопросы клиента прилетают к карточке, строка-ответ подсвечивается */
+.iq { gap: 1.25rem; }
+.iq-qs { display: flex; flex-direction: column; gap: .75rem; align-items: flex-end; }
+.iq-q { position: relative; padding: .5rem .875rem; border-radius: 1rem 1rem .25rem 1rem; background: #2c3038; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); color: #fff; font: 500 .875rem/1.2 var(--f-body, "Geist", sans-serif); white-space: nowrap; opacity: .35; transition: opacity .4s ease, background-color .4s ease, translate .5s cubic-bezier(.22, 1, .36, 1); }
+.iq-q::after { content: ""; position: absolute; left: 100%; top: 50%; width: 1.25rem; border-top: 1.5px dashed rgb(255 255 255 / .25); opacity: 0; transition: opacity .3s ease; }
+.iq-q.is-on { opacity: 1; background: #3d7cf0; translate: -.25rem 0; } .iq-q.is-on::after { opacity: 1; border-top-color: #3d7cf0; }
+.iq .iq-r.is-on { background: #eaf1fe; box-shadow: inset 0 0 0 1.5px #3d7cf0; }
+/* B · три вкладки и сцены */
+.it { flex-direction: column; gap: .75rem; padding: 1rem; }
+.it-tabs { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); padding: .25rem; border-radius: 99px; background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
+.it-tabs button { position: relative; z-index: 1; height: 2.25rem; padding: 0 1rem; border: 0; background: none; color: rgb(255 255 255 / .6); font: 600 .8125rem/1 var(--f-body, "Geist", sans-serif); cursor: pointer; white-space: nowrap; transition: color .3s ease; }
+.it-tabs button[aria-selected="true"] { color: #0f151d; }
+.it-ind { position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc((100% - .5rem) / 3); border-radius: 99px; background: #fff; translate: calc(var(--k, 0) * 100%) 0; transition: translate .5s cubic-bezier(.34, 1.4, .64, 1); }
+.it-scenes { position: relative; width: 100%; flex: 1; min-height: 16rem; }
+.it-sc { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; pointer-events: none; } .it-sc.is-on { opacity: 1; }
+.it-sc .xi-svg { width: 100%; height: 100%; }
+/* C · до / после — слайдер */
+.ib-wrap { position: relative; width: 19rem; touch-action: pan-y; }
+.ib-after, .ib-before { position: relative; } .ib-before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--x)) 0 0); }
+.ib-before .iq-card, .ib-after .iq-card { width: 100%; }
+.ib-range { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.ib-handle { position: absolute; z-index: 2; top: -.75rem; bottom: -.75rem; left: var(--x); width: 2px; margin-left: -1px; background: #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .15); pointer-events: none; }
+.ib-handle i { position: absolute; left: 50%; top: 50%; width: 2.5rem; height: 2.5rem; translate: -50% -50%; border-radius: 50%; background: #fff; box-shadow: 0 .5rem 1rem -.25rem rgb(0 0 0 / .5); }
+.ib-handle i::before, .ib-handle i::after { content: ""; position: absolute; top: 50%; width: .4375rem; height: .4375rem; margin-top: -.25rem; border: solid #0f151d; border-width: 0 0 1.5px 1.5px; }
+.ib-handle i::before { left: .625rem; rotate: 45deg; } .ib-handle i::after { right: .625rem; rotate: -135deg; }
+.ib-lab { position: absolute; top: -2rem; left: 0; padding: .25rem .625rem; border-radius: 99px; background: rgb(255 255 255 / .1); color: rgb(255 255 255 / .8); font: 500 .6875rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.ib-lab--r { left: auto; right: 0; background: #3d7cf0; color: #fff; }
+@media (max-width: 1000px) { .iq { flex-direction: column; padding: 1.5rem 0; } .iq-qs { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; } .iq-q::after { display: none; } .p-intro .iv-win { min-height: 26rem; } }
+
+@media (prefers-reduced-motion: no-preference) { .nw.is-in .iv .xi-svg .a-out { animation: xi-out 500ms ease var(--d, 0s) both; } .nw.is-in .iv .xi-svg .a-fill { animation: xi-fade 600ms ease var(--d, 0s) both; } }
+.ib-before .ib-lab { left: .5rem; }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -6391,6 +6442,26 @@ html.p-lock { overflow: hidden; }
       e.preventDefault(); e.stopPropagation(); open(d);
     }, true);
   })();
+
+  /* 2ГИС: варианты блока «Карточка, по которой удобно выбрать компанию» (на время выбора) */
+  const iv = $('.iv');
+  if (iv) {
+    const bs = [...document.querySelectorAll('.p-vsw button')];
+    let tq = 0, qk = -1;
+    const runQ = () => { clearInterval(tq); const qs = [...iv.querySelectorAll('.iq-q')], rs = [...iv.querySelectorAll('.iq .iq-r')]; qk = -1;
+      const step = () => { qk = (qk + 1) % qs.length; qs.forEach((q, k) => q.classList.toggle('is-on', k === qk)); rs.forEach(r => r.classList.toggle('is-on', +r.dataset.q === qk)); };
+      step(); if (!reduce) tq = setInterval(step, 1600); };
+    const setV = v => { iv.dataset.ivCur = v; bs.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v))); try { localStorage.setItem('gis-iv', v); } catch (e) {} if (v === 'a') runQ(); else clearInterval(tq);
+      if (v === 'b') { iv.querySelectorAll('.it-sc.is-on .xi-svg *').forEach(x => { x.style.animation = 'none'; void x.offsetWidth; x.style.animation = ''; }); } };
+    bs.forEach(b => b.addEventListener('click', () => { setV(b.dataset.v); iv.scrollIntoView({ block: 'center' }); }));
+    let sv = null; try { sv = localStorage.getItem('gis-iv'); } catch (e) {} setV(sv || 'a');
+    const tabs = [...iv.querySelectorAll('.it-tabs button')], scs = [...iv.querySelectorAll('.it-sc')], ind = iv.querySelector('.it-tabs');
+    tabs.forEach((b, k) => b.addEventListener('click', () => { tabs.forEach((x, j) => x.setAttribute('aria-selected', String(j === k))); scs.forEach((x, j) => x.classList.toggle('is-on', j === k)); ind.style.setProperty('--k', k);
+      const sc = scs[k]; sc.querySelectorAll('[class*="a-"]').forEach(x => { x.style.animation = 'none'; void x.getBoundingClientRect(); x.style.animation = ''; }); }));
+    const rng = iv.querySelector('.ib-range'), wrap = iv.querySelector('.ib-wrap');
+    if (rng) { rng.addEventListener('input', () => wrap.style.setProperty('--x', rng.value + '%'));
+      if (!reduce) seen([wrap], () => { let t0 = performance.now(); const go = now => { const k = Math.min(1, (now - t0) / 1600), x = 50 + Math.sin(k * Math.PI * 2) * 30 * (1 - k); wrap.style.setProperty('--x', x + '%'); rng.value = x; if (k < 1) requestAnimationFrame(go); }; requestAnimationFrame(go); }, .5); }
+  }
 })();
 </script>
 </body>
