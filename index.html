@@ -3667,6 +3667,23 @@ html.rvs-lock { overflow: hidden; }
   .fina .ft__in { padding-left: 0 !important; padding-right: 0 !important; }
 }
 
+
+/* 12.11.2026 — проверка адаптива (страница «Яндекс Карты» и главная) */
+/* 320–359: кнопка «Получить бесплатный разбор» в «Что в разборе» шире панели — уменьшаем, колонка не растягивается */
+@media (max-width: 359px) {
+  #kak-nachinaem .pn6__in { grid-template-columns: minmax(0, 1fr) !important; }
+  #kak-nachinaem .btn6 { font-size: .875rem !important; padding: 0 .875rem !important; }
+}
+@media (max-width: 359px) { .fin .ft__in a[href^="mailto:"], .fina__card a[href^="mailto:"] { font-size: .8125rem; } }   /* почта на 320 упиралась в край */
+/* телефон в подвале не рвётся («70» уходило на новую строку) */
+.fin .ft__phone, .fina__card .ft__phone { white-space: nowrap; }
+@media (max-width: 1199px) { .fin .ft__phone, .fina__card .ft__phone { font-size: 1.0625rem; } }
+/* 761–1199: пункты меню в шапке не переносятся («Кому помогаем» шло в две строки), номер телефона — только значок */
+@media (min-width: 761px) and (max-width: 1199px) {
+  body[data-hdr="bar"] .hdr .plate__nav a { white-space: nowrap; padding-inline: .5rem !important; font-size: .875rem !important; }
+  body[data-ph="pill"] .hdr .hdr__phone .contact__num { display: none; }
+  body[data-ph="pill"] .hdr .hdr__phone { padding: 0 .3125rem !important; }
+}
 </style>
 <style>
 /* Мост главной к дизайн-системе (05.11.2026): старые переменные блоков теперь берут значения из site/ds/tokens.css.
