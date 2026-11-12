@@ -4822,6 +4822,16 @@ html.p-lock { overflow: hidden; }
 .iv[data-ivs="k2m"] .iq-list i { width: 5.5rem; height: 3.85rem; border-radius: .875rem; background: none; overflow: hidden; box-shadow: 0 .5rem 1rem -.5rem rgb(0 0 0 / .6); }
 .iv[data-ivs="k2m"] .iq-list i svg.ic-m { display: block; width: 100%; height: 100%; }
 .nw__head--sub { margin-top: clamp(4rem, 8vw, 7rem); }
+/* 12.11 · иконки площадок в H1 — как на главной: наклоны, нахлёст, «подпрыгивание» при появлении, пружина на наведении */
+.o-h1 .p-pf { position: relative; transition: rotate .5s cubic-bezier(.34, 1.56, .64, 1), translate .5s cubic-bezier(.34, 1.56, .64, 1), scale .5s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s; animation: pf-hop .7s cubic-bezier(.34, 1.56, .64, 1) both; }
+.o-h1 .p-pf:nth-of-type(1) { rotate: -8deg; animation-delay: .35s; }
+.o-h1 .p-pf:nth-of-type(2) { rotate: 6deg; translate: 0 -.07em; margin-left: -.08em; z-index: 1; animation-delay: .5s; }
+.o-h1 .p-pf:nth-of-type(3) { rotate: -4deg; translate: 0 .04em; margin-left: -.08em; animation-delay: .65s; }
+@media (hover: hover) and (pointer: fine) { .o-h1 .p-pf:hover { rotate: 0deg; translate: 0 -.1em; scale: 1.14; z-index: 2; box-shadow: 0 .12em .3em #2020201f; } }
+@media (prefers-reduced-motion: reduce) { .o-h1 .p-pf { animation: none; } }
+/* 3D-иконка ниши в центре обложки — без плитки, с мягкой тенью */
+.p-cl__app--3d { background: none !important; border: 0 !important; box-shadow: none !important; }
+.p-cl__app--3d img { width: 100% !important; height: 100% !important; object-fit: contain; filter: drop-shadow(0 1.25rem 1.25rem rgb(15 21 29 / .22)) drop-shadow(0 .25rem .375rem rgb(15 21 29 / .12)); }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
