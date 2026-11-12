@@ -427,6 +427,7 @@ html.o-lock { overflow: hidden; }
 .o-crumbs li + li::before { content: "/"; margin-right: var(--space-2); color: var(--text-subtle); }
 .o-crumbs a { display: inline-flex; align-items: center; min-height: 1.5rem; color: var(--text-muted); text-decoration: none; transition: color var(--dur-fast) ease; }
 .o-crumbs a:hover { color: var(--text-default); }
+.o-crumbs li[aria-current="page"] { color: var(--text-default); font-weight: 500; }   /* текущая страница — чёрным, путь — серым (Никита 12.11) */
 
 /* ── Ряд логотипов клиентов ────────────────────────── */
 .o-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8) var(--space-10); }
