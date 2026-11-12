@@ -4665,6 +4665,45 @@ html.p-lock { overflow: hidden; }
 /* G — иконка в маленьком оранжевом кружке, текст под ней */
 .iv[data-ivs="g"] .iq-list i { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: rgb(255 100 20 / .14); }
 .iv[data-ivs="g"] .iq-list svg { width: 1rem; height: 1rem; }
+/* 12.11 · D выбран — «покреативнее»: D1 маршрут · D2 крупные номера · D3 шкала. Общее: текст без подсветки, три пункта в ряд */
+.iv[data-ivs^="d"] .iq-m { color: inherit; }
+.iv[data-ivs^="d"] .iq-list { flex-direction: row; gap: 1.5rem; counter-reset: iqn; }
+.iv[data-ivs^="d"] .iq-list li { flex: 1; display: flex; flex-direction: column; gap: .5rem; padding: 0; font-size: .875rem; color: rgb(255 255 255 / .62); position: relative; }
+.iv[data-ivs^="d"] .iq-list li::before { counter-increment: iqn; content: "0" counter(iqn); font: 500 .75rem/1 var(--font-mono, "Geist Mono", monospace); color: #ff8a4d; }
+.iv:is([data-ivs="d1"], [data-ivs="d2"], [data-ivs="d3"]) .iq-list i { display: none; }
+/* D1 — маршрут: пунктир через три колонки, на нём оранжевые метки-пины, как точки на карте */
+.iv[data-ivs="d1"] .iq-list { position: relative; padding-top: 2.75rem; }
+.iv[data-ivs="d1"] .iq-list::before { content: ""; position: absolute; left: .875rem; right: 0; top: .875rem; border-top: 1.5px dashed rgb(255 138 77 / .4); }
+.iv[data-ivs="d1"] .iq-list i { display: grid; place-items: center; position: absolute; left: 0; top: -2.75rem; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: linear-gradient(180deg, #ff7a33, #ff6414); color: #fff; box-shadow: 0 0 0 .3125rem #23262c, 0 .5rem 1.25rem -.25rem rgb(255 100 20 / .6); }
+.iv[data-ivs="d1"] .iq-list svg { width: .9375rem; height: .9375rem; stroke-width: 2.2; }
+.iv[data-ivs="d1"] .iq-k { color: #fff; }
+/* D2 — крупные контурные номера, на наведении заливаются оранжевым */
+.iv[data-ivs="d2"] .iq-list li::before { font: 600 3.5rem/.9 var(--f-head, var(--font-head)); letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1.25px rgb(255 138 77 / .75); transition: color .35s ease; }
+@media (hover: hover) and (pointer: fine) { .iv[data-ivs="d2"] .iq-list li:hover::before { color: #ff8a4d; } .iv[data-ivs="d2"] .iq-list li:hover { color: rgb(255 255 255 / .9); } }
+.iv[data-ivs="d2"] .iq-list li { gap: .875rem; transition: color .35s ease; }
+/* D3 — шкала как в историях: линия над пунктом заполняется по очереди, активный пункт светлеет */
+.iv[data-ivs="d3"] .iq-list li { padding-top: .875rem; border-top: 2px solid rgb(255 255 255 / .1); }
+.iv[data-ivs="d3"] .iq-list li::after { content: ""; position: absolute; left: 0; top: -2px; height: 2px; width: 0; border-radius: 2px; background: #ff8a4d; box-shadow: 0 0 .5rem rgb(255 100 20 / .8); }
+.iv[data-ivs="d3"] .iq-list li:nth-child(1)::after { animation: iqB1 9s linear infinite; } .iv[data-ivs="d3"] .iq-list li:nth-child(1) { animation: iqT1 9s infinite; }
+.iv[data-ivs="d3"] .iq-list li:nth-child(2)::after { animation: iqB2 9s linear infinite; } .iv[data-ivs="d3"] .iq-list li:nth-child(2) { animation: iqT2 9s infinite; }
+.iv[data-ivs="d3"] .iq-list li:nth-child(3)::after { animation: iqB3 9s linear infinite; } .iv[data-ivs="d3"] .iq-list li:nth-child(3) { animation: iqT3 9s infinite; }
+@keyframes iqB1 { 0% { width: 0 } 31% { width: 100% } 100% { width: 100% } }
+@keyframes iqB2 { 0%, 33% { width: 0 } 64% { width: 100% } 100% { width: 100% } }
+@keyframes iqB3 { 0%, 66% { width: 0 } 97% { width: 100% } 100% { width: 100% } }
+@keyframes iqT1 { 0%, 31% { color: rgb(255 255 255 / .95) } 35%, 100% { color: rgb(255 255 255 / .5) } }
+@keyframes iqT2 { 0%, 31% { color: rgb(255 255 255 / .5) } 35%, 64% { color: rgb(255 255 255 / .95) } 68%, 100% { color: rgb(255 255 255 / .5) } }
+@keyframes iqT3 { 0%, 64% { color: rgb(255 255 255 / .5) } 68%, 97% { color: rgb(255 255 255 / .95) } 100% { color: rgb(255 255 255 / .5) } }
+@media (prefers-reduced-motion: reduce) { .iv[data-ivs="d3"] .iq-list li, .iv[data-ivs="d3"] .iq-list li::after { animation: none; } .iv[data-ivs="d3"] .iq-list li::after { width: 100%; } }
+@media (max-width: 700px) {
+  .iv[data-ivs^="d"] .iq-list { flex-direction: column; gap: 1.25rem; }
+  .iv[data-ivs="d1"] .iq-list { padding: 0 0 0 2.75rem; } .iv[data-ivs="d1"] .iq-list::before { left: .875rem; right: auto; top: .875rem; bottom: .875rem; border-top: 0; border-left: 1.5px dashed rgb(255 138 77 / .4); }
+  .iv[data-ivs="d1"] .iq-list i { top: 0; left: -2.75rem; }
+}
+/* 12.11 · карточка справа — тёмная, под тёмную секцию (Никита) */
+.iq-card { background: #2b2f37; color: #f2f3f5; box-shadow: 0 1.5rem 3rem -1rem rgb(0 0 0 / .7), inset 0 0 0 1px rgb(255 255 255 / .09); }
+.iq-hd small, .iq-r span { color: rgb(255 255 255 / .5); }
+.iq-r { background: rgb(255 255 255 / .05); }
+.iq .iq-r.is-on { background: rgb(61 124 240 / .18); box-shadow: inset 0 0 0 1.5px #3d7cf0; }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
