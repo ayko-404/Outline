@@ -1791,7 +1791,7 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 
 .nw { --bg: #111317; --card: #1a1c21; --line: rgb(255 255 255 / .06); --mut: rgb(255 255 255 / .72);
   position: relative; z-index: 1; color: #f2f3f5; padding: 0 0 8rem; font-family: var(--font-body); margin-top: -30vh;
-  background: linear-gradient(transparent 0, transparent 30vh, var(--bg) 30vh); }
+  background: linear-gradient(transparent 0, transparent calc(30vh - 3px), var(--bg) calc(30vh - 3px)); }   /* 12.11: −3px — на стыке с волной была светлая линия (дробные пиксели) */
 /* контент проявляется, когда переход полностью тёмный — стыка не видно */
 .nw .nw__in { transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1), transform 650ms cubic-bezier(0.23, 1, 0.32, 1); }
 .nw:not(.is-ready) .nw__in { opacity: 0; transform: translateY(24px); }
@@ -2036,7 +2036,7 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 
 .lt { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ink: #0f151d; --mut: rgb(15 21 29 / .6); --line: rgb(15 21 29 / .07);
   position: relative; z-index: 1; color: var(--ink); font-family: var(--f-body, "Golos Text"), sans-serif; padding: 0 0 7rem; margin-top: -50vh;
-  background: linear-gradient(transparent 0, transparent 50vh, var(--page, #fafafa) 50vh); }
+  background: linear-gradient(transparent 0, transparent calc(50vh - 3px), var(--page, #fafafa) calc(50vh - 3px)); }   /* 12.11: стык с волной без линии */
 .lt__in { width: min(75rem, calc(100% - 4rem)); margin: 0 auto; }
 .lt .lt-ready-gate { transition: opacity 500ms var(--ease-out), transform 650ms var(--ease-out); }
 .lt:not(.is-ready) .lt-ready-gate { opacity: 0; transform: translateY(24px); }
