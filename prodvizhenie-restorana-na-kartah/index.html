@@ -3776,6 +3776,45 @@ html.mn-lock { overflow: hidden; }
 a.is-soon { cursor: default; }
 @media (prefers-reduced-motion: reduce) { .soon-tip { transition: none; } }
 </style>
+<style>
+/* 13.11 (Никита): на главной «Получить бесплатный разбор» открывает поп-ап, а не ведёт к подвалу; «Посмотреть кейсы» — поп-ап с кейсами.
+   В поп-ап разбора переносится сама форма блока «Разбор» (те же стили и скрипты), при закрытии возвращается на место.
+   На страницах услуг свои поп-апы (src/inner/yandex/page.js) — скрипт этого блока там вырезается (метка HOME-POPUPS). */
+.hp-pop { width: min(30rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; background: transparent; overflow: visible; color: var(--text-default, #0f151d); }
+.hp-pop--cases { width: min(60rem, calc(100vw - 2rem)); }
+.hp-pop::backdrop { background: rgb(15 21 29 / .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.hp-pop[open] { animation: hp-in .45s cubic-bezier(.22, 1, .36, 1); } .hp-pop[open]::backdrop { animation: hp-fade .3s ease; }
+@keyframes hp-in { from { opacity: 0; translate: 0 1.5rem; scale: .97; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes hp-fade { from { opacity: 0; } }
+.hp-pop__box { position: relative; max-height: calc(100dvh - 2rem); overflow: auto; overscroll-behavior: contain; padding: 2rem; border-radius: 2rem; background: var(--paper-0, #fff); box-shadow: 0 2rem 4rem -1.5rem rgb(0 0 0 / .45); }
+.hp-pop--cases .hp-pop__box { background: var(--surface-page, #f6f7f9); }
+.hp-pop__x { position: absolute; right: .75rem; top: .75rem; z-index: 2; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 0; border-radius: 50%; background: rgb(15 21 29 / .06); color: inherit; font: 400 1.5rem/1 sans-serif; cursor: pointer; }
+.hp-pop__x:hover { background: rgb(15 21 29 / .12); }
+.hp-pop__t { margin: 0 2.5rem .5rem 0; font: 600 1.75rem/1.1 var(--font-head); letter-spacing: -.03em; }
+.hp-pop__t em { font-family: var(--font-script); font-style: normal; font-weight: 400; font-size: 1.15em; color: var(--text-script, #2563eb); }
+.hp-pop__lead { margin: 0 0 1.25rem; color: var(--text-muted, #5b6470); line-height: 1.5; }
+/* форма блока «Разбор» внутри поп-апа: без своей подложки и отступа под карточку справа */
+.hp-pop .cx__form { margin: 0 !important; padding: 0 !important; background: none !important; box-shadow: none !important; border: 0 !important; }
+/* кейсы */
+.hp-cs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-top: .5rem; }
+.hp-c { display: flex; flex-direction: column; gap: .875rem; padding: 1.25rem; border-radius: 1.25rem; background: var(--paper-0, #fff); box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 .75rem 1.5rem -1rem rgb(15 21 29 / .25); }
+.hp-c__h { display: flex; align-items: center; gap: .75rem; }
+.hp-c__h img { flex: none; width: 2.75rem; height: 2.75rem; border-radius: .75rem; object-fit: cover; }
+.hp-c__h b { display: block; font: 600 1.0625rem/1.2 var(--font-head); letter-spacing: -.01em; }
+.hp-c__h small { display: block; margin-top: .125rem; font-size: .8125rem; color: var(--text-muted, #5b6470); }
+.hp-c__top { display: flex; align-items: baseline; gap: .625rem; }
+.hp-c__top b { flex: none; font: 600 1.75rem/1 var(--font-head); letter-spacing: -.04em; color: #ff6414; }
+.hp-c__top span { font-size: .875rem; line-height: 1.35; color: var(--text-default, #0f151d); }
+.hp-c__rows { display: grid; gap: .375rem; margin: 0; padding: .75rem 0 0; border-top: 1px dashed rgb(15 21 29 / .14); list-style: none; }
+.hp-c__rows li { display: flex; justify-content: space-between; gap: .75rem; font-size: .8125rem; color: var(--text-muted, #5b6470); }
+.hp-c__rows b { flex: none; font-weight: 600; color: var(--text-default, #0f151d); }
+.hp-pop__acts { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1.25rem; }
+.hp-pop__acts p { margin: 0; font-size: .875rem; color: var(--text-muted, #5b6470); }
+.hp-go { display: inline-flex; align-items: center; gap: .5rem; height: 3rem; padding: 0 1.375rem; border: 0; border-radius: 99px; background: #ff6414; color: #fff; font: 600 .9375rem/1 var(--font-body, inherit); cursor: pointer; box-shadow: 0 .75rem 1.5rem -.75rem rgb(255 100 20 / .7); }
+.hp-go:hover { background: #f05a0c; } .hp-go:active { scale: .96; } .hp-go svg { width: 1rem; height: 1rem; }
+html.hp-lock { overflow: hidden; }
+@media (max-width: 700px) { .hp-pop__box { padding: 1.5rem 1.25rem; border-radius: 1.5rem; } .hp-cs { grid-template-columns: 1fr; } .hp-pop__t { font-size: 1.5rem; } }
+</style>
 
 <script>document.documentElement.classList.add('o-js')</script><style>/* ── Сетка ─────────────────────────────────────────── */
 .o-container { width: var(--container); margin-inline: auto; }
@@ -4475,6 +4514,8 @@ html.p-lock { overflow: hidden; }
 /* 13.11 · чек выезжает по прокрутке (page.js ставит --rc-y и .is-pr строкам) */
 .o-js .p-rc.is-scroll .p-rc__paper { transition: none; translate: 0 var(--rc-y, -100%); will-change: translate; }
 .o-js .p-rc.is-scroll :is(.p-rc__l, .p-rc__tot, .p-rc__bar, .p-rc__foot).is-pr { opacity: 1; animation: p-print .32s steps(5) backwards; }
+/* 13.11 (Никита): чек дальше от сообщения менеджера — бабл успевает «напечататься», взгляд не уходит на чек раньше времени */
+#tarify.p-prc { padding-top: clamp(10rem, 30vh, 18rem) !important; }
 
 /* ════════ Страницы услуг (build_services.py, 12.11.2026) ════════ */
 /* обложка: летающие карточки карт вокруг иконки площадки */
@@ -4887,6 +4928,14 @@ html.p-lock { overflow: hidden; }
   .iv--g .iq-card { width: min(19rem, 100%); }
   .p-intro .p-quote--big p { font-size: 1.3125rem !important; }
 }
+/* 13.11 (Никита): цитата Google — меньше, обычным шрифтом, по центру левой половины, с наклоном */
+.iq-qbig { display: grid; place-items: center; }
+.p-intro .p-quote--big { max-width: 25rem; padding: 1.5rem 3.5rem 1.5rem 1.875rem; border-radius: 1.25rem; rotate: -3deg; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09), 0 1.5rem 2.5rem -1.25rem rgb(0 0 0 / .6); }
+.p-intro .p-quote--big::before { top: 1.25rem; bottom: 1.25rem; width: 3px; }
+.p-intro .p-quote--big::after { right: 1rem; top: .25rem; font-size: 4.5rem; }
+.p-intro .p-quote--big p { font: 400 1.1875rem/1.5 var(--f-body, var(--font-body)) !important; letter-spacing: 0; color: rgb(255 255 255 / .88) !important; }
+@media (max-width: 1000px) { .p-intro .p-quote--big { rotate: -1.5deg; } .p-intro .p-quote--big p { font-size: 1.0625rem !important; } }
+.p-intro .p-quote--big p { text-wrap: pretty; }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -6390,6 +6439,8 @@ html.p-lock { overflow: hidden; }
 })();
 </script>
 
+
+
 <div class="vsw" hidden style="display:none"><span hidden><button type="button" data-h="now">текущий</button></span></div>
 
 
@@ -6797,7 +6848,7 @@ html.p-lock { overflow: hidden; }
       const upd = () => {
         raf = 0;
         const vh = innerHeight, top = rc.getBoundingClientRect().top, H = paper.offsetHeight;
-        const p = Math.min(1, Math.max(0, (vh * .9 - top) / (vh * .6)));
+        const p = Math.min(1, Math.max(0, (vh * .8 - top) / (vh * .55)));
         rc.style.setProperty('--rc-y', ((p - 1) * 100).toFixed(2) + '%');
         const hidden = (1 - p) * H;   // бумага выезжает нижним краем вперёд: видно всё ниже hidden
         parts.forEach(el => el.classList.toggle('is-pr', el.offsetTop + el.offsetHeight * .4 >= hidden));
