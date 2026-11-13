@@ -6134,7 +6134,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 <style>
 /* «Услуги» · анимация телефона v2 (02.11): одна мягкая подсветка перетекает между шагами, лента прокручивается плавно,
    тезисы отмечаются синхронно с подсветкой; после последнего шага — пауза и цикл заново. Ведёт JS ниже, CSS-ключевые кадры отключены. */
-.svc3 .mph__feed { animation: none !important; transition: transform 1.15s cubic-bezier(0.65, 0, 0.35, 1); }
+.svc3 .mph__feed { animation: none !important; transition: transform .7s cubic-bezier(0.65, 0, 0.35, 1); }
 .svc3 .mph-hl { display: none !important; }
 .mph-spot { position: absolute; z-index: 2; left: 2%; right: 2%; top: 0; height: 0; border-radius: .875rem; pointer-events: none; opacity: 0;
   box-shadow: 0 0 0 1.5px rgb(255 100 20 / .95), 0 0 1.25rem rgb(255 100 20 / .28), 0 0 0 9999px rgb(15 21 29 / .26);
@@ -6168,7 +6168,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
     const alive = () => run === me && card.classList.contains('is-act');
     while (alive()) {
       pills.forEach(p => p.classList.remove('on', 'cur')); spot.classList.remove('on', 'lbl');
-      feed.style.transform = 'translateY(0)'; await wait(reduce ? 0 : 700);
+      feed.style.transform = 'translateY(0)'; await wait(reduce ? 0 : 300);   // 13.11 (Никита: «чуть ускорить… не успеваешь увидеть»)
       for (let i = 0; i < steps.length && alive(); i++) {
         const [a, b, label] = steps[i];
         me.place = instant => {
@@ -6186,15 +6186,15 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
         me.place(false);
         if (i === 0) { spot.offsetWidth; spot.style.transition = ''; }
         spot.querySelector('b').textContent = label;
-        spot.classList.add('on'); await wait(reduce ? 0 : 950); if (!alive()) break;
+        spot.classList.add('on'); await wait(reduce ? 0 : 600); if (!alive()) break;
         spot.classList.add('lbl');
         pills.forEach(p => p.classList.remove('cur'));
         if (pills[i]) pills[i].classList.add('on', 'cur');
         if (i === steps.length - 1) pills.slice(i + 1).forEach(p => p.classList.add('on'));
-        await wait(reduce ? 4000 : 2100);
+        await wait(reduce ? 4000 : 1100);
       }
       if (!alive()) break;
-      spot.classList.remove('lbl'); await wait(1800);
+      spot.classList.remove('lbl'); await wait(1000);
     }
     me.timers.forEach(clearTimeout);
   };
