@@ -5065,7 +5065,6 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 /* обложки — три варианта (переключатель внизу) */
 .m-cvv { display: flex; align-items: center; justify-content: center; min-height: 34rem; }
 .m-cv { position: relative; width: 100%; }
-.m-cv:not([data-v="a"]) .m-cv__a, .m-cv:not([data-v="b"]) .m-cv__b, .m-cv:not([data-v="c"]) .m-cv__c { display: none; }
 
 /* ── тарифы (/tarify/) ── */
 .m-tfv { display: flex; justify-content: center; }
@@ -5181,48 +5180,9 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 /* ── обложки кейсов «папки» (13.11) ── */
 .m-cvv { min-height: 32rem; }
 :root { --fd-1: #3b82f6; --fd-2: #2f6fe0; --fd-paper: #fbfaf7; }
-/* A · стопка папок */
-.m-fa { position: relative; height: 30rem; margin-left: auto; width: min(32rem, 100%); }
-.m-fa__f { --o: 0; position: absolute; left: 0; right: 0; bottom: 0; height: 21rem; border-radius: 0 var(--radius-xl) var(--radius-xl) var(--radius-xl);
-  background: linear-gradient(170deg, var(--fd-1), var(--fd-2)); box-shadow: 0 1.75rem 3rem -1.5rem rgb(15 21 29 / .45), inset 0 1px 0 rgb(255 255 255 / .25);
-  translate: 0 calc(var(--o) * -1.5rem); scale: calc(1 - var(--o) * .035); z-index: calc(20 - var(--o)); filter: brightness(calc(1 - var(--o) * .07));
-  transition: translate .7s var(--ease-spring), scale .7s var(--ease-spring), filter .5s ease; transform-origin: 50% 0; }
-.m-fa__f[style*="--o: 4"], .m-fa__f[style*="--o: 5"], .m-fa__f[style*="--o: 6"] { opacity: 0; pointer-events: none; }
-.m-fa__f { opacity: 1; transition: translate .7s var(--ease-spring), scale .7s var(--ease-spring), filter .5s ease, opacity .4s ease; }
-.m-fa__tab { position: absolute; bottom: 100%; left: calc(var(--k) * 12%); display: flex; align-items: center; gap: var(--space-1-5); max-width: 13rem; height: 2.25rem; padding: 0 var(--space-3) 0 var(--space-1-5); border: 0; border-radius: var(--radius-md) var(--radius-md) 0 0;
-  background: inherit; background: var(--fd-1); color: var(--paper-0); font: 600 var(--fs-caption)/1 var(--font-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
-.m-fa__tab img { width: 1.5rem; height: 1.5rem; border-radius: 50%; object-fit: cover; flex: none; }
-.m-fa__sheet { position: absolute; left: 1.25rem; right: 1.25rem; bottom: 9rem; display: grid; gap: var(--space-1-5); padding: var(--space-4) var(--space-5) 5rem; border-radius: var(--radius-md); background: var(--fd-paper); box-shadow: 0 -0.5rem 1.5rem -0.75rem rgb(15 21 29 / .25);
-  translate: 0 4rem; rotate: -2deg; opacity: 0; transition: translate .7s var(--ease-spring) .15s, opacity .3s ease .15s; z-index: -1; }
-.m-fa__f.is-top .m-fa__sheet { translate: 0 0; opacity: 1; }
-.m-fa__lbl { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-subtle); }
 .m-fa__row { display: flex; justify-content: space-between; gap: var(--space-3); font-size: var(--fs-caption); color: var(--text-muted); border-bottom: 1px dashed rgb(15 21 29 / .12); padding-bottom: var(--space-1); }
 .m-fa__row b { color: var(--text-default); white-space: nowrap; }
-.m-fa__body { position: absolute; inset: 0; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-6); color: var(--paper-0); opacity: 0; transition: opacity .4s ease .2s; }
-.m-fa__f.is-top .m-fa__body { opacity: 1; }
-.m-fa__n { display: flex; align-items: center; gap: var(--space-2-5); }
-.m-fa__n img { width: 2.5rem; height: 2.5rem; border-radius: var(--radius-md); object-fit: cover; box-shadow: 0 0 0 2px rgb(255 255 255 / .35); }
-.m-fa__n b { display: block; font: 600 var(--fs-h6)/1.2 var(--font-head); } .m-fa__n small { display: block; font-size: var(--fs-caption); opacity: .75; }
 .m-fa__top { margin-top: auto; font: 700 4rem/.9 var(--font-head); letter-spacing: -.05em; } .m-fa__top i { font-style: normal; opacity: .55; margin-right: .1em; }
-.m-fa__cap { max-width: 22rem; font: 500 var(--fs-sm)/1.35 var(--font-body); opacity: .9; }
-.m-fa__go { display: inline-flex; align-items: center; gap: var(--space-2); align-self: flex-start; margin-top: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill); background: rgb(255 255 255 / .16); color: var(--paper-0); font-size: var(--fs-sm); font-weight: 600; text-decoration: none; }
-.m-fa__go svg { width: 1rem; height: 1rem; } .m-fa__go:hover { background: rgb(255 255 255 / .26); }
-/* B · картотека */
-.m-fb { position: relative; height: 30rem; width: min(34rem, 100%); margin-left: auto; }
-.m-fb__files { position: absolute; left: 1.5rem; right: 1.5rem; bottom: 7rem; height: 20rem; }
-.m-fb__f { position: absolute; bottom: 0; left: calc(var(--k) * 11.5%); width: 34%; height: 15rem; display: block; color: inherit; text-decoration: none; z-index: calc(var(--k) + 1);
-  translate: 0 calc(var(--k) * .55rem); transition: translate .55s var(--ease-spring); }
-.m-fb__f::before { content: ""; position: absolute; inset: 1.75rem 0 0; border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md); background: linear-gradient(175deg, var(--fd-1), var(--fd-2)); box-shadow: -0.5rem 0 1.25rem -0.5rem rgb(15 21 29 / .35); filter: brightness(calc(.88 + var(--k) * .025)); }
-.m-fb__tab { position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: var(--space-1-5); max-width: 100%; height: 1.875rem; padding: 0 var(--space-2-5) 0 var(--space-1); border-radius: var(--radius-sm) var(--radius-sm) 0 0; background: var(--fd-1); color: var(--paper-0); font: 600 var(--fs-label)/1 var(--font-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; filter: brightness(calc(.88 + var(--k) * .025)); }
-.m-fb__tab img { width: 1.375rem; height: 1.375rem; border-radius: 50%; object-fit: cover; flex: none; }
-.m-fb__card { position: absolute; left: .75rem; right: .75rem; top: 2.5rem; display: grid; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-sm); background: var(--fd-paper); box-shadow: 0 .5rem 1rem -.5rem rgb(15 21 29 / .25); opacity: 0; translate: 0 1rem; transition: opacity .35s ease, translate .55s var(--ease-spring); }
-.m-fb__card b { font: 700 2rem/.95 var(--font-head); letter-spacing: -.05em; color: var(--text-default); } .m-fb__card b i { font-style: normal; color: var(--blue-600); margin-right: .08em; }
-.m-fb__card small { font-size: var(--fs-label); color: var(--text-muted); line-height: 1.25; } .m-fb__card em { font: 600 var(--fs-h6)/1 var(--font-head); font-style: normal; color: var(--orange-600); }
-.m-fb__f.is-up { translate: 0 -6rem; z-index: 30; } .m-fb__f.is-up .m-fb__card { opacity: 1; translate: 0 0; }
-.m-fb__box { position: absolute; left: 0; right: 0; bottom: 0; height: 9rem; z-index: 40; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-1); border-radius: var(--radius-md) var(--radius-md) var(--radius-xl) var(--radius-xl);
-  background: linear-gradient(var(--ink-800), var(--ink-950)); color: var(--paper-0); box-shadow: inset 0 1px 0 rgb(255 255 255 / .12), 0 1.5rem 2.5rem -1.25rem rgb(15 21 29 / .6); }
-.m-fb__box::before { content: ""; position: absolute; top: 1.25rem; width: 6rem; height: .5rem; border-radius: var(--radius-pill); background: rgb(0 0 0 / .5); box-shadow: 0 1px 0 rgb(255 255 255 / .1); }
-.m-fb__box span { margin-top: var(--space-4); font: 600 var(--fs-h6)/1 var(--font-head); } .m-fb__box small { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; opacity: .55; }
 /* C · папка «Кейсы» */
 .m-fc { position: relative; height: 31rem; width: min(32rem, 100%); margin-left: auto; }
 .m-fc__back { position: absolute; left: 0; right: 0; bottom: 0; height: 19rem; border-radius: 0 var(--radius-xl) var(--radius-xl) var(--radius-xl); background: linear-gradient(175deg, var(--fd-2), #2563c9); }
@@ -5242,18 +5202,10 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-fc__av { display: flex; } .m-fc__av img { width: 2.25rem; height: 2.25rem; margin-right: -.6rem; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px var(--fd-1); }
 @media (prefers-reduced-motion: reduce) { .m-fc__ph, .m-fc__sh { animation: none; } }
 @media (max-width: 1000px) {
-  .m-cvv { min-height: 0; } .m-fa, .m-fb, .m-fc { margin: var(--space-10) auto 0; }
+  .m-cvv { min-height: 0; } .m-fc { margin: var(--space-10) auto 0; }
   .m-fc__sh { display: none; }
 }
-@media (max-width: 520px) { .m-fa { height: 27rem; } .m-fa__top { font-size: 3rem; } .m-fb__f { width: 42%; left: calc(var(--k) * 9.5%); } .m-fc__ph { width: 7rem; } }
-/* A — вкладыш с результатами внутри папки справа (лист сверху перекрывал текст) */
-.m-fa__body { right: 14.5rem; }
-.m-fa__sheet { left: auto; right: 1.25rem; top: 3.25rem; bottom: auto; width: 12.5rem; padding: var(--space-4); z-index: 2; rotate: 3deg; translate: 1rem 0; }
-.m-fa__f.is-top .m-fa__sheet { translate: 0 0; }
-.m-fa__sheet::before { content: ""; position: absolute; top: -.625rem; left: 1.25rem; width: 1.125rem; height: 2.25rem; border: 2.5px solid #9aa3ae; border-bottom: 0; border-radius: .6rem .6rem 0 0; }
-.m-fa__row { flex-direction: column; gap: .125rem; }
-.m-fa__row b { font: 600 var(--fs-h6)/1.1 var(--font-head); }
-@media (max-width: 560px) { .m-fa__body { right: 0; } .m-fa__sheet { display: none; } }
+@media (max-width: 520px) { .m-fc__ph { width: 7rem; } }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -5287,7 +5239,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       <div class="p-cta o-rv" style="--d:3"><a class="o-btn o-btn--lg o-btn--primary" href="#razbor">Получить бесплатный разбор <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="o-btn o-btn--lg" href="../#tarify">Сколько стоит</a></div>
       
     </div>
-    <div class="p-cva__vis m-cvv" aria-hidden="true"><div class="m-cv" data-vgs="cv" data-v="a"><div class="m-cv__a" aria-hidden="true"></div><div class="m-cv__b" aria-hidden="true"></div><div class="m-cv__c"></div></div></div>
+    <div class="p-cva__vis m-cvv" aria-hidden="true"><div class="m-cv"><div class="m-cv__c"></div></div></div>
   </div>
 </section>
 <section class="o-section m-cs" aria-label="Кейсы"><div class="o-container"><div class="m-csbar"><div class="m-seg" role="tablist" aria-label="Фильтр кейсов"><i class="m-seg__ind" aria-hidden="true"></i><button type="button" role="tab" data-f="all" aria-selected="true">Все кейсы<b></b></button><button type="button" role="tab" data-f="up" aria-selected="false">Рост позиций<b></b></button><button type="button" role="tab" data-f="new" aria-selected="false">Запуск с&nbsp;нуля<b></b></button></div></div><div class="m-cs__list"></div></div></section><section class="cta8" id="razbor" aria-labelledby="cta8-title">
@@ -6559,7 +6511,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   ems.forEach(em => io.observe(em));
 })();
 </script>
-<div class="p-vsw" role="group" aria-label="Варианты блоков"><span class="p-vsw__t">Обложка</span><span class="p-vsw__g"><button type="button" data-vg="cv" data-v="a" aria-pressed="true">A · стопка папок</button><button type="button" data-vg="cv" data-v="b" aria-pressed="false">B · картотека</button><button type="button" data-vg="cv" data-v="c" aria-pressed="false">C · папка «Кейсы»</button></span></div><script>/* варианты блоков: [data-vg] → [data-vgs] */document.addEventListener("click",e=>{const b=e.target.closest(".p-vsw [data-vg]");if(!b)return;const g=b.dataset.vg;document.querySelectorAll(`[data-vgs="${g}"]`).forEach(x=>x.dataset.v=b.dataset.v);document.querySelectorAll(`.p-vsw [data-vg="${g}"]`).forEach(x=>x.setAttribute("aria-pressed",x===b));const t=document.querySelector(`[data-vgs="${g}"]`);t&&t.scrollIntoView({block:"center",behavior:"smooth"});});document.addEventListener("click",e=>{const b=e.target.closest(".p-seg [data-k]");if(!b)return;const r=b.closest(".p-ts__b");r.dataset.k=b.dataset.k;r.querySelectorAll(".p-seg [data-k]").forEach(x=>x.setAttribute("aria-selected",x===b));});addEventListener("load",()=>{const a=document.querySelector(".cx__av img");document.querySelectorAll("img[data-av]").forEach(i=>{if(a)i.src=a.src;});});</script><script>/* Outline Agency — поведение компонентов кита (ds/components.css). Подключается на всех страницах, кроме главной
+<script>/* Outline Agency — поведение компонентов кита (ds/components.css). Подключается на всех страницах, кроме главной
    (у главной своё в блоках src/). Сборка подставляет [["M405.039 61.7084H430.26H455.481C457.873 50.5041 452.86 24.8405 421.96 24.1234C405.039 23.7307 388.563 31.1746 387.287 52.7465C385.899 64.0254 392.637 88.8718 421.96 88.8718C431.793 88.8718 449.597 84.2842 453.566 68.7476H438.154C437.415 70.9135 433.009 75.3206 421.96 75.3206C416.794 75.3206 406.03 73.4208 405.039 61.7084ZM421.96 37.3436C409.147 37.3436 405.336 46.161 405.039 50.5444H438.533C437.28 39.537 428.296 37.3436 421.96 37.3436Z", "#0B0B0B"], ["M96.435 26.1752C113.554 26.1752 127.432 40.2072 127.432 57.5166C127.432 74.826 113.554 88.858 96.435 88.858H30.997C13.8778 88.858 0 74.826 0 57.5166C0 40.2072 13.8778 26.1752 30.997 26.1752H96.435ZM30.3082 44.2836C23.0801 44.2836 17.2205 50.2082 17.2205 57.5166C17.2205 64.825 23.0801 70.7496 30.3082 70.7496H97.1239C104.352 70.7496 110.211 64.825 110.211 57.5166C110.211 50.2082 104.352 44.2836 97.1239 44.2836H30.3082Z", "#2878EE"], ["M296.193 9.6435C296.193 14.9695 291.876 19.287 286.55 19.287C281.224 19.287 276.906 14.9695 276.906 9.6435C276.906 4.31754 281.224 0 286.55 0C291.876 0 296.193 4.31754 296.193 9.6435Z", "#0B0B0B"], ["M205.958 26.8168V10.3323H224.25V26.8168H236.61V43.2851H224.25V67.8125C224.25 69.5662 225.245 72.4744 230.794 72.4744C234.261 72.4744 235.154 72.4606 236.61 72.4744V88.858H229.339C211.124 88.858 205.958 77.6591 205.958 70.629V43.2851H197.347V26.8168H205.958Z", "#2878EE"], ["M247.287 6.1994H265.196V88.858H247.287V6.1994Z", "#0B0B0B"], ["M277.595 26.1752H295.505V88.858H277.595V26.1752Z", "#0B0B0B"], ["M155.287 69.5634C153.724 67.8605 152.949 64.632 152.949 61.4638V26.1752H134.322V61.4638C134.215 73.6185 138.835 80.4971 144.744 84.3159C150.47 88.0163 157.361 88.8139 162.199 88.8539V88.858H162.532C162.541 88.858 162.552 88.8573 162.561 88.8573C162.572 88.8573 162.582 88.858 162.592 88.858H162.925V88.8539C167.763 88.8139 174.654 88.0163 180.38 84.3159C186.289 80.4971 190.909 73.6185 190.802 61.4638V26.1752H172.175V61.4638C172.175 64.632 171.4 67.8605 169.837 69.5634C168.339 71.1952 166.071 72.1376 162.925 72.1658L162.536 72.1651L162.199 72.1658C159.053 72.1382 156.785 71.1952 155.287 69.5634Z", "#2878EE"], ["M307.903 88.858V26.7013H324.582L325.695 33.9941C332.233 26.6668 340.084 25.4863 346.305 25.4864C372.81 25.4865 375.408 45.3015 375.408 55.7701V88.858H357.027V55.7701C357.027 40.8196 348.899 38.1981 341.003 38.1981C325.695 38.1981 325.695 48.5594 325.695 55.7701V88.858H307.903Z", "#0B0B0B"]] — контуры логотипа из assets/logo-vec/logo-fill.svg.
    Порядок: шапка и меню → тёмная шапка над [data-hdr-dark] → вкладки → FAQ → появление → подвал (карта + логотип контуром). */
 (() => {
@@ -6889,25 +6841,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   const bar = document.querySelector('.m-csbar'); new IntersectionObserver(([e]) => bar.classList.toggle('is-stuck', e.intersectionRatio < 1), { rootMargin: '-81px 0px 0px 0px', threshold: [1] }).observe(bar);
   document.addEventListener('click', e => { const sh = e.target.closest('.m-cs [data-shot], .m-cv [data-shot]'); if (sh && window.__csShot) { e.preventDefault(); window.__csShot(+sh.dataset.shot); } });
 
-  /* обложки «папки» (13.11, Никита: «обложки не нравятся… может с папками что-нибудь») */
-  const N = C.length, res = c => c.rows[0], ARR2 = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-  /* A · стопка папок: верхняя сменяется сама, ярлыки — по клику */
-  const A = document.querySelector('.m-cv__a');
-  A.innerHTML = `<div class="m-fa">${C.map((c, k) => `<div class="m-fa__f" style="--k:${k}" data-k="${k}"><button type="button" class="m-fa__tab" data-pick="${k}"><img src="${IMG[c.id]}" alt="">${c.name}</button>
-    <div class="m-fa__sheet"><span class="m-fa__lbl">Результат</span>${c.rows.map(r => `<span class="m-fa__row"><span>${r[0]}</span><b>${r[1]}</b></span>`).join('')}</div>
-    <div class="m-fa__body"><span class="m-fa__n"><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><small>${c.niche} · ${c.city}</small></span></span><span class="m-fa__top">${c.big.replace('ТОП-', '<i>ТОП</i>')}</span><span class="m-fa__cap">${c.cap}</span><a class="m-fa__go" href="#cs-${c.id}">Смотреть кейс ${ARR2}</a></div></div>`).join('')}</div>`;
-  let cur = 0, tA = 0; const fs = [...A.querySelectorAll('.m-fa__f')];
-  const setA = i => { cur = (i + N) % N; fs.forEach((f, k) => { const o = (k - cur + N) % N; f.style.setProperty('--o', o); f.classList.toggle('is-top', o === 0); }); };
-  const runA = () => { clearInterval(tA); if (!reduce) tA = setInterval(() => setA(cur + 1), 3200); };
-  A.addEventListener('click', e => { const t = e.target.closest('[data-pick]'); if (t) { setA(+t.dataset.pick); runA(); } });
-  A.addEventListener('pointerenter', () => clearInterval(tA)); A.addEventListener('pointerleave', runA); setA(0); runA();
-  /* B · картотека: ящик с папками, выбранная приподнимается */
-  const B = document.querySelector('.m-cv__b');
-  B.innerHTML = `<div class="m-fb"><div class="m-fb__files">${C.map((c, k) => `<a class="m-fb__f" href="#cs-${c.id}" style="--k:${k}"><span class="m-fb__tab"><img src="${IMG[c.id]}" alt="">${c.name}</span><span class="m-fb__card"><b>${c.big.replace('ТОП-', '<i>ТОП</i>')}</b><small>${res(c)[0]}</small><em>${res(c)[1]}</em></span></a>`).join('')}</div><div class="m-fb__box"><span>Кейсы Outline Agency</span><small>${N}&nbsp;проектов</small></div></div>`;
-  const fb = [...B.querySelectorAll('.m-fb__f')]; let cb = 0, tB = 0;
-  const setB = i => { cb = (i + N) % N; fb.forEach((f, k) => f.classList.toggle('is-up', k === cb)); };
-  const runB = () => { clearInterval(tB); if (!reduce) tB = setInterval(() => setB(cb + 1), 2400); };
-  fb.forEach((f, k) => f.addEventListener('pointerenter', () => { clearInterval(tB); setB(k); })); B.addEventListener('pointerleave', runB); setB(0); runB();
+  /* обложка — папка «Кейсы» (13.11, выбрана Никитой из трёх «папок») */
+  const N = C.length;
   /* C · папка «Кейсы»: из папки торчат телефоны с карточками клиентов и листы с результатами */
   const Cc = document.querySelector('.m-cv__c'), ph = [0, 3, 2], sh = [1, 4];
   Cc.innerHTML = `<div class="m-fc"><div class="m-fc__back"></div>
