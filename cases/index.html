@@ -5219,6 +5219,9 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-fc__front { animation-duration: .6s; animation-delay: 0s; }
 .m-fc__ph { animation-delay: calc(var(--k) * 180ms + .55s); }
 .m-fc__sh { animation-delay: calc(var(--k) * 200ms + 1s); }
+/* 13.11 (Никита): телефоны и листы в папке не нажимаются и не открываются (обычные блоки, не кнопки и не ссылки); подъём на наведении остаётся */
+.m-fc { user-select: none; }
+.m-fc__ph, .m-fc__sh { cursor: default; }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -6859,8 +6862,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   /* C · папка «Кейсы»: из папки торчат телефоны с карточками клиентов и листы с результатами */
   const Cc = document.querySelector('.m-cv__c'), ph = [0, 3, 2], sh = [1, 4];
   Cc.innerHTML = `<div class="m-fc"><div class="m-fc__back"></div>
-    ${ph.map((i, k) => `<button type="button" class="m-fc__ph" style="--k:${k}" data-shot="${i}" aria-label="Карточка ${C[i].name} в Яндекс Картах"><span class="csv__dev"><span class="mph"><span class="mph__scr"><span class="mph__view"><img src="${YA[C[i].id]}" alt=""></span><span class="mph__home"></span></span></span></span></button>`).join('')}
-    ${sh.map((i, k) => `<a class="m-fc__sh" href="#cs-${C[i].id}" style="--k:${k}"><span class="m-fc__shh"><img src="${IMG[C[i].id]}" alt=""><b>${C[i].name}</b></span><span class="m-fa__top">${C[i].big.replace('ТОП-', '<i>ТОП</i>')}</span>${C[i].rows.slice(0, 2).map(r => `<span class="m-fa__row"><span>${r[0]}</span><b>${r[1]}</b></span>`).join('')}</a>`).join('')}
+    ${ph.map((i, k) => `<div class="m-fc__ph" style="--k:${k}"><span class="csv__dev"><span class="mph"><span class="mph__scr"><span class="mph__view"><img src="${YA[C[i].id]}" alt=""></span><span class="mph__home"></span></span></span></span></div>`).join('')}
+    ${sh.map((i, k) => `<div class="m-fc__sh" style="--k:${k}"><span class="m-fc__shh"><img src="${IMG[C[i].id]}" alt=""><b>${C[i].name}</b></span><span class="m-fa__top">${C[i].big.replace('ТОП-', '<i>ТОП</i>')}</span>${C[i].rows.slice(0, 2).map(r => `<span class="m-fa__row"><span>${r[0]}</span><b>${r[1]}</b></span>`).join('')}</div>`).join('')}
     <div class="m-fc__front"><span class="m-fc__lbl"><b>Кейсы</b><small>${N}&nbsp;проектов · ${[...new Set(C.map(c => c.niche))].length}&nbsp;ниш</small></span><span class="m-fc__av">${C.map(c => `<img src="${IMG[c.id]}" alt="">`).join('')}</span></div></div>`;
 })();</script>
 </body>
