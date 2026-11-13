@@ -6614,7 +6614,7 @@ html.p-lock { overflow: hidden; }
     const qs = [...iv.querySelectorAll('.iq-q')], rs = [...iv.querySelectorAll('.iq .iq-r')], ms = [...(iv.closest('section') || iv).querySelectorAll('.iq-m')];
     let k = -1, tm = 0;
     const set = n => { k = n; [qs, rs, ms].forEach(arr => arr.forEach(x => x.classList.toggle('is-on', +x.dataset.q === k))); };
-    const run = () => { clearInterval(tm); set(0); if (!reduce) tm = setInterval(() => set((k + 1) % 4), 1800); };
+    const run = () => { clearInterval(tm); set(0); if (!reduce) tm = setInterval(() => set((k + 1) % qs.length), 1800); };
     [...qs, ...ms].forEach(x => x.addEventListener('pointerenter', () => { clearInterval(tm); set(+x.dataset.q); }));
     iv.addEventListener('pointerleave', run);
     seen([iv], run, .3);
