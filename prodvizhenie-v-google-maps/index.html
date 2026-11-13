@@ -4842,6 +4842,25 @@ html.p-lock { overflow: hidden; }
 .p-cva__dev[data-pf="google"] .csv__dev .mph__view { background: #1d1a17; }
 .p-cva__dev[data-pf="google"] .csv__dev .mph__view img.p-one { top: 8.6cqw; clip-path: inset(.6% 0 0 0); }   /* сверху у скрина 8 px светлой панели — срезаны */
 .o-js .p-cva__vis.is-in .p-cva__dev .mph__view .p-one { transform: none; }
+
+/* 13.11 · 2ГИС «Карточка…»: абзац Ивана — в шапке блока от центральной линии (как .nw__lead на главной), вопросы подчёркиваются вместе с карточкой справа;
+   три карточки «веера» разбросаны по левой половине большой карточки, на наведении выпрямляются */
+.nw__head .iq-hlead { max-width: 34rem; font: 500 1.1875rem/1.5 var(--f-head, var(--font-head)); letter-spacing: -.01em; color: rgb(255 255 255 / .7); }
+.iq-hlead .iq-m { padding: 0; margin: 0; border-radius: 0; background: none; box-shadow: none; color: #fff; text-decoration: underline 2px; text-decoration-color: rgb(61 124 240 / 0); text-underline-offset: .28em; transition: text-decoration-color .4s ease; }
+.iq-hlead .iq-m.is-on { text-decoration-color: #3d7cf0; }
+.p-intro__txt.iq-scatter { align-self: stretch; padding: 2.5rem !important; }
+.iv[data-ivs="k2s"] .iq-scatter .iq-list { position: relative; display: block; height: 100%; min-height: 26rem; padding: 0; }
+.iv[data-ivs="k2s"] .iq-scatter .iq-list li { position: absolute; width: 15rem; margin: 0; transition: rotate .5s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)), translate .5s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)), box-shadow .3s ease; }
+.iv[data-ivs="k2s"] .iq-scatter .iq-list li:nth-child(1) { left: 3%; top: 6%; rotate: -7deg; translate: 0; z-index: 1; }
+.iv[data-ivs="k2s"] .iq-scatter .iq-list li:nth-child(2) { left: 52%; top: 20%; rotate: 6deg; translate: 0; z-index: 2; }
+.iv[data-ivs="k2s"] .iq-scatter .iq-list li:nth-child(3) { left: 16%; top: 58%; rotate: -3deg; translate: 0; z-index: 2; }
+@media (hover: hover) and (pointer: fine) { .iv[data-ivs="k2s"] .iq-scatter .iq-list li:hover { rotate: 0deg; translate: 0 -.5rem; z-index: 3; } }
+@media (max-width: 1000px) {
+  .nw__head .iq-hlead { max-width: none; font-size: 1.0625rem; }
+  .p-intro__txt.iq-scatter { padding: 1.5rem 1rem 0 !important; }
+  .iv[data-ivs="k2s"] .iq-scatter .iq-list { display: flex; flex-direction: column; gap: .75rem; height: auto; min-height: 0; }
+  .iv[data-ivs="k2s"] .iq-scatter .iq-list li { position: relative; left: auto !important; top: auto !important; width: auto; rotate: 0deg !important; }
+}
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -5031,7 +5050,7 @@ html.p-lock { overflow: hidden; }
       
     </div>
 
-    <div class="svc3__stage" aria-hidden="true"><div class="svc3__stage-in"><span class="sv__grid"></span><span class="svc3__count"><b id="svc3-n">01</b><i class="svc3__seg"><i class="on"></i><i></i><i></i><i></i><i></i></i><span>05</span></span><span class="svc3__demo">Пример: профиль в Google Картах</span></div></div>
+    <div class="svc3__stage" aria-hidden="true"><div class="svc3__stage-in"><span class="sv__grid"></span><span class="svc3__count"><b id="svc3-n">01</b><i class="svc3__seg"><i class="on"></i><i></i><i></i><i></i><i></i></i><span>05</span></span></div></div>
 
     <div class="svc3__grid">
       <article class="sv sv--wide"><div class="sv__in"><span class="sv__grid" aria-hidden="true"></span>
@@ -6890,7 +6909,7 @@ html.p-lock { overflow: hidden; }
   /* 2ГИС, «Карточка, по которой удобно выбрать компанию»: вопрос клиента ↔ слово в тексте Ивана ↔ строка карточки подсвечиваются вместе */
   const iv = $('.iv');
   if (iv) {
-    const qs = [...iv.querySelectorAll('.iq-q')], rs = [...iv.querySelectorAll('.iq .iq-r')], ms = [...iv.querySelectorAll('.iq-m')];
+    const qs = [...iv.querySelectorAll('.iq-q')], rs = [...iv.querySelectorAll('.iq .iq-r')], ms = [...(iv.closest('section') || iv).querySelectorAll('.iq-m')];
     let k = -1, tm = 0;
     const set = n => { k = n; [qs, rs, ms].forEach(arr => arr.forEach(x => x.classList.toggle('is-on', +x.dataset.q === k))); };
     const run = () => { clearInterval(tm); set(0); if (!reduce) tm = setInterval(() => set((k + 1) % 4), 1800); };

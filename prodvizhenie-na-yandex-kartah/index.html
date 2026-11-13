@@ -4700,7 +4700,7 @@ html.p-lock { overflow: hidden; }
       
     </div>
 
-    <div class="svc3__stage" aria-hidden="true"><div class="svc3__stage-in"><span class="sv__grid"></span><span class="svc3__count"><b id="svc3-n">01</b><i class="svc3__seg"><i class="on"></i><i></i><i></i><i></i><i></i></i><span>05</span></span><span class="svc3__demo">Пример, данные условные</span></div></div>
+    <div class="svc3__stage" aria-hidden="true"><div class="svc3__stage-in"><span class="sv__grid"></span><span class="svc3__count"><b id="svc3-n">01</b><i class="svc3__seg"><i class="on"></i><i></i><i></i><i></i><i></i></i><span>05</span></span></div></div>
 
     <div class="svc3__grid">
       <article class="sv sv--wide"><div class="sv__in"><span class="sv__grid" aria-hidden="true"></span>
@@ -6590,7 +6590,7 @@ html.p-lock { overflow: hidden; }
   /* 2ГИС, «Карточка, по которой удобно выбрать компанию»: вопрос клиента ↔ слово в тексте Ивана ↔ строка карточки подсвечиваются вместе */
   const iv = $('.iv');
   if (iv) {
-    const qs = [...iv.querySelectorAll('.iq-q')], rs = [...iv.querySelectorAll('.iq .iq-r')], ms = [...iv.querySelectorAll('.iq-m')];
+    const qs = [...iv.querySelectorAll('.iq-q')], rs = [...iv.querySelectorAll('.iq .iq-r')], ms = [...(iv.closest('section') || iv).querySelectorAll('.iq-m')];
     let k = -1, tm = 0;
     const set = n => { k = n; [qs, rs, ms].forEach(arr => arr.forEach(x => x.classList.toggle('is-on', +x.dataset.q === k))); };
     const run = () => { clearInterval(tm); set(0); if (!reduce) tm = setInterval(() => set((k + 1) % 4), 1800); };
