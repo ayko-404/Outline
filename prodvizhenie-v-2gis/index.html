@@ -6196,8 +6196,9 @@ html.p-lock { overflow: hidden; }
 (() => {
   /* кейсы: данные из b06-cases (window.__cases); блок встаёт на место прежнего «Кейсы» */
   const K = window.__cases, old = document.getElementById('keysy'), sec = document.getElementById('keysy-v'), root = document.getElementById('csv');
-  if (!K || !old || !sec) return;
-  old.after(sec); old.remove(); sec.id = 'keysy';
+  if (!K) return;
+  const has = old && sec && root;   // 13.11: на /cases/ блока главной нет — функции отрисовки всё равно нужны (window.__csvR)
+  if (has) { old.after(sec); old.remove(); sec.id = 'keysy'; }
   const { C, IMG, YA, RT } = K, N = C.length, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const plural = n => { n = +n; const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? 'оценка' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'оценки' : 'оценок'; };
   const ARR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -6223,7 +6224,8 @@ html.p-lock { overflow: hidden; }
   const body = c => `<div class="csv__body"><div class="csv__tags"><span class="n">${ico(c.id)}${c.niche}</span><span>${c.city}</span><span class="q">${c.period}</span></div><p class="csv__top">${top(c)}</p><p class="csv__cap">${c.cap}</p><div class="csv__rows">${row(c, 1)}${row(c, 0)}</div>${tbl(c)}<div class="csv__ft"><a class="csv__more" href="#">Читать кейс ${ARR}</a></div></div>`;
   const phone = c => `<button type="button" class="csv__ph" data-shot="${cur}" aria-label="Карточка ${c.name} в Яндекс Картах — открыть крупно"><span class="csv__dev"><span class="mph"><span class="mph__scr">${SB}<span class="mph__view"><img src="${YA[c.id]}" alt=""></span><span class="mph__home"></span></span></span></span><span class="cap">Карточка клиента в&nbsp;Яндекс Картах</span></button>`;
   const tab = (c, k) => `<button type="button" role="tab" class="csv__it" data-i="${k}" aria-selected="${k === cur}" aria-controls="csv-panel" tabindex="${k === cur ? 0 : -1}"><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><small>${c.niche} · ${c.city}</small></span></button>`;
-  window.__csvR = { body, phone };   // 13.11: страница /cases/ строит ленту теми же карточками
+  window.__csvR = { body, phone };   // 13.11: страница /cases/ строит сетку теми же карточками
+  if (!has) return;
   root.innerHTML = `<div class="csv__list" role="tablist" aria-label="Кейсы" aria-orientation="vertical">${C.map(tab).join('')}</div><div class="csv__card"><div class="csv__in" role="tabpanel" id="csv-panel">${body(C[cur])}${phone(C[cur])}</div></div>`;
 
   /* смена кейса: список сразу, текст — короткий фейд, экран телефона — наплыв поверх прежнего */

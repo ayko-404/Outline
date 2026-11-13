@@ -5036,9 +5036,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 @keyframes m-th-pop { from { opacity: 0; scale: .6; rotate: -20deg; } }
 @media (prefers-reduced-motion: reduce) { .m-th__ic .o-app { animation: none; } }
 
-/* ── кейсы (/cases/): варианты A лента · B сетка · C блок главной — переключатель внизу ── */
-.m-csw:not([data-v="a"]) .m-cs--a, .m-csw:not([data-v="b"]) .m-cs--b, .m-csw:not([data-v="c"]) .m-cs--c { display: none !important; }
-.m-csw .m-cs--c .vx__head { display: none; }
+/* ── кейсы (/cases/): сетка с фильтром (13.11 выбрана Никитой) ── */
 /* обложка: реальные результаты трёх кейсов вокруг кубка */
 .m-cf { display: grid; gap: var(--space-2); padding: var(--space-1); }
 .m-cf__h { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-sm); }
@@ -5046,38 +5044,40 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-cf__top { justify-self: start; padding: .2rem .5rem; border-radius: var(--radius-pill); background: var(--orange-100); color: var(--orange-700); font: 600 var(--fs-caption)/1.2 var(--font-mono); letter-spacing: .04em; }
 .m-cf__v b { display: block; font: 600 var(--fs-h4)/1 var(--font-head); letter-spacing: -.03em; }
 .m-cf__v small { display: block; margin-top: var(--space-1); font-size: var(--fs-caption); color: var(--text-muted); line-height: 1.3; }
-/* A · лента */
+/* фильтр — сегментный переключатель с бегущей подложкой и счётчиками */
 .m-cs { padding-top: var(--space-6) !important; }
-.m-cs__nav { position: sticky; top: 5rem; z-index: 5; display: flex; gap: var(--space-2); overflow-x: auto; padding: var(--space-2); margin: 0 0 var(--space-8); border-radius: var(--radius-pill); background: rgb(255 255 255 / .82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: var(--shadow-card); scrollbar-width: none; }
-.m-cs__nav a { flex: none; display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1-5) var(--space-3) var(--space-1-5) var(--space-1-5); border-radius: var(--radius-pill); color: var(--text-default); font-size: var(--fs-sm); font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) ease; }
-.m-cs__nav a:hover { background: var(--surface-row); }
-.m-cs__nav img { width: 1.75rem; height: 1.75rem; border-radius: 50%; object-fit: cover; }
-.m-cs__list { display: grid; gap: var(--space-6); }
-.m-cl { scroll-margin-top: 9rem; }
-/* B · сетка */
-.m-cs__flt { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); }
-.m-cs__flt button { height: 2.5rem; padding: 0 var(--space-4); border: 0; border-radius: var(--radius-pill); background: var(--surface-tray); color: var(--text-default); font: 500 var(--fs-sm)/1 var(--font-body); cursor: pointer; transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease; }
-.m-cs__flt button[aria-pressed="true"] { background: var(--ink-950); color: var(--paper-0); }
-.m-cs__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
-.m-cg { display: grid; grid-template-columns: 11rem 1fr; gap: var(--space-5); padding: var(--space-4); border-radius: var(--radius-xl); background: var(--surface-frame); box-shadow: var(--shadow-card); }
-.m-cg[hidden] { display: none; }
-.m-cg__shot { position: relative; height: 15rem; padding: 0; border: 0; border-radius: var(--radius-lg); overflow: hidden; background: var(--surface-inset); cursor: zoom-in; }
-.m-cg__shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: scale var(--dur-slow) var(--ease-out); }
-.m-cg__shot:hover img { scale: 1.04; }
-.m-cg__b { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; padding: var(--space-2) var(--space-2) var(--space-2) 0; }
-.m-cg__h { display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: center; gap: var(--space-3); }
-.m-cg__h img { width: 2.5rem; height: 2.5rem; border-radius: var(--radius-md); object-fit: cover; }
-.m-cg__h b { display: block; font: 600 var(--fs-h6)/1.2 var(--font-head); letter-spacing: -.01em; }
-.m-cg__h small { display: block; margin-top: .125rem; font-size: var(--fs-caption); color: var(--text-muted); }
-.m-cg__h em { font: 600 var(--fs-h5)/1 var(--font-head); font-style: normal; letter-spacing: -.03em; color: var(--orange-600); white-space: nowrap; }
-.m-cg__cap { margin: 0; font-size: var(--fs-sm); line-height: 1.45; }
-.m-cg ul { display: grid; gap: var(--space-1-5); margin: 0; padding: var(--space-3) 0 0; border-top: 1px dashed var(--border-default); list-style: none; }
-.m-cg li { display: flex; justify-content: space-between; gap: var(--space-3); font-size: var(--fs-caption); color: var(--text-muted); } .m-cg li b { color: var(--text-default); white-space: nowrap; }
-.m-cg__q { margin: auto 0 0; font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .04em; color: var(--text-subtle); }
-@media (max-width: 1000px) { .m-cs__grid { grid-template-columns: 1fr; } }
-@media (max-width: 560px) { .m-cg { grid-template-columns: 1fr; } .m-cg__shot { height: 12rem; } .m-cg__b { padding: 0 var(--space-1) var(--space-1); } }
-.m-cl > .csv { display: block !important; grid-template-columns: none !important; }
-.m-cl .csv__card { width: 100%; }
+.m-seg { position: relative; display: inline-flex; gap: var(--space-1); padding: var(--space-1-5); margin: 0 0 var(--space-8); border-radius: var(--radius-pill); background: var(--surface-tray); box-shadow: var(--shadow-inset); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.m-seg__ind { position: absolute; z-index: 0; top: var(--space-1-5); bottom: var(--space-1-5); left: 0; width: var(--w, 0); translate: var(--x, 0) 0; border-radius: var(--radius-pill); background: var(--surface-frame); box-shadow: var(--shadow-card); }
+.m-seg.is-ready .m-seg__ind { transition: translate .5s var(--ease-spring), width .5s var(--ease-spring); }
+.m-seg button { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: var(--space-2); flex: none; height: 3rem; padding: 0 var(--space-3) 0 var(--space-5); border: 0; border-radius: var(--radius-pill); background: none; color: var(--text-muted); font: 500 var(--fs-base)/1 var(--font-body); cursor: pointer; transition: color var(--dur-base) ease; }
+.m-seg button:hover { color: var(--text-default); }
+.m-seg button[aria-selected="true"] { color: var(--text-default); }
+.m-seg b { display: grid; place-items: center; min-width: 1.75rem; height: 1.75rem; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: rgb(15 21 29 / .06); font: 600 var(--fs-caption)/1 var(--font-mono); color: var(--text-muted); transition: background-color var(--dur-base) ease, color var(--dur-base) ease; }
+.m-seg button[aria-selected="true"] b { background: var(--blue-100); color: var(--blue-700); }
+/* сетка: карточка кейса главной (белый кант, внутренняя панель, теги, ТОП, цифры «сейчас») + телефон в титане — компактнее */
+.m-cs__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); align-items: stretch; }
+.m-cg2[hidden] { display: none; }
+.m-cg2 .csv__card { height: 100%; border-radius: 40px; }
+.m-cg2 .csv__in { height: 100%; box-sizing: border-box; grid-template-columns: minmax(0, 1fr) 9.75rem; column-gap: var(--space-5); padding: var(--space-6) var(--space-5) var(--space-6) var(--space-6); border-radius: 30px; }
+.m-cg2 .csv__top { margin-top: var(--space-5); font-size: clamp(3rem, 4.4vw, 4rem); }
+.m-cg2 .csv__cap { font-size: var(--fs-base); }
+.m-cg2 .csv__rows { display: none; }
+.m-cg2 .csv__tbl { margin-top: var(--space-4); font-size: var(--fs-sm); }
+.m-cg2 .csv__tbl th.b, .m-cg2 .csv__tbl td.b { display: none; }
+.m-cg2 .csv__tbl th:nth-child(3) { display: none; }
+.m-cg2 .csv__tbl thead { display: none; }
+.m-cg2 .csv__tbl td { padding: var(--space-2) 0; }
+.m-cg2 .csv__tbl td.n { font-size: var(--fs-base); color: var(--text-default); }
+.m-cg2 .csv__ft { padding-top: var(--space-5); }
+.m-cg2 .csv__more { height: 2.5rem; padding: 0 var(--space-4); font-size: var(--fs-sm); }
+.m-cg2 .csv__ph { width: 9.75rem; align-self: center; gap: var(--space-2); }
+.m-cg2 .csv__ph .cap { font-size: var(--fs-label); white-space: normal; text-align: center; }
+@media (max-width: 1200px) { .m-cs__grid { grid-template-columns: 1fr; } }
+@media (max-width: 700px) {
+  .m-seg button { height: 2.75rem; padding: 0 var(--space-2) 0 var(--space-3); font-size: var(--fs-sm); }
+  .m-cg2 .csv__in { grid-template-columns: 1fr; padding: var(--space-5) var(--space-4); }
+  .m-cg2 .csv__ph { width: 12rem; justify-self: center; margin-top: var(--space-5); }
+}
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -5118,17 +5118,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
     </div></div>
   </div>
 </section>
-<div class="m-csw" data-vgs="cs" data-v="a"><section class="o-section m-cs m-cs--a" aria-label="Кейсы лентой"><div class="o-container"><nav class="m-cs__nav" aria-label="К кейсу"></nav><div class="m-cs__list"></div></div></section><section class="o-section m-cs m-cs--b" aria-label="Кейсы сеткой"><div class="o-container"><div class="m-cs__flt" role="group" aria-label="Фильтр"><button type="button" data-f="all" aria-pressed="true">Все кейсы</button><button type="button" data-f="up" aria-pressed="false">Рост позиций</button><button type="button" data-f="new" aria-pressed="false">Запуск с&nbsp;нуля</button></div><div class="m-cs__grid"></div></div></section><section class="lt lt--plain m-cs--c" id="keysy" aria-labelledby="cs-title">
-  <div class="lt__in">
-    <div class="lt__head">
-      <h2 class="lt__title" id="cs-title">Кейсы</h2>
-      <p class="lt__lead">Что было, что сделали и&nbsp;к&nbsp;чему пришли&nbsp;— по&nbsp;проектам в&nbsp;разных нишах.</p>
-    </div>
-  </div>
-</section><section class="vx csv-sec m-cs--c" id="keysy-v" aria-labelledby="csv-title">
-  <div class="vx__in"><div class="vx__head"><h2 class="vx__h" id="csv-title">Кейсы</h2><p class="vx__lead">Что было, что сделали и&nbsp;к&nbsp;чему пришли&nbsp;— по&nbsp;проектам в&nbsp;разных нишах.</p></div>
-  <div class="csv csv--a" id="csv"></div></div>
-</section></div><section class="lt lt--plain" id="otzyvy" aria-labelledby="rv-title">
+<section class="o-section m-cs" aria-label="Кейсы"><div class="o-container"><div class="m-seg" role="tablist" aria-label="Фильтр кейсов"><i class="m-seg__ind" aria-hidden="true"></i><button type="button" role="tab" data-f="all" aria-selected="true">Все кейсы<b></b></button><button type="button" role="tab" data-f="up" aria-selected="false">Рост позиций<b></b></button><button type="button" role="tab" data-f="new" aria-selected="false">Запуск с&nbsp;нуля<b></b></button></div><div class="csv m-cs__grid"></div></div></section><section class="lt lt--plain" id="otzyvy" aria-labelledby="rv-title">
   <div class="lt__in">
     <div class="lt__head">
       <h2 class="lt__title" id="rv-title">Отзывы клиентов</h2>
@@ -5947,8 +5937,9 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 (() => {
   /* кейсы: данные из b06-cases (window.__cases); блок встаёт на место прежнего «Кейсы» */
   const K = window.__cases, old = document.getElementById('keysy'), sec = document.getElementById('keysy-v'), root = document.getElementById('csv');
-  if (!K || !old || !sec) return;
-  old.after(sec); old.remove(); sec.id = 'keysy';
+  if (!K) return;
+  const has = old && sec && root;   // 13.11: на /cases/ блока главной нет — функции отрисовки всё равно нужны (window.__csvR)
+  if (has) { old.after(sec); old.remove(); sec.id = 'keysy'; }
   const { C, IMG, YA, RT } = K, N = C.length, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const plural = n => { n = +n; const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? 'оценка' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'оценки' : 'оценок'; };
   const ARR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -5974,7 +5965,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   const body = c => `<div class="csv__body"><div class="csv__tags"><span class="n">${ico(c.id)}${c.niche}</span><span>${c.city}</span><span class="q">${c.period}</span></div><p class="csv__top">${top(c)}</p><p class="csv__cap">${c.cap}</p><div class="csv__rows">${row(c, 1)}${row(c, 0)}</div>${tbl(c)}<div class="csv__ft"><a class="csv__more" href="#">Читать кейс ${ARR}</a></div></div>`;
   const phone = c => `<button type="button" class="csv__ph" data-shot="${cur}" aria-label="Карточка ${c.name} в Яндекс Картах — открыть крупно"><span class="csv__dev"><span class="mph"><span class="mph__scr">${SB}<span class="mph__view"><img src="${YA[c.id]}" alt=""></span><span class="mph__home"></span></span></span></span><span class="cap">Карточка клиента в&nbsp;Яндекс Картах</span></button>`;
   const tab = (c, k) => `<button type="button" role="tab" class="csv__it" data-i="${k}" aria-selected="${k === cur}" aria-controls="csv-panel" tabindex="${k === cur ? 0 : -1}"><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><small>${c.niche} · ${c.city}</small></span></button>`;
-  window.__csvR = { body, phone };   // 13.11: страница /cases/ строит ленту теми же карточками
+  window.__csvR = { body, phone };   // 13.11: страница /cases/ строит сетку теми же карточками
+  if (!has) return;
   root.innerHTML = `<div class="csv__list" role="tablist" aria-label="Кейсы" aria-orientation="vertical">${C.map(tab).join('')}</div><div class="csv__card"><div class="csv__in" role="tabpanel" id="csv-panel">${body(C[cur])}${phone(C[cur])}</div></div>`;
 
   /* смена кейса: список сразу, текст — короткий фейд, экран телефона — наплыв поверх прежнего */
@@ -6436,7 +6428,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   ems.forEach(em => io.observe(em));
 })();
 </script>
-<div class="p-vsw" role="group" aria-label="Варианты блоков"><span class="p-vsw__t">Страница кейсов</span><span class="p-vsw__g"><button type="button" data-vg="cs" data-v="a" aria-pressed="true">A · лента</button><button type="button" data-vg="cs" data-v="b" aria-pressed="false">B · сетка</button><button type="button" data-vg="cs" data-v="c" aria-pressed="false">C · как на главной</button></span></div><script>/* варианты блоков: [data-vg] → [data-vgs] */document.addEventListener("click",e=>{const b=e.target.closest(".p-vsw [data-vg]");if(!b)return;const g=b.dataset.vg;document.querySelectorAll(`[data-vgs="${g}"]`).forEach(x=>x.dataset.v=b.dataset.v);document.querySelectorAll(`.p-vsw [data-vg="${g}"]`).forEach(x=>x.setAttribute("aria-pressed",x===b));const t=document.querySelector(`[data-vgs="${g}"]`);t&&t.scrollIntoView({block:"center",behavior:"smooth"});});document.addEventListener("click",e=>{const b=e.target.closest(".p-seg [data-k]");if(!b)return;const r=b.closest(".p-ts__b");r.dataset.k=b.dataset.k;r.querySelectorAll(".p-seg [data-k]").forEach(x=>x.setAttribute("aria-selected",x===b));});addEventListener("load",()=>{const a=document.querySelector(".cx__av img");document.querySelectorAll("img[data-av]").forEach(i=>{if(a)i.src=a.src;});});</script><script>/* Outline Agency — поведение компонентов кита (ds/components.css). Подключается на всех страницах, кроме главной
+<script>/* Outline Agency — поведение компонентов кита (ds/components.css). Подключается на всех страницах, кроме главной
    (у главной своё в блоках src/). Сборка подставляет [["M405.039 61.7084H430.26H455.481C457.873 50.5041 452.86 24.8405 421.96 24.1234C405.039 23.7307 388.563 31.1746 387.287 52.7465C385.899 64.0254 392.637 88.8718 421.96 88.8718C431.793 88.8718 449.597 84.2842 453.566 68.7476H438.154C437.415 70.9135 433.009 75.3206 421.96 75.3206C416.794 75.3206 406.03 73.4208 405.039 61.7084ZM421.96 37.3436C409.147 37.3436 405.336 46.161 405.039 50.5444H438.533C437.28 39.537 428.296 37.3436 421.96 37.3436Z", "#0B0B0B"], ["M96.435 26.1752C113.554 26.1752 127.432 40.2072 127.432 57.5166C127.432 74.826 113.554 88.858 96.435 88.858H30.997C13.8778 88.858 0 74.826 0 57.5166C0 40.2072 13.8778 26.1752 30.997 26.1752H96.435ZM30.3082 44.2836C23.0801 44.2836 17.2205 50.2082 17.2205 57.5166C17.2205 64.825 23.0801 70.7496 30.3082 70.7496H97.1239C104.352 70.7496 110.211 64.825 110.211 57.5166C110.211 50.2082 104.352 44.2836 97.1239 44.2836H30.3082Z", "#2878EE"], ["M296.193 9.6435C296.193 14.9695 291.876 19.287 286.55 19.287C281.224 19.287 276.906 14.9695 276.906 9.6435C276.906 4.31754 281.224 0 286.55 0C291.876 0 296.193 4.31754 296.193 9.6435Z", "#0B0B0B"], ["M205.958 26.8168V10.3323H224.25V26.8168H236.61V43.2851H224.25V67.8125C224.25 69.5662 225.245 72.4744 230.794 72.4744C234.261 72.4744 235.154 72.4606 236.61 72.4744V88.858H229.339C211.124 88.858 205.958 77.6591 205.958 70.629V43.2851H197.347V26.8168H205.958Z", "#2878EE"], ["M247.287 6.1994H265.196V88.858H247.287V6.1994Z", "#0B0B0B"], ["M277.595 26.1752H295.505V88.858H277.595V26.1752Z", "#0B0B0B"], ["M155.287 69.5634C153.724 67.8605 152.949 64.632 152.949 61.4638V26.1752H134.322V61.4638C134.215 73.6185 138.835 80.4971 144.744 84.3159C150.47 88.0163 157.361 88.8139 162.199 88.8539V88.858H162.532C162.541 88.858 162.552 88.8573 162.561 88.8573C162.572 88.8573 162.582 88.858 162.592 88.858H162.925V88.8539C167.763 88.8139 174.654 88.0163 180.38 84.3159C186.289 80.4971 190.909 73.6185 190.802 61.4638V26.1752H172.175V61.4638C172.175 64.632 171.4 67.8605 169.837 69.5634C168.339 71.1952 166.071 72.1376 162.925 72.1658L162.536 72.1651L162.199 72.1658C159.053 72.1382 156.785 71.1952 155.287 69.5634Z", "#2878EE"], ["M307.903 88.858V26.7013H324.582L325.695 33.9941C332.233 26.6668 340.084 25.4863 346.305 25.4864C372.81 25.4865 375.408 45.3015 375.408 55.7701V88.858H357.027V55.7701C357.027 40.8196 348.899 38.1981 341.003 38.1981C325.695 38.1981 325.695 48.5594 325.695 55.7701V88.858H307.903Z", "#0B0B0B"]] — контуры логотипа из assets/logo-vec/logo-fill.svg.
    Порядок: шапка и меню → тёмная шапка над [data-hdr-dark] → вкладки → FAQ → появление → подвал (карта + логотип контуром). */
 (() => {
@@ -6748,19 +6740,19 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
     seen([iv], run, .3);
   }
 })();
-</script><script>(() => { /* страница кейсов: лента (A) и сетка (B) из данных главной; C — блок главной как есть */
+</script><script>(() => { /* страница кейсов: сетка из данных главной (window.__cases) теми же карточками и телефоном; фильтр — рост позиций / запуск с нуля */
   const K = window.__cases, R = window.__csvR; if (!K || !R) return;
-  const { C, IMG, YA } = K, nav = document.querySelector('.m-cs__nav'), list = document.querySelector('.m-cs__list'), grid = document.querySelector('.m-cs__grid');
-  const ARR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-  nav.innerHTML = C.map((c, k) => `<a href="#cs-${c.id}"><img src="${IMG[c.id]}" alt=""><span>${c.name}</span></a>`).join('');
-  list.innerHTML = C.map((c, k) => `<article class="m-cl" id="cs-${c.id}"><div class="csv csv--a"><div class="csv__card"><div class="csv__in">${R.body(c)}${R.phone(c).replace(/data-shot="\d+"/, `data-shot="${k}"`)}</div></div></div></article>`).join('');
+  const { C } = K, grid = document.querySelector('.m-cs__grid'), seg = document.querySelector('.m-seg'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const kind = c => c.was ? 'new' : 'up';
-  grid.innerHTML = C.map((c, k) => `<article class="m-cg" data-k="${kind(c)}"><button type="button" class="m-cg__shot" data-shot="${k}" aria-label="Карточка ${c.name} в Яндекс Картах — открыть крупно"><img src="${YA[c.id]}" alt="" loading="lazy"></button>
-    <div class="m-cg__b"><div class="m-cg__h"><img src="${IMG[c.id]}" alt=""><span><b>${c.name}</b><small>${c.niche} · ${c.city}</small></span><em>${c.big}</em></div><p class="m-cg__cap">${c.cap}</p>
-    <ul>${c.rows.map(r => `<li><span>${r[0]}</span><b>${r[1]}</b></li>`).join('')}</ul><p class="m-cg__q">${c.period}</p></div></article>`).join('');
-  document.addEventListener('click', e => { const sh = e.target.closest('.m-cs [data-shot]'); if (sh && window.__csShot) { e.preventDefault(); window.__csShot(+sh.dataset.shot); }
-    const f = e.target.closest('.m-cs__flt [data-f]'); if (f) { const v = f.dataset.f; f.parentElement.querySelectorAll('[data-f]').forEach(b => b.setAttribute('aria-pressed', b === f));
-      grid.querySelectorAll('.m-cg').forEach(x => { x.hidden = v !== 'all' && x.dataset.k !== v; }); } });
+  grid.innerHTML = C.map((c, k) => `<article class="m-cg2" data-k="${kind(c)}"><div class="csv__card"><div class="csv__in">${R.body(c)}${R.phone(c).replace(/data-shot="\d+"/, `data-shot="${k}"`)}</div></div></article>`).join('');
+  const cards = [...grid.children], bs = [...seg.querySelectorAll('[data-f]')];
+  bs.forEach(b => { const f = b.dataset.f; b.querySelector('b').textContent = f === 'all' ? C.length : C.filter(c => kind(c) === f).length; });
+  const ind = () => { const a = seg.querySelector('[aria-selected="true"]'); seg.style.setProperty('--x', a.offsetLeft + 'px'); seg.style.setProperty('--w', a.offsetWidth + 'px'); };
+  const pick = b => { bs.forEach(x => x.setAttribute('aria-selected', x === b)); ind(); const f = b.dataset.f;
+    cards.forEach(el => { const on = f === 'all' || el.dataset.k === f; if (on && el.hidden) { el.hidden = false; if (!reduce) el.animate([{ opacity: 0, transform: 'translateY(.75rem) scale(.98)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)' }); } else if (!on) el.hidden = true; }); };
+  seg.addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (b) pick(b); });
+  addEventListener('resize', ind); ind(); requestAnimationFrame(() => seg.classList.add('is-ready'));
+  grid.addEventListener('click', e => { const sh = e.target.closest('[data-shot]'); if (sh && window.__csShot) window.__csShot(+sh.dataset.shot); });
 })();</script>
 </body>
 </html>
