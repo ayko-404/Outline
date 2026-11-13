@@ -4401,7 +4401,7 @@ html.o-lock { overflow: hidden; }
 /* переход в светлое: на главной нижнюю половину волны перекрывает «Как начинаем», здесь блока нет — волна короче, без пустого поля;
    «Услуги» заходят на 2 px внахлёст — иначе в щель просвечивает тёмный фон волны (линия) */
 #wavel { height: 36vh !important; }
-#uslugi .svc3__in { padding-top: 0 !important; }
+/* 13.11: #uslugi .svc3__in { padding-top: 0 } убран — «Что берём на себя» закреплённый (100vh), без отступа заголовок уходил под шапку, а счётчик срезался */
 #kak-nachinaem { display: none !important; }
 #uslugi { position: relative; z-index: 1; margin-top: -2px !important; }
 @media (max-width: 760px) { #wavel { height: 30vh !important; } }
@@ -4471,6 +4471,10 @@ html.o-lock { overflow: hidden; }
 .p-pop__acts { display: flex; flex-direction: column; gap: var(--space-2-5); margin-top: var(--space-2); }
 html.p-lock { overflow: hidden; }
 @media (max-width: 700px) { .p-pop__box { padding: var(--space-6) var(--space-5); } }
+
+/* 13.11 · чек выезжает по прокрутке (page.js ставит --rc-y и .is-pr строкам) */
+.o-js .p-rc.is-scroll .p-rc__paper { transition: none; translate: 0 var(--rc-y, -100%); will-change: translate; }
+.o-js .p-rc.is-scroll :is(.p-rc__l, .p-rc__tot, .p-rc__bar, .p-rc__foot).is-pr { opacity: 1; animation: p-print .32s steps(5) backwards; }
 
 /* ════════ Страницы услуг (build_services.py, 12.11.2026) ════════ */
 /* обложка: летающие карточки карт вокруг иконки площадки */
@@ -6856,14 +6860,31 @@ html.p-lock { overflow: hidden; }
 
   /* ситуации и «Состав сопровождения»: сцены запускаются, когда видна сама карточка */
 
-  /* чек: выезжает из принтера, строки печатаются, сумма досчитывается */
-  seen([$('.p-rc')], el => {
-    el.classList.add('is-in');
-    const sum = $('.p-rc__sum', el), to = +sum.dataset.to, fmt = n => Math.round(n).toLocaleString('ru-RU').replace(/\s/g, '\u00a0') + '\u00a0₽';
-    if (reduce) { sum.textContent = fmt(to); return; }
-    sum.textContent = fmt(0);
-    setTimeout(() => { const t0 = performance.now(); const step = now => { const k = Math.min(1, (now - t0) / 900), e = 1 - Math.pow(1 - k, 3); sum.textContent = fmt(to * e); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }, 1900);
-  }, .3);
+  /* чек (13.11, Никита: «чтобы выдвигались по скроллу»): бумага выезжает из принтера вместе с прокруткой —
+     начинает, когда принтер входит снизу экрана, выезжает целиком к верхней трети; строки «печатаются», когда выходят из щели,
+     сумма досчитывается, когда показалось «Итого»; прокрутка назад — бумага уезжает обратно */
+  const rc = $('.p-rc');
+  if (rc) {
+    const sum = $('.p-rc__sum', rc), to = +sum.dataset.to, fmt = n => Math.round(n).toLocaleString('ru-RU').replace(/\s/g, '\u00a0') + '\u00a0₽';
+    if (reduce) { rc.classList.add('is-in'); sum.textContent = fmt(to); }
+    else {
+      rc.classList.add('is-scroll'); sum.textContent = fmt(0);
+      const paper = $('.p-rc__paper', rc), parts = [...rc.querySelectorAll('.p-rc__l, .p-rc__tot, .p-rc__bar, .p-rc__foot')], tot = $('.p-rc__tot', rc);
+      let counted = false, raf = 0;
+      const count = () => { counted = true; const t0 = performance.now(); const step = now => { const k = Math.min(1, (now - t0) / 900), e = 1 - Math.pow(1 - k, 3); sum.textContent = fmt(to * e); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); };
+      const upd = () => {
+        raf = 0;
+        const vh = innerHeight, top = rc.getBoundingClientRect().top, H = paper.offsetHeight;
+        const p = Math.min(1, Math.max(0, (vh * .9 - top) / (vh * .6)));
+        rc.style.setProperty('--rc-y', ((p - 1) * 100).toFixed(2) + '%');
+        const hidden = (1 - p) * H;   // бумага выезжает нижним краем вперёд: видно всё ниже hidden
+        parts.forEach(el => el.classList.toggle('is-pr', el.offsetTop + el.offsetHeight * .4 >= hidden));
+        if (!counted && tot.classList.contains('is-pr')) count();
+      };
+      const req = () => { if (!raf) raf = requestAnimationFrame(upd); };
+      addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); upd();
+    }
+  }
 
   /* «С вашей стороны»: сообщение в мессенджере — сначала «печатает», затем появляется */
   const note = $('.p-note');
@@ -6891,7 +6912,7 @@ html.p-lock { overflow: hidden; }
     const rc = document.querySelector('#tarify .p-rc');
     let price = null;
     if (rc) {
-      const c = rc.cloneNode(true); c.classList.add('is-in'); c.removeAttribute('id');
+      const c = rc.cloneNode(true); c.classList.add('is-in'); c.classList.remove('is-scroll'); c.style.removeProperty('--rc-y'); c.removeAttribute('id');
       const sum = c.querySelector('.p-rc__sum'); if (sum) sum.textContent = (+sum.dataset.to).toLocaleString('ru-RU').replace(/\s/g, '\u00a0') + '\u00a0₽';
       const btn = document.querySelector('#tarify .o-btn--primary'), name = btn ? btn.textContent.trim() : 'Выбрать тариф';
       price = mk('p-pop--price', `<p class="p-pop__t">Сколько <em>стоит</em></p><div class="p-pop__rc"></div><div class="p-pop__acts"><button class="o-btn o-btn--primary o-btn--lg o-btn--block" type="button" data-go>${name} ${ARR}</button><a class="o-btn o-btn--lg o-btn--block" href="../#tarify">Сравнить все тарифы</a></div>`);
