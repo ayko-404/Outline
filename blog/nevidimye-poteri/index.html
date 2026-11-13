@@ -5206,6 +5206,19 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   .m-fc__sh { display: none; }
 }
 @media (max-width: 520px) { .m-fc__ph { width: 7rem; } }
+/* 13.11 (Никита: «анимация у папок слишком резкая») — без пружины: плавный выезд с проявлением, мягкий подъём на наведении */
+.m-fc__ph, .m-fc__sh { animation: m-fc-in 1.4s cubic-bezier(.22, 1, .36, 1) backwards; transition: translate .9s cubic-bezier(.22, 1, .36, 1), rotate .9s cubic-bezier(.22, 1, .36, 1); }
+.m-fc__ph { animation-delay: calc(var(--k) * 180ms + .25s); }
+.m-fc__sh { animation-delay: calc(var(--k) * 200ms + .7s); }
+@keyframes m-fc-in { from { opacity: 0; translate: 0 2.5rem; } }
+.m-fc__ph:hover { translate: 0 -1.25rem; }
+.m-fc__sh:hover { translate: 0 -1rem; }
+.m-fc__front { animation: m-fc-front 1s cubic-bezier(.22, 1, .36, 1) backwards .1s; }
+@keyframes m-fc-front { from { opacity: 0; translate: 0 1rem; } }
+@media (prefers-reduced-motion: reduce) { .m-fc__ph, .m-fc__sh, .m-fc__front { animation: none; } }
+.m-fc__front { animation-duration: .6s; animation-delay: 0s; }
+.m-fc__ph { animation-delay: calc(var(--k) * 180ms + .55s); }
+.m-fc__sh { animation-delay: calc(var(--k) * 200ms + 1s); }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
