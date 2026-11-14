@@ -5365,6 +5365,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 /* 14.11 (Никита: «между шапкой и первой группой большой белый отступ») */
 .m-sx__r--h > span { padding-bottom: var(--space-3); }
 .m-sx__r--h + .m-sx__g > span { padding-top: var(--space-3); }
+
+#sravnenie { scroll-margin-top: 4rem; }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
@@ -6981,7 +6983,14 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       tfp.querySelector('.p-pop__tf').append(tpl.content.cloneNode(true));
       tfp.addEventListener('click', e => { const b = e.target.closest('.tf__btn'); if (!b) return; e.preventDefault(); tfp.close(); open(form, b.textContent.replace('Выбрать', '').trim()); });
     }
-    if (price && tfp) price.querySelector('[data-tf]').addEventListener('click', () => { price.close(); open(tfp); });
+    /* 14.11 (Никита): «Сравнить тарифы» / «Сравнить все тарифы» ведут к таблице сравнения на странице «Тарифы» (/tarify/#sravnenie), а не в поп-ап */
+    const tfA = document.querySelector('.plate a[href$="tarify/"], a[href$="tarify/"]');
+    const onTf = /\/tarify\/?$/.test(location.pathname);
+    const cmpUrl = onTf ? '#sravnenie' : (tfA ? tfA.getAttribute('href') + '#sravnenie' : '');
+    const goCmp = () => { if (onTf) { const s = document.getElementById('sravnenie'); s && s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else if (cmpUrl) location.href = cmpUrl; };
+    if (cmpUrl) document.querySelectorAll('a').forEach(a => { if (/^Сравнить/.test(a.textContent.trim()) && !a.closest('.p-pop')) a.setAttribute('href', cmpUrl); });
+    if (price && cmpUrl) price.querySelector('[data-tf]').addEventListener('click', () => { price.close(); goCmp(); });
+    else if (price && tfp) price.querySelector('[data-tf]').addEventListener('click', () => { price.close(); open(tfp); });
     else if (price) price.querySelector('[data-tf]').replaceWith(Object.assign(document.createElement('a'), { className: 'o-btn o-btn--lg o-btn--block', href: '../#tarify', textContent: 'Сравнить все тарифы' }));
     document.addEventListener('click', e => {
       const a = e.target.closest('a'); if (!a || a.closest('#razbor, .p-pop')) return;
@@ -6989,7 +6998,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       let d = null;
       if (href === '#razbor') d = form;
       else if (href === '#tarify') d = price || tfp;
-      else if (tfp && /tarify\/?$|#tarify$/.test(href) && /^(Сравнить|Сколько стоит)/.test(txt)) d = tfp;
+      else if (tfp && /tarify\/?$|#tarify$/.test(href) && /^Сколько стоит/.test(txt)) d = tfp;
       if (!d) return;
       e.preventDefault(); e.stopPropagation(); open(d);
     }, true);
