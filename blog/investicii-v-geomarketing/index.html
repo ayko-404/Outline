@@ -5326,6 +5326,9 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-sx__r--h.is-stuck::after { opacity: 1; }
 .m-sx__pop { transition: top .25s var(--ease-out), translate .25s var(--ease-out); }
 .m-sx__r--h.is-stuck .m-sx__pop { top: .25rem; translate: -50% 0; scale: .92; }
+/* прилипшая шапка: скруглённый верх рамки не оставляет «окошек», через которые видны строки под ней — верх прямой, колонка уходит под меню */
+.m-sx__r--h > .c1 { transition: border-radius .25s var(--ease-out), border-top-color .25s var(--ease-out); }
+.m-sx__r--h.is-stuck > .c1 { border-radius: 0; border-top-color: transparent; }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
