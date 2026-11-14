@@ -5329,6 +5329,9 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 /* прилипшая шапка: скруглённый верх рамки не оставляет «окошек», через которые видны строки под ней — верх прямой, колонка уходит под меню */
 .m-sx__r--h > .c1 { transition: border-radius .25s var(--ease-out), border-top-color .25s var(--ease-out); }
 .m-sx__r--h.is-stuck > .c1 { border-radius: 0; border-top-color: transparent; }
+/* 14.11 (Никита: «между шапкой и первой группой большой белый отступ») */
+.m-sx__r--h > span { padding-bottom: var(--space-3); }
+.m-sx__r--h + .m-sx__g > span { padding-top: var(--space-3); }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
