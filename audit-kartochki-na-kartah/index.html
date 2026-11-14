@@ -5208,11 +5208,14 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 
 /* ── обложка тарифов: бирки на верёвке (13.11, выбрана Никитой) — верёвка от верха страницы под шапкой к правому краю ── */
 .m-tgv { min-height: 33rem; }
-.m-tgw__rope { position: absolute; left: 0; top: 0; z-index: 1; overflow: visible; pointer-events: none; fill: none; stroke: #3a2f27; stroke-width: 2.25; stroke-linecap: round; filter: drop-shadow(0 6px 4px rgb(15 21 29 / .12)); }
+.m-tgw__rope { position: absolute; left: 0; top: 0; z-index: 1; overflow: visible; pointer-events: none; fill: none; stroke: #3a2f27; stroke-width: 2.25; stroke-linecap: round; }
+.m-tgw__rope .m-tgw__sh { stroke: rgb(15 21 29 / .1); stroke-width: 3.5; translate: 0 5px; }
 .m-tgw__mount { position: absolute; z-index: 2; width: 1.125rem; height: 1.125rem; margin: -.5625rem 0 0 -.5625rem; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 35% 30%, #fff, #dfe2e6 60%, #c3c8cf); box-shadow: 0 1px 2px rgb(15 21 29 / .3), 0 0 0 1px rgb(15 21 29 / .08); }
 .m-tgw__mount::after { content: ""; position: absolute; inset: 0; margin: auto; width: .375rem; height: .375rem; border-radius: 50%; background: #3a2f27; }
-.m-tgw__t { position: absolute; z-index: 3; width: clamp(8.75rem, 11.5vw, 9.75rem); translate: -50% 0; transform-origin: 50% 0; animation: m-tgw-sw calc(3.8s + var(--k) * .6s) ease-in-out infinite alternate; animation-delay: calc(var(--k) * -1.3s); }
-@keyframes m-tgw-sw { from { rotate: -2.5deg; } to { rotate: 2.5deg; } }
+.m-tgw__t { position: absolute; z-index: 3; width: clamp(8.75rem, 11.5vw, 9.75rem); translate: -50% 0; transform-origin: 50% 0; will-change: transform, opacity; }
+/* покачивание (маятник: быстрее в центре, замедляется у краёв) — включается после появления, с нуля, без рывка */
+@keyframes m-tgw-sw { 0% { rotate: 0deg; animation-timing-function: cubic-bezier(.61, 1, .88, 1); } 25% { rotate: 2.2deg; animation-timing-function: cubic-bezier(.37, 0, .63, 1); } 75% { rotate: -2.2deg; animation-timing-function: cubic-bezier(.12, 0, .39, 0); } 100% { rotate: 0deg; } }
+.is-tg .m-tgw__t { animation: m-tgw-sw calc(4.2s + var(--k) * .7s) linear infinite; animation-delay: calc(1.4s + var(--k) * .18s); }
 .m-tgw__str { position: relative; z-index: 1; display: block; width: 1.5px; height: var(--len, 4rem); margin: 0 auto; background: #3a2f27; }
 .m-tgw__str::before { content: ""; position: absolute; left: 50%; top: -.25rem; width: .5rem; height: .5rem; margin-left: -.25rem; border-radius: 50%; background: #3a2f27; }
 .m-tgw__tag { position: relative; display: grid; justify-items: center; gap: .3rem; margin-top: -1.1875rem; padding: 2.5rem var(--space-4) var(--space-5); background: var(--surface-frame); text-align: center;
@@ -5220,7 +5223,9 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   --cw: 3rem; --ch: 3.5rem; border-radius: 0 0 1.25rem 1.25rem;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 56'%3E%3Cpath d='M0 56V55Q0 48 4.48 42.62L35.52 5.38Q40 0 47 0H48V56Z'/%3E%3C/svg%3E") 0 0 / var(--cw) var(--ch) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 56'%3E%3Cpath d='M48 56V55Q48 48 43.52 42.62L12.48 5.38Q8 0 1 0H0V56Z'/%3E%3C/svg%3E") 100% 0 / var(--cw) var(--ch) no-repeat, linear-gradient(#000 0 0) 50% 0 / calc(100% - 2 * var(--cw) + 2px) var(--ch) no-repeat, linear-gradient(#000 0 0) 0 calc(var(--ch) - 1px) / 100% calc(100% - var(--ch) + 1px) no-repeat;
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 56'%3E%3Cpath d='M0 56V55Q0 48 4.48 42.62L35.52 5.38Q40 0 47 0H48V56Z'/%3E%3C/svg%3E") 0 0 / var(--cw) var(--ch) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 56'%3E%3Cpath d='M48 56V55Q48 48 43.52 42.62L12.48 5.38Q8 0 1 0H0V56Z'/%3E%3C/svg%3E") 100% 0 / var(--cw) var(--ch) no-repeat, linear-gradient(#000 0 0) 50% 0 / calc(100% - 2 * var(--cw) + 2px) var(--ch) no-repeat, linear-gradient(#000 0 0) 0 calc(var(--ch) - 1px) / 100% calc(100% - var(--ch) + 1px) no-repeat; }
-.m-tgw__t { filter: drop-shadow(0 .875rem 1rem rgb(15 21 29 / .16)) drop-shadow(0 1px 1px rgb(15 21 29 / .08)); }
+/* тень без filter (filter на качающемся элементе перерисовывался каждый кадр): мягкое пятно под биркой, качается вместе с ней */
+.m-tgw__t::after { content: ""; position: absolute; z-index: -1; left: 8%; right: 8%; top: calc(var(--len, 4rem) + 1.5rem); bottom: -1.25rem; border-radius: 40% 40% 50% 50%; background: radial-gradient(closest-side, rgb(15 21 29 / .2), rgb(15 21 29 / .08) 60%, transparent); }
+.m-tgw__tag { box-shadow: none; }
 .m-tgw__eye { position: absolute; top: .75rem; left: 50%; width: .875rem; height: .875rem; margin-left: -.4375rem; border-radius: 50%; background: #e9ebee; box-shadow: 0 0 0 2.5px #fff, 0 0 0 3.5px rgb(15 21 29 / .14), inset 0 1px 2px rgb(0 0 0 / .25); }
 .m-tgw__tag .m-tpf { margin: .125rem 0 var(--space-1); }
 .m-tgw__n { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
@@ -5236,9 +5241,9 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .is-tg .m-tgw__rope path { stroke-dashoffset: 0; transition: stroke-dashoffset .8s cubic-bezier(.23, 1, .32, 1) .05s; }
 .m-tgw__mount { opacity: 0; scale: .4; } .m-tgw__mount--side { transition-delay: .45s !important; }
 .is-tg .m-tgw__mount { opacity: 1; scale: 1; transition: opacity .25s var(--ease-out), scale .5s var(--ease-spring); }
-.m-tgw__t { opacity: 0; transform: rotate(-24deg) scale(.92); }
-.is-tg .m-tgw__t { opacity: 1; transform: none; transition: opacity .35s var(--ease-out) calc(.4s + var(--k) * .18s), transform 1.1s cubic-bezier(.3, 1.6, .5, 1) calc(.4s + var(--k) * .18s); }
-@media (prefers-reduced-motion: reduce) { .m-tgw__t { animation: none; } .m-tgw__rope path, .m-tgw__mount, .m-tgw__t { transition: none !important; } }
+.m-tgw__t { opacity: 0; transform: rotate(-14deg); }
+.is-tg .m-tgw__t { opacity: 1; transform: none; transition: opacity .3s var(--ease-out) calc(.4s + var(--k) * .18s), transform .9s cubic-bezier(.34, 1.45, .64, 1) calc(.4s + var(--k) * .18s); }
+@media (prefers-reduced-motion: reduce) { .m-tgw__t, .is-tg .m-tgw__t { animation: none; } .m-tgw__rope path, .m-tgw__mount, .m-tgw__t { transition: none !important; } }
 @media (max-width: 1000px) { .m-tgv { min-height: 20rem; } .m-tgw__t { width: 6.5rem; } .m-tgw__tag { padding: 2rem var(--space-2) var(--space-3); --cw: 2rem; --ch: 2.333rem; border-radius: 0 0 1rem 1rem; } .m-tgw__sub { display: none; } .m-tgw__tag b { font-size: var(--fs-h6); } }
 
 /* ── /tarify/ сравнение — «строгая» таблица (14.11, выбрал Никита): без заливок, популярный обведён, на телефоне вкладки.
@@ -5253,7 +5258,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-sx__r:not(.m-sx__r--h, .m-sx__r--f, .m-sx__g):hover > span { background-color: var(--paper-100); }
 .m-sx__r:not(.m-sx__r--h, .m-sx__r--f, .m-sx__g):hover > .c1 { background-color: rgb(255 100 20 / .08); }
 /* шапка */
-.m-sx__r--h { position: sticky; top: 4.25rem; z-index: 2; }
+.m-sx__r--h { position: sticky; top: 4rem; z-index: 2; transition: box-shadow .25s var(--ease-out); }
 .m-sx__r--h > span { padding: var(--space-8) var(--space-3) var(--space-5); border-bottom: 0; background: var(--surface-frame); }
 .m-sx__r--h > .c1 { position: relative; border-top: 1.5px solid var(--orange-500); border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: linear-gradient(var(--surface-frame), var(--surface-frame)), var(--surface-frame); }
 .m-sx__r--h > .c1::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: rgb(255 100 20 / .035); pointer-events: none; }
@@ -5281,7 +5286,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-sx.is-anim .m-sx__r:not(.is-in) > span { opacity: 0; translate: 0 .75rem; }
 .m-sx.is-anim .m-ck, .m-sx.is-anim .m-sx__no, .m-sx.is-anim .m-sx__v { transition: scale .55s var(--ease-spring), opacity .3s var(--ease-out); transition-delay: calc(var(--i, 0) * 55ms + 150ms + var(--c, 0) * 80ms); }
 .m-sx.is-anim .m-sx__r:not(.is-in) :is(.m-ck, .m-sx__no, .m-sx__v) { scale: .3; opacity: 0; }
-.m-sx.is-anim .m-sx__pop { transition: scale .6s var(--ease-spring) .35s, opacity .3s var(--ease-out) .35s; }
+.m-sx.is-anim .m-sx__pop { transition: scale .6s var(--ease-spring) .35s, opacity .3s var(--ease-out) .35s, top .25s var(--ease-out), translate .25s var(--ease-out); }
 .m-sx.is-anim .m-sx__r--h:not(.is-in) .m-sx__pop { scale: .5; opacity: 0; }
 @media (max-width: 1000px) { .m-sx { padding: var(--space-2) var(--space-4) var(--space-4); } .m-sx__r > span { padding: .75rem var(--space-2); } .m-sx__r--h > span > small { display: none; } .m-sx__r--h em { font-size: var(--fs-h5); } }
 @media (max-width: 700px) {
@@ -5314,6 +5319,13 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-sx.is-anim .m-sx__pf img:nth-child(2) { transition-delay: .08s; } .m-sx.is-anim .m-sx__pf img:nth-child(3) { transition-delay: .16s; }
 .m-sx.is-anim .m-sx__r--h:not(.is-in) .m-sx__pf img { scale: .4; opacity: 0; }
 .m-sx__r--h > span:not(:first-child) { justify-content: flex-start; }
+
+/* прилипшая шапка: без щели под меню, ровный низ, бейдж внутри рамки */
+.m-sx__r--h::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--border-default); opacity: 0; transition: opacity .25s var(--ease-out); }
+.m-sx__r--h.is-stuck { box-shadow: 0 1.25rem 1.5rem -1.5rem rgb(15 21 29 / .25); }
+.m-sx__r--h.is-stuck::after { opacity: 1; }
+.m-sx__pop { transition: top .25s var(--ease-out), translate .25s var(--ease-out); }
+.m-sx__r--h.is-stuck .m-sx__pop { top: .25rem; translate: -50% 0; scale: .92; }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
