@@ -7048,7 +7048,10 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   const F = [.18, .515, .85], DROP = [.42, .12, .3];
   const lay = () => {
     const S = sec.getBoundingClientRect(), V = vis.getBoundingClientRect(), W = S.width, Hh = S.height, mob = innerWidth <= 1000;
-    const hdr = document.querySelector('.hdr, header'), hb = hdr ? Math.max(0, hdr.getBoundingClientRect().bottom - S.top) : 0;
+    const hdr = document.querySelector('.hdr, header');
+    /* 14.11 баг: при открытом поп-апе ниже обложки пересчёт брал низ прилипшего меню относительно уехавшей вверх секции — крепление улетало вниз. Теперь — высота меню минус положение секции в документе, от прокрутки не зависит */
+    let docTop = 0; for (let e = sec; e; e = e.offsetParent) docTop += e.offsetTop;
+    const hb = hdr ? Math.max(0, hdr.offsetHeight - docTop) : 0;
     const A = mob ? [14, V.top - S.top + 14] : [V.left - S.left - V.width * .06, hb + 14];
     const B = mob ? [W - 14, V.top - S.top + 40] : [W - 16, V.top - S.top + V.height * .42];
     const sag = mob ? 70 : Math.max(120, (B[1] - A[1]) * .9), Cx = (A[0] + B[0]) / 2, Cy = Math.max(A[1], B[1]) + sag;
