@@ -5234,18 +5234,15 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 /* ── обложка тарифов: бирки на верёвке (13.11, выбрана Никитой) — верёвка от верха страницы под шапкой к правому краю ── */
 .m-tgv { min-height: 33rem; }
 .m-tgw__rope { position: absolute; left: 0; top: 0; z-index: 1; overflow: visible; pointer-events: none; fill: none; stroke: #3a2f27; stroke-width: 2.25; stroke-linecap: round; filter: drop-shadow(0 6px 4px rgb(15 21 29 / .12)); }
-.m-tgw__mount { position: absolute; z-index: 2; pointer-events: none; }
-.m-tgw__mount--top { width: 2.25rem; height: .875rem; margin-left: -1.125rem; border-radius: 0 0 .5rem .5rem; background: linear-gradient(#c9ccd2, #9aa0a8); box-shadow: 0 2px 4px rgb(15 21 29 / .25), inset 0 1px 0 rgb(255 255 255 / .6); }
-.m-tgw__mount--top::after { content: ""; position: absolute; left: 50%; top: 100%; width: .625rem; height: .625rem; margin: -.25rem 0 0 -.3125rem; border: 2px solid #8b929b; border-radius: 50%; background: transparent; }
-.m-tgw__mount--side { right: 0; width: 1.125rem; height: 2.25rem; margin-top: -1.125rem; border-radius: .5rem 0 0 .5rem; background: linear-gradient(90deg, #9aa0a8, #c9ccd2); box-shadow: -2px 2px 4px rgb(15 21 29 / .25), inset 1px 0 0 rgb(255 255 255 / .6); }
-.m-tgw__mount--side::after { content: ""; position: absolute; right: 100%; top: 50%; width: .625rem; height: .625rem; margin: -.3125rem -.25rem 0 0; border: 2px solid #8b929b; border-radius: 50%; }
-.m-tgw__t { position: absolute; z-index: 3; width: 9.75rem; margin-left: -4.875rem; transform-origin: 50% 0; animation: m-tgw-sw calc(3.8s + var(--k) * .6s) ease-in-out infinite alternate; animation-delay: calc(var(--k) * -1.3s); }
+.m-tgw__mount { position: absolute; z-index: 2; width: 1.125rem; height: 1.125rem; margin: -.5625rem 0 0 -.5625rem; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 35% 30%, #fff, #dfe2e6 60%, #c3c8cf); box-shadow: 0 1px 2px rgb(15 21 29 / .3), 0 0 0 1px rgb(15 21 29 / .08); }
+.m-tgw__mount::after { content: ""; position: absolute; inset: 0; margin: auto; width: .375rem; height: .375rem; border-radius: 50%; background: #3a2f27; }
+.m-tgw__t { position: absolute; z-index: 3; width: clamp(8.75rem, 11.5vw, 9.75rem); translate: -50% 0; transform-origin: 50% 0; animation: m-tgw-sw calc(3.8s + var(--k) * .6s) ease-in-out infinite alternate; animation-delay: calc(var(--k) * -1.3s); }
 @keyframes m-tgw-sw { from { rotate: -2.5deg; } to { rotate: 2.5deg; } }
-.m-tgw__str { position: relative; display: block; width: 1.5px; height: var(--len, 4rem); margin: 0 auto; background: #3a2f27; }
+.m-tgw__str { position: relative; z-index: 1; display: block; width: 1.5px; height: var(--len, 4rem); margin: 0 auto; background: #3a2f27; }
 .m-tgw__str::before { content: ""; position: absolute; left: 50%; top: -.25rem; width: .5rem; height: .5rem; margin-left: -.25rem; border-radius: 50%; background: #3a2f27; }
-.m-tgw__tag { position: relative; display: grid; justify-items: center; gap: .3rem; margin-top: -.5rem; padding: 2.25rem var(--space-4) var(--space-5); background: var(--surface-frame); text-align: center;
-  clip-path: polygon(26% 0, 74% 0, 100% 18%, 100% 100%, 0 100%, 0 18%); border-radius: 0 0 var(--radius-lg) var(--radius-lg); filter: drop-shadow(0 1.25rem 1.25rem rgb(15 21 29 / .16)); }
-.m-tgw__eye { position: absolute; top: .75rem; left: 50%; width: .875rem; height: .875rem; margin-left: -.4375rem; border-radius: 50%; background: var(--surface-page); box-shadow: 0 0 0 3px #c9ccd2, inset 0 1px 2px rgb(0 0 0 / .3); }
+.m-tgw__tag { position: relative; display: grid; justify-items: center; gap: .3rem; margin-top: -1.1875rem; padding: 2.5rem var(--space-4) var(--space-5); background: var(--surface-frame); text-align: center;
+  border-radius: 3rem 3rem 1.25rem 1.25rem; box-shadow: 0 1.25rem 2rem -1rem rgb(15 21 29 / .28), 0 0 0 1px rgb(15 21 29 / .05); }
+.m-tgw__eye { position: absolute; top: .75rem; left: 50%; width: .875rem; height: .875rem; margin-left: -.4375rem; border-radius: 50%; background: #e9ebee; box-shadow: 0 0 0 2.5px #fff, 0 0 0 3.5px rgb(15 21 29 / .14), inset 0 1px 2px rgb(0 0 0 / .25); }
 .m-tgw__tag .m-tpf { margin: .125rem 0 var(--space-1); }
 .m-tgw__n { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
 .m-tgw__tag b { font: 700 var(--fs-h5)/1 var(--font-head); letter-spacing: -.04em; white-space: nowrap; }
@@ -5256,7 +5253,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-tpf { display: inline-flex; } .m-tpf img { width: 1.625rem; height: 1.625rem; margin-right: -.375rem; border-radius: .5rem; box-shadow: 0 0 0 2px var(--surface-frame); background: var(--surface-frame); }
 .m-tgw__t--1 .m-tpf img { box-shadow: 0 0 0 2px var(--orange-500); } .m-tgw__t--2 .m-tpf img { box-shadow: 0 0 0 2px var(--ink-950); }
 @media (prefers-reduced-motion: reduce) { .m-tgw__t { animation: none; } }
-@media (max-width: 1000px) { .m-tgv { min-height: 20rem; } .m-tgw__t { width: 6.75rem; margin-left: -3.375rem; } .m-tgw__tag { padding: 1.75rem var(--space-2) var(--space-3); } .m-tgw__sub { display: none; } .m-tgw__tag b { font-size: var(--fs-h6); } }
+@media (max-width: 1000px) { .m-tgv { min-height: 20rem; } .m-tgw__t { width: 6.5rem; } .m-tgw__tag { padding: 2rem var(--space-2) var(--space-3); border-radius: 2.25rem 2.25rem 1rem 1rem; } .m-tgw__sub { display: none; } .m-tgw__tag b { font-size: var(--fs-h6); } }
 </style>
 </head>
 <body class="v-a1" data-hdr="bar" data-glass="0" data-hf="c" data-af="c" data-bg="b" data-pat="none" data-ph="pill" data-tg="none" data-flo="b" data-tag="b">
