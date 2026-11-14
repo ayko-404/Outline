@@ -4510,6 +4510,16 @@ html.p-lock { overflow: hidden; }
 .p-pop__more svg { width: 1rem; height: 1rem; }
 @media (max-width: 700px) { .p-pop--tf .p-pop__box { padding: var(--space-6) var(--space-4) var(--space-5); } .p-pop__tf .tf { padding-block: var(--space-6) 0; } }
 
+/* 14.11 (Никита: «плохо вмещаются в экран»): «Сколько стоит» на десктопе — чек слева, заголовок и кнопки справа; поп-ап ниже, чем столбиком */
+@media (min-width: 900px) {
+  .p-pop--price { width: min(50rem, calc(100vw - 2rem)); }
+  .p-pop--price .p-pop__box { display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 1fr); grid-template-rows: 1fr auto auto 1fr; column-gap: var(--space-8); padding: var(--space-6) var(--space-8) var(--space-6) var(--space-6); }
+  .p-pop--price .p-pop__rc { grid-column: 1; grid-row: 1 / -1; }
+  .p-pop--price .p-rc { margin-top: 0; }
+  .p-pop--price .p-pop__t { grid-column: 2; grid-row: 2; margin: 0 0 var(--space-6); font-size: var(--fs-h3); }
+  .p-pop--price .p-pop__acts { grid-column: 2; grid-row: 3; margin: 0; }
+}
+
 /* ════════ Страницы услуг (build_services.py, 12.11.2026) ════════ */
 /* обложка: летающие карточки карт вокруг иконки площадки */
 .p-cvs .p-cva__in { grid-template-columns: 1.15fr .85fr; }
@@ -7223,7 +7233,12 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       <div class="p-pop__done"><b>Заявка принята</b><span>Ответим в&nbsp;течение 5&nbsp;минут в&nbsp;рабочее время.</span></div>`);
     const f = form.querySelector('form');
     f.addEventListener('submit', e => { e.preventDefault(); if (!f.reportValidity()) return; form.classList.add('is-sent'); /* отправка заявки подключается на боевом сайте */ });
-    const open = (d, tariff) => { if (d === form) { form.classList.remove('is-sent'); f.tariff.value = tariff || ''; } document.documentElement.classList.add('p-lock'); d.showModal(); };
+    /* 14.11 (Никита: «плохо вмещаются поп-апы в экран»): если содержимое выше окна — поп-ап целиком уменьшается под высоту (не меньше 0,75), без прокрутки внутри; на телефоне — прокрутка как была */
+    const fit = d => { const b = d.querySelector('.p-pop__box'); if (!b) return; b.style.zoom = ''; b.style.maxHeight = '';
+      if (innerWidth <= 700) return; const avail = innerHeight - 32, need = b.scrollHeight;
+      if (need > avail) { const z = Math.max(.75, avail / need); b.style.zoom = z; b.style.maxHeight = (avail / z) + 'px'; } };
+    addEventListener('resize', () => document.querySelectorAll('.p-pop[open]').forEach(fit));
+    const open = (d, tariff) => { if (d === form) { form.classList.remove('is-sent'); f.tariff.value = tariff || ''; } document.documentElement.classList.add('p-lock'); d.showModal(); fit(d); };
     const rc = document.querySelector('#tarify .p-rc');
     let price = null;
     if (rc) {
