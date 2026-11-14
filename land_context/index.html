@@ -4520,28 +4520,17 @@ html.p-lock { overflow: hidden; }
   .p-pop--price .p-pop__acts { grid-column: 2; grid-row: 3; margin: 0; }
 }
 
-/* 14.11 (Иван: «пустота между блоками») — варианты места сообщения Лизы (page.js переносит .p-note), во всех A–C отступ до чека меньше */
-body:has(#komanda[data-v="a"], #komanda[data-v="b"], #komanda[data-v="c"]) #tarify.p-prc { padding-top: clamp(5rem, 12vh, 7rem) !important; }
-/* A — в шапке, под текстом справа */
-#komanda[data-v="a"] .lt__head { align-items: start; }
-#komanda[data-v="a"] .lt__head .p-note { grid-column: 2; max-width: none; margin: var(--space-6) 0 0; }
-/* B — полосой во всю ширину под командой */
-#komanda[data-v="b"] .p-note { max-width: none; margin: var(--space-8) 0 0; padding: var(--space-6) var(--space-8); border-radius: 2.25rem; background: var(--paper-0); box-shadow: 0 10px 15px -3px rgb(0 0 0 / .08), 0 4px 6px -4px rgb(0 0 0 / .08); }
-#komanda[data-v="b"] .p-nt--c { align-items: center; gap: var(--space-6); }
-#komanda[data-v="b"] .p-nt__av { width: 5rem; height: 5rem; }
-#komanda[data-v="b"] .p-nt__name { margin: 0; font-size: var(--fs-sm); }
-#komanda[data-v="b"] .p-nt__msg { padding: 0; border-radius: 0; background: none; box-shadow: none; font-size: var(--fs-lead); line-height: 1.45; }
-#komanda[data-v="b"] .p-nt__msg small { display: none; }
-#komanda[data-v="b"] .p-nt__typing { box-shadow: none; background: var(--paper-100); }
-/* C — карточкой в сетке команды: 4 колонки, сообщение занимает место двух портретов */
-#komanda[data-v="c"] .tm > .p-note { order: 99; grid-column: span 2; display: flex; align-items: flex-end; max-width: none; margin: 0; padding: var(--space-6); border-radius: 2.25rem; background: linear-gradient(160deg, var(--paper-100), var(--paper-0)); box-shadow: inset 0 0 0 1px var(--border-default); }
-@media (min-width: 1001px) { #komanda[data-v="c"] .tm { grid-template-columns: repeat(4, 1fr) !important; } }
-@media (max-width: 1000px) { #komanda[data-v="c"] .tm > .p-note { grid-column: 1 / -1; } #komanda[data-v="a"] .lt__head .p-note { grid-column: 1; } #komanda[data-v="b"] .p-note { padding: var(--space-5); } #komanda[data-v="b"] .p-nt__av { width: 3.5rem; height: 3.5rem; } #komanda[data-v="b"] .p-nt__msg { font-size: var(--fs-base); } }
-/* C: сообщение по центру плитки, фон — как обои мессенджера (лёгкий синий и точки), чтобы плитка не была пустой сверху */
-#komanda[data-v="c"] .tm > .p-note { align-items: center; padding: var(--space-8); background: radial-gradient(circle at 1px 1px, rgb(37 99 235 / .14) 1px, transparent 0) 0 0 / 1.25rem 1.25rem, linear-gradient(160deg, #eaf1ff, #f6f8fc); box-shadow: inset 0 0 0 1px rgb(37 99 235 / .1); }
-#komanda[data-v="c"] .tm > .p-note .p-nt__msg { font-size: var(--fs-lead); line-height: 1.45; }
-@media (max-width: 1000px) { #komanda[data-v="c"] .tm > .p-note { padding: var(--space-5) var(--space-4); } #komanda[data-v="c"] .tm > .p-note .p-nt__msg { font-size: var(--fs-base); } }
-@media (max-width: 700px) { #komanda[data-v="b"] .p-nt--c { flex-direction: column; align-items: flex-start; gap: var(--space-3); } #komanda[data-v="b"] .p-nt__av { width: 3rem; height: 3rem; } }
+/* 14.11 (Никита, по замечанию Ивана о пустоте): под командой — ряд из двух половин: слева сообщение Лизы, справа небольшой CTA «Бесплатный разбор» (тексты — из поп-апа разбора) */
+.p-nrow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); align-items: end; margin-top: var(--space-12); }
+.p-nrow .p-note { margin: 0; max-width: none; }
+.p-ncta { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); padding: var(--space-6) var(--space-8); border-radius: 2.25rem; background: var(--paper-0); box-shadow: 0 10px 15px -3px rgb(0 0 0 / .08), 0 4px 6px -4px rgb(0 0 0 / .08); }
+.p-ncta__t { margin: 0; font: 600 var(--fs-h5)/1.15 var(--font-head); letter-spacing: -.02em; }
+.p-ncta__t em { font-family: var(--font-script); font-style: normal; font-weight: 400; font-size: 1.15em; color: var(--text-script); }
+.p-ncta__d { margin: 0 0 var(--space-2); color: var(--text-muted); line-height: 1.5; }
+.p-ncta .o-btn svg { width: 1rem; height: 1rem; }
+#tarify.p-prc { padding-top: clamp(6rem, 16vh, 9rem) !important; }
+@media (max-width: 1000px) { .p-nrow { grid-template-columns: 1fr; } .p-ncta { padding: var(--space-5); } }
+.p-ncta__t em { margin-right: .12em; }
 
 /* ════════ Страницы услуг (build_services.py, 12.11.2026) ════════ */
 /* обложка: летающие карточки карт вокруг иконки площадки */
@@ -7235,17 +7224,6 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); upd();
     }
   }
-
-  /* 14.11 (Иван: «смущает пустота между блоками») — варианты места сообщения Лизы, переключатель внизу:
-     A в шапке под текстом · B полосой во всю ширину · C карточкой в сетке команды · D как было */
-  (() => {
-    const nt = $('.p-note'), tmg = document.getElementById('tm-grid'); if (!nt || !tmg) return;
-    const sec = nt.closest('section'), head = sec && sec.querySelector('.lt__head'); if (!head) return;
-    const home = document.createComment('p-note'); nt.before(home);
-    sec.dataset.vgs = 'note'; if (!sec.dataset.v) sec.dataset.v = 'a';
-    const place = () => { const v = sec.dataset.v; if (v === 'a') head.append(nt); else if (v === 'c') tmg.append(nt); else home.after(nt); };
-    place(); new MutationObserver(place).observe(sec, { attributes: true, attributeFilter: ['data-v'] });
-  })();
 
   /* «С вашей стороны»: сообщение в мессенджере — сначала «печатает», затем появляется */
   const note = $('.p-note');
