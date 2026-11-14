@@ -5227,7 +5227,14 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-tgw__t--2 .m-tgw__tag { background: var(--ink-950); color: var(--paper-0); } .m-tgw__t--2 :is(.m-tgw__n, small, .m-tgw__sub) { color: rgb(255 255 255 / .62); } .m-tgw__t--2 .m-tgw__sub { border-color: rgb(255 255 255 / .2); }
 .m-tpf { display: inline-flex; } .m-tpf img { width: 1.625rem; height: 1.625rem; margin-right: -.375rem; border-radius: .5rem; box-shadow: 0 0 0 2px var(--surface-frame); background: var(--surface-frame); }
 .m-tgw__t--1 .m-tpf img { box-shadow: 0 0 0 2px var(--orange-500); } .m-tgw__t--2 .m-tpf img { box-shadow: 0 0 0 2px var(--ink-950); }
-@media (prefers-reduced-motion: reduce) { .m-tgw__t { animation: none; } }
+/* появление (14.11): верёвка протягивается слева направо, крепления «встают», бирки навешиваются по очереди качнувшись */
+.m-tgw__rope path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.is-tg .m-tgw__rope path { stroke-dashoffset: 0; transition: stroke-dashoffset .8s cubic-bezier(.23, 1, .32, 1) .05s; }
+.m-tgw__mount { opacity: 0; scale: .4; } .m-tgw__mount--side { transition-delay: .45s !important; }
+.is-tg .m-tgw__mount { opacity: 1; scale: 1; transition: opacity .25s var(--ease-out), scale .5s var(--ease-spring); }
+.m-tgw__t { opacity: 0; transform: rotate(-24deg) scale(.92); }
+.is-tg .m-tgw__t { opacity: 1; transform: none; transition: opacity .35s var(--ease-out) calc(.4s + var(--k) * .18s), transform 1.1s cubic-bezier(.3, 1.6, .5, 1) calc(.4s + var(--k) * .18s); }
+@media (prefers-reduced-motion: reduce) { .m-tgw__t { animation: none; } .m-tgw__rope path, .m-tgw__mount, .m-tgw__t { transition: none !important; } }
 @media (max-width: 1000px) { .m-tgv { min-height: 20rem; } .m-tgw__t { width: 6.5rem; } .m-tgw__tag { padding: 2rem var(--space-2) var(--space-3); border-radius: 2.25rem 2.25rem 1rem 1rem; } .m-tgw__sub { display: none; } .m-tgw__tag b { font-size: var(--fs-h6); } }
 
 /* ── /tarify/ сравнение — «строгая» таблица (14.11, выбрал Никита): без заливок, популярный обведён, на телефоне вкладки.
