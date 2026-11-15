@@ -4990,6 +4990,8 @@ html.p-lock { overflow: hidden; }
   .p-ni .ni-card { width: min(21rem, 100%); }
 }
 @media (max-width: 700px) { .ni-q .p-quote--big { padding: 1.25rem 1.5rem; } .ni-q .p-quote--big::after { display: none; } .ni-q .p-quote--big p { font-size: 1.125rem !important; } }
+/* 15.11 (Никита): у одиночной иконки площадки в H1 (2ГИС, Google Maps) — без реакции на наведение */
+.o-h1 .p-pf:only-of-type { pointer-events: none; }
 /* 13.11 · оставшиеся страницы (build_misc.py): контакты, чек-лист, благодарность, политика, разбор, рекламная. Только токены кита. */
 
 /* разбор: строка «Удобнее обсудить напрямую…» под подводкой формы */
