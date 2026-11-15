@@ -1611,19 +1611,21 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-blg { padding-top: var(--space-8) !important; }
 .m-blg[data-v="a"] .m-blg__b, .m-blg[data-v="b"] .m-blg__a { display: none; }
 .m-blg [hidden] { display: none !important; }
-/* A · светлые */
+/* A · светлые — в стиле карточек сайта (15.11, Никита: «поаккуратнее в стиле наших карточек»): белая рамка с отступом и тенью карточки,
+   обложка — в «окне» с сеткой, как у окон в блоках «Кому помогаем» и «Услуги» */
 .m-blg__a { gap: var(--space-5); }
-.m-bk { display: flex; flex-direction: column; border-radius: var(--radius-lg); background: var(--surface-frame); box-shadow: 0 0 0 1px var(--border-default); color: inherit; text-decoration: none; overflow: hidden; transition: box-shadow .25s ease, translate .25s var(--ease-out); }
-@media (hover: hover) and (pointer: fine) { .m-bk:hover { translate: 0 -.25rem; box-shadow: 0 0 0 1px var(--border-default), 0 1.25rem 2rem -1.25rem rgb(15 21 29 / .3); } .m-bk:hover .m-bk__img img { scale: 1.04; } .m-bk:hover em svg { translate: .25rem 0; } }
-.m-bk__pic { display: block; padding: 1.75rem 1.75rem 1.5rem; background-color: #f6f6f4; background-image: radial-gradient(rgb(15 21 29 / .09) 1px, transparent 1.2px); background-size: 9px 9px; }
-.m-bk__img { display: block; aspect-ratio: 16 / 10; border-radius: .625rem; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 .75rem 1.5rem -1rem rgb(15 21 29 / .35); }
+.m-bk { display: flex; flex-direction: column; padding: var(--space-2-5); border-radius: var(--radius-xl); background: var(--surface-frame); box-shadow: var(--shadow-card); color: inherit; text-decoration: none; transition: box-shadow .3s ease, translate .3s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .m-bk:hover { translate: 0 -.25rem; box-shadow: var(--shadow-card-open); } .m-bk:hover .m-bk__img img { scale: 1.04; } .m-bk:hover em svg { translate: .25rem 0; } }
+.m-bk__pic { position: relative; display: block; padding: var(--space-5); border-radius: var(--radius-lg); background-color: var(--surface-inset, #f2f2ef);
+  background-image: linear-gradient(to right, var(--grid-line, rgb(15 21 29 / .05)) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line, rgb(15 21 29 / .05)) 1px, transparent 1px); background-size: 28px 28px; background-position: -1px -1px; }
+.m-bk__img { display: block; aspect-ratio: 900 / 506; border-radius: var(--radius-md, .75rem); overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 1rem 1.75rem -1.25rem rgb(15 21 29 / .45); }
 .m-bk__img img { width: 100%; height: 100%; object-fit: cover; transition: scale .6s var(--ease-out); }
-.m-bk__b { display: flex; flex-direction: column; flex: 1; gap: .75rem; padding: 1.5rem 1.5rem 1.375rem; }
-.m-bk__b small { font: 500 var(--fs-caption)/1 var(--font-body); color: var(--text-muted); }
-.m-bk__b b { font: 500 1.375rem/1.2 var(--font-head); letter-spacing: -.025em; color: var(--text-default); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.m-bk__meta { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 1.25rem; font-size: var(--fs-caption); color: var(--text-subtle); }
-.m-bk__meta em { display: inline-flex; align-items: center; gap: .375rem; font-style: normal; font-weight: 600; color: var(--text-default); }
-.m-bk__meta svg { width: .9375rem; height: .9375rem; transition: translate var(--dur-fast) var(--ease-out); }
+.m-bk__b { display: flex; flex-direction: column; flex: 1; gap: var(--space-3); padding: var(--space-5) var(--space-3) var(--space-3); }
+.m-bk__b small { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-subtle); }
+.m-bk__b b { font: 600 var(--fs-h6)/1.25 var(--font-head); letter-spacing: -.01em; color: var(--text-default); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.m-bk__meta { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--border-default); font-size: var(--fs-caption); color: var(--text-subtle); }
+.m-bk__meta em { display: inline-flex; align-items: center; gap: var(--space-2); font-style: normal; font-weight: 600; color: var(--text-accent); }
+.m-bk__meta svg { width: 1rem; height: 1rem; transition: translate var(--dur-fast) var(--ease-out); }
 /* B · тёмные */
 .m-blg__grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
 .m-bd { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: 1.5rem; padding: 1.5rem; border-radius: 1.25rem; background: #17191d; color: #fff; text-decoration: none; transition: translate .3s var(--ease-out), box-shadow .3s ease; }
@@ -1645,3 +1647,14 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   .m-blg__grid2 { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) { .m-bd { grid-template-columns: 1fr; } .m-bd__pic { aspect-ratio: 16 / 10; order: -1; } .m-bk__pic { padding: 1.25rem; } }
+/* ── 15.11 · обложки «Команда» и «Отзывы»: веер настоящих фото с подписями ── */
+.m-fan { position: relative; width: 100%; max-width: 32rem; margin-left: auto; height: clamp(30rem, 42vw, 38rem); }
+.m-fan__c { position: absolute; width: 43%; margin: 0; padding: .5rem .5rem .75rem; border-radius: 1.25rem; background: #fff; rotate: var(--r); box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 1.5rem 2.5rem -1.25rem rgb(15 21 29 / .35);
+  transition: rotate .5s cubic-bezier(.34, 1.56, .64, 1), translate .5s cubic-bezier(.34, 1.56, .64, 1); }
+.m-fan__c img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: .875rem; background: #2878ee; }
+.m-fan__c figcaption { display: flex; flex-direction: column; gap: .125rem; padding: .625rem .375rem 0; }
+.m-fan__c b { font: 600 .9375rem/1.2 var(--font-head); } .m-fan__c small { font-size: .75rem; color: var(--text-muted); }
+@media (hover: hover) and (pointer: fine) { .m-fan__c:hover { rotate: 0deg; translate: 0 -.5rem; z-index: 5; } }
+@media (prefers-reduced-motion: no-preference) { .o-js .m-fan__c { animation: m-fan-in .7s cubic-bezier(.22, 1, .36, 1) var(--d) both; } }
+@keyframes m-fan-in { from { opacity: 0; translate: 0 1.5rem; scale: .94; } }
+@media (max-width: 1000px) { .m-fan { height: 28rem; max-width: 22rem; margin: 2rem auto 0; } }

@@ -6,4 +6,4 @@
     none.hidden = k > 0; };
   inp.addEventListener('input', run);
   tabs.forEach(b => b.addEventListener('click', () => { cat = b.dataset.cat; tabs.forEach(x => x.setAttribute('aria-pressed', x === b)); run(); }));
-  document.addEventListener('click', e => { if (e.target.closest('.p-vsw [data-vg="bl"]')) setTimeout(run, 0); }); })();
+})();
