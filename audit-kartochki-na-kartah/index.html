@@ -6088,6 +6088,13 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .lt.is-in .rm6[data-v="c"] .rmc__more i:nth-child(1) { opacity: .55; } .lt.is-in .rm6[data-v="c"] .rmc__more i:nth-child(2) { opacity: .3; transition-delay: calc(var(--d) + .1s); } .lt.is-in .rm6[data-v="c"] .rmc__more i:nth-child(3) { opacity: .14; transition-delay: calc(var(--d) + .2s); }
 .rmc__cap { top: .5rem; display: inline-flex; align-items: center; gap: .5rem; }
 .rmc__cap em { width: .5rem; height: .5rem; border-radius: 50%; background: #ff6414; box-shadow: 0 0 0 4px rgb(255 100 20 / .15); }
+/* 15.11 (Никита): вместо точки — гео-метка: оранжевая капля с белым центром, тень и мягкая пульсация у основания */
+.rmc__cap em.rmc__pin { width: 1.125rem; height: 1.375rem; border-radius: 0; background: none; box-shadow: none; margin-top: -.25rem; }
+.rmc__pin svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.rmc__pin-b { fill: #ff6414; filter: drop-shadow(0 .125rem .1875rem rgb(255 100 20 / .35)); }
+.rmc__pin-r { fill: none; stroke: rgb(255 100 20 / .55); stroke-width: 1; transform-box: fill-box; transform-origin: center; opacity: 0; }
+@media (prefers-reduced-motion: no-preference) { .rmc__pin-r { animation: rmc-pin 2.4s cubic-bezier(.22, 1, .36, 1) infinite; } }
+@keyframes rmc-pin { 0% { opacity: .9; scale: .4; } 100% { opacity: 0; scale: 1.6; } }
 .rmc__note { position: absolute; right: 0; bottom: .5rem; display: inline-flex; align-items: center; gap: .4375rem; }
 .rmc__note b { display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: 50%; background: #2878ee; color: #fff; }
 .rmc__note svg { width: .625rem; height: .625rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
