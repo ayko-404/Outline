@@ -4969,89 +4969,24 @@ html.p-lock { overflow: hidden; }
 .p-cl__row > span { white-space: normal; overflow: visible; }
 .p-cl__btns { grid-template-columns: auto auto 1fr; } .p-cl__btns i { padding-inline: .5rem; }
 
-/* ── 15.11 · ниши: блок «Информация…» в духе 2ГИС (переключатель «Блок „Информация“»): A веер · B цитата · C телефон · D как было ── */
-.p-ni .p-ni__v { display: none; }
-.p-ni[data-v="a"] .p-ni--a, .p-ni[data-v="b"] .p-ni--b, .p-ni[data-v="c"] .p-ni--c, .p-ni[data-v="d"] .p-ni--d { display: grid; }
-.nw__in:has(.p-ni[data-v="d"]) .iq-hlead { display: none; }   /* «как было»: абзац и так в карточке */
+/* ── 15.11 · ниши: блок «Информация…» в духе 2ГИС, выбрана «цитата»: абзац Ивана в шапке, второй абзац крупной цитатой, справа вопросы и карточка ниши ── */
 .ni-win { display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .ni-win > .iq { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 .ni-card .iq-hd img { padding: .1875rem; background: #f4f5f7; object-fit: contain; }
 .ni-card .iq-ph i { background-color: #e9ebee !important; }
 .ni-card .iq-r b { min-width: 0; }
-/* A · веер: наклонные карточки на левой половине, как у 2ГИС */
-.ni-fan { align-self: stretch; padding: 2.5rem !important; }
-.ni-fan ul { position: relative; list-style: none; margin: 0; padding: 0; height: 100%; min-height: 26rem; }
-.ni-fan li { position: absolute; width: 16.5rem; padding: 1.125rem 1.25rem 1.25rem; border-radius: 1.25rem; background: #2a2e35; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .07), 0 1.25rem 2.5rem -1rem rgb(0 0 0 / .6);
-  font-size: .9375rem; line-height: 1.45; color: rgb(255 255 255 / .62); transition: rotate .5s cubic-bezier(.34, 1.56, .64, 1), translate .5s cubic-bezier(.34, 1.56, .64, 1); }
-.ni-fan li i { display: grid; place-items: center; width: 3.5rem; height: 3.5rem; margin-bottom: .875rem; border-radius: 1.125rem; background: linear-gradient(150deg, #3a2c25, #262a31 70%); box-shadow: inset 0 0 0 1px rgb(255 138 77 / .22), 0 .5rem 1rem -.5rem rgb(0 0 0 / .6); }
-.ni-fan li i img { width: 2.375rem; height: 2.375rem; object-fit: contain; }
-.ni-fan li em { position: absolute; right: 1.125rem; top: .875rem; font: 400 2rem/1 var(--f-head, var(--font-head)); font-style: normal; color: rgb(255 255 255 / .16); }
-.ni-k { font-weight: 500; color: #fff; }
-.ni-fan li:nth-child(1) { left: 2%; top: 4%; rotate: -6deg; z-index: 1; }
-.ni-fan li:nth-child(2) { left: 46%; top: 22%; rotate: 5deg; z-index: 2; }
-.ni-fan li:nth-child(3) { left: 14%; top: 56%; rotate: -3deg; z-index: 2; }
-.ni-fan ul[style*="--n:2"] li:nth-child(2) { top: 40%; left: 40%; }
-@media (hover: hover) and (pointer: fine) { .ni-fan li:hover { rotate: 0deg; translate: 0 -.5rem; z-index: 3; } }
-/* B · цитата: второй абзац крупно, «с чем работаем» — оранжевым */
+.p-ni .ni-card { width: 21rem; }
 .ni-q { align-self: center; padding: 2.5rem !important; }
 .ni-q__ic { display: block; width: 4.5rem; height: 4.5rem; margin: 0 0 1.25rem .25rem; object-fit: contain; filter: drop-shadow(0 .75rem 1rem rgb(0 0 0 / .45)); rotate: -6deg; }
 .ni-o { font-weight: inherit; color: #ff8a4d; }
-/* C · телефон: карточка — шторка над картой; слева 3D-иконка и метки */
-.ni-c { align-self: center; padding: 2.5rem !important; }
-.ni-c__ic { display: block; width: 5.5rem; height: 5.5rem; margin-bottom: 1.5rem; object-fit: contain; filter: drop-shadow(0 .75rem 1rem rgb(0 0 0 / .45)); rotate: -6deg; }
-.ni-c p { font-size: 1.1875rem !important; line-height: 1.5; color: rgb(255 255 255 / .8) !important; }
-.ni-c__tags { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; margin: 1.25rem 0 0; padding: 0; }
-.ni-c__tags li { padding: .4375rem .875rem; border-radius: 99px; background: rgb(255 100 20 / .12); box-shadow: inset 0 0 0 1px rgb(255 138 77 / .3); color: #ffb48a; font: 500 .875rem/1.2 var(--f-body, "Geist", sans-serif); }
-.p-ni--c .p-intro__win { min-height: 34rem; }
-.ni-dev { position: relative; width: 17.5rem; flex: none; margin-bottom: -9rem; align-self: flex-end; }
-.ni-view { background: #eef1f5 center / cover no-repeat; }
-.ni-map { position: absolute; left: 0; right: 0; top: 0; height: 32%; display: grid; place-items: center; }
-.ni-pin { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50% 50% 50% 0; rotate: -45deg; background: #ff6414; box-shadow: 0 .5rem 1rem -.25rem rgb(255 100 20 / .6); }
-.ni-pin img { width: 1.875rem; height: 1.875rem; rotate: 45deg; object-fit: contain; }
-.ni-view .iq-card { position: absolute; left: 0; right: 0; bottom: 0; width: auto; border-radius: 1.375rem 1.375rem 0 0; padding: .75rem .625rem 2.5rem; font-size: .75rem; box-shadow: 0 -.75rem 2rem -1rem rgb(0 0 0 / .35); }
-.ni-view .iq-card::before { content: ""; display: block; width: 2.25rem; height: .25rem; margin: -.25rem auto .5rem; border-radius: 99px; background: rgb(15 21 29 / .15); }
-.ni-view .iq-r { padding: .4375rem .5rem; } .ni-view .iq-hd b { font-size: .875rem; }
-.p-ni--c .ni-win > .iq { align-items: flex-end; }
-.p-ni--c .iq-qs { align-self: center; }
-@media (max-width: 1000px) {
-  .ni-fan { padding: 1.5rem 1rem 0 !important; }
-  .ni-fan ul { display: flex; flex-direction: column; gap: .75rem; height: auto; min-height: 0; }
-  .ni-fan li { position: relative; left: auto !important; top: auto !important; width: auto; rotate: 0deg !important; }
-  .ni-q, .ni-c { padding: 1.75rem 1.25rem 0 !important; }
-  .ni-dev { margin-bottom: -6rem; width: 16rem; }
-  .p-ni--c .ni-win > .iq { justify-content: flex-end; padding-top: 1.5rem; }
-}
 .ni-q .p-quote--big { max-width: 30rem; rotate: 0deg; }
 .ni-q .p-quote--big p { font: 500 1.375rem/1.45 var(--f-head, var(--font-head)) !important; letter-spacing: -.01em; color: rgb(255 255 255 / .85) !important; }
-/* C: стили телефона с главной двигают картинки внутри — сбрасываем; карточка в телефоне светлая, как в приложении карт */
-.csv__dev .ni-view img { position: static; left: auto; top: auto; width: auto; height: auto; }
-.ni-view .iq-hd img { width: 1.75rem; height: 1.75rem; }
-.ni-view .ni-pin img { width: 1.875rem; height: 1.875rem; }
-.ni-view .iq-card { background: #fff; color: #0f151d; }
-.ni-view .iq-r { background: #f4f5f7; } .ni-view .iq-r span, .ni-view .iq-hd small { color: rgb(15 21 29 / .55); }
-.ni-view .iq-r.is-on { background: #eaf1fe !important; box-shadow: inset 0 0 0 1.5px #3d7cf0 !important; }
-/* 15.11 · правки после проверки: три карточки веера не перекрывают текст; карточка шире; телефон целиком, видны все строки */
-.ni-fan ul[style*="--n:3"] { min-height: 30rem; }
-.ni-fan ul[style*="--n:3"] li:nth-child(2) { left: 49%; top: 12%; }
-.ni-fan ul[style*="--n:3"] li:nth-child(3) { left: 3%; top: 60%; }
-.p-ni .ni-card { width: 21rem; }
-.p-ni--c .p-intro__win { min-height: 36rem; }
-.ni-dev { width: 16rem; margin: 2.5rem 0 -4rem; }
-.ni-map { height: 24%; }
-.ni-view .iq-card { width: auto; font-size: .6875rem; padding-bottom: 2rem; }
-.ni-view .iq-r { align-items: flex-start; } .ni-view .iq-r span { flex: none; }
-.ni-view .iq-ph { height: 3.75rem; }
 @media (max-width: 1000px) {
+  .ni-q { padding: 1.75rem 1.25rem 0 !important; }
   .p-intro .ni-win { min-height: 0; }
   .ni-win > .iq { position: relative; inset: auto; flex-direction: column; padding: 1.5rem .75rem 1.75rem; }
   .p-ni .ni-card { width: min(21rem, 100%); }
-  .p-ni--c .p-intro__win { min-height: 0; }
-  .p-ni--c .ni-win > .iq { padding-bottom: 0; }
-  .ni-dev { width: min(16rem, 80%); margin: .5rem auto -3rem; align-self: center; }
 }
-.ni-fan ul[style*="--n:2"] { min-height: 28rem; }
-.ni-fan ul[style*="--n:2"] li:nth-child(2) { left: 42%; top: 50%; }
-@media (max-width: 1300px) and (min-width: 1001px) { .ni-fan li { width: 15rem; } }
 @media (max-width: 700px) { .ni-q .p-quote--big { padding: 1.25rem 1.5rem; } .ni-q .p-quote--big::after { display: none; } .ni-q .p-quote--big p { font-size: 1.125rem !important; } }
 /* 13.11 · оставшиеся страницы (build_misc.py): контакты, чек-лист, благодарность, политика, разбор, рекламная. Только токены кита. */
 
