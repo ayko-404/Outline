@@ -6357,7 +6357,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   let mapTheme = 'ya';   /* 03.11: Никита — светлая «Как в Яндексе», подвал на ней заметнее; тёмная — в коде, переключатель скрыт */
   (() => {
     const cv = A.querySelector('canvas'), cx = cv.getContext('2d'); let W = 0, H = 0, dpr = 1, base = null, U = [], V = [], cars = [], pins = [], route = null, vis = false, raf = 0, last = 0, th = MAPPAL.ya;
-    let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647; let wet = () => false;
     const ang = -0.21, ca = Math.cos(ang), sa = Math.sin(ang); let OX = 0, OY = 0;
     const S = (u, v) => [OX + u * ca - v * sa, OY + u * sa + v * ca];          /* (u, v) → экран */
     const build = () => {
@@ -6370,25 +6370,26 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       b.fillStyle = th.bg; b.fillRect(0, 0, W, H);
       const quad = (u0, v0, u1, v1, fill) => { b.fillStyle = fill; b.beginPath(); [S(u0, v0), S(u1, v0), S(u1, v1), S(u0, v1)].forEach(([x, y], k) => k ? b.lineTo(x, y) : b.moveTo(x, y)); b.closePath(); b.fill(); };
       /* кварталы: дома по периметру или парк */
+      /* 15.11 (Никита: «река идёт прямо через дома и улицы») — берег: дома у воды не ставим, мелкие улицы обрываются у реки, через неё — только магистрали-мосты; машины, маршрут и метки на воду не заходят */ const bz = (t, a0, a1, a2, a3) => { const m = 1 - t; return m * m * m * a0 + 3 * m * m * t * a1 + 3 * m * t * t * a2 + t * t * t * a3; }; const RP = []; for (let k = 0; k <= 90; k++) { const t = k / 90; RP.push([bz(t, -80, W * .3, W * .62, W + 80), bz(t, H * .2, H * .55, H * .02, H * .34)]); } wet = (x, y, pad = 0) => { for (let k = 0; k < RP.length - 1; k++) { const [ax, ay] = RP[k], dx = RP[k + 1][0] - ax, dy = RP[k + 1][1] - ay, t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy))); if (Math.hypot(x - ax - dx * t, y - ay - dy * t) < 27 + pad) return true; } return false; }; const house = (u0, v0, u1, v1) => { const c = S((u0 + u1) / 2, (v0 + v1) / 2); if (!wet(c[0], c[1], 14)) quad(u0, v0, u1, v1, th.house); };
       for (let i = 0; i < U.length - 1; i++) for (let j = 0; j < V.length - 1; j++) {
         const g = 7, u0 = U[i].o + g, u1 = U[i + 1].o - g, v0 = V[j].o + g, v1 = V[j + 1].o - g; if (u1 - u0 < 20 || v1 - v0 < 20) continue;
         const c = S((u0 + u1) / 2, (v0 + v1) / 2); if (c[0] < -150 || c[0] > W + 150 || c[1] < -150 || c[1] > H + 150) continue;
         if (rnd() < .1) { quad(u0, v0, u1, v1, th.park); quad(u0 + 8, v0 + 8, u1 - 8, v1 - 8, th.park2); continue; }
         quad(u0, v0, u1, v1, th.block);
         for (let u = u0 + 2; u < u1 - 10; u += 14 + rnd() * 16) { const w = 10 + rnd() * 12, d = 12 + rnd() * 10; if (u + w > u1 - 2) break;
-          quad(u, v0 + 2, u + w, v0 + 2 + d, th.house); quad(u, v1 - 2 - d, u + w, v1 - 2, th.house); }
+          house(u, v0 + 2, u + w, v0 + 2 + d); house(u, v1 - 2 - d, u + w, v1 - 2); }
         for (let v = v0 + 26; v < v1 - 30; v += 16 + rnd() * 14) { const h = 10 + rnd() * 10, d = 12 + rnd() * 8;
-          quad(u0 + 2, v, u0 + 2 + d, v + h, th.house); quad(u1 - 2 - d, v, u1 - 2, v + h, th.house); }
+          house(u0 + 2, v, u0 + 2 + d, v + h); house(u1 - 2 - d, v, u1 - 2, v + h); }
       }
       /* река поверх кварталов: плавная кривая, мосты — там, где её пересекают улицы */
-      b.save(); b.lineCap = 'butt'; b.beginPath(); b.moveTo(-80, H * .2); b.bezierCurveTo(W * .3, H * .55, W * .62, H * .02, W + 80, H * .34); b.strokeStyle = th.water; b.lineWidth = 54; b.stroke(); b.restore();
+      /* река — после дорог, см. ниже */
       /* дороги: обводка, потом заливка — магистрали шире */
       const seg = (l, fam) => fam === 'U' ? [S(l.o, -R), S(l.o, R)] : [S(-R, l.o), S(R, l.o)];
       [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { const [p0, p1] = seg(l, f); b.strokeStyle = l.major ? th.majorCasing : th.casing; b.lineWidth = l.major ? 12 : 7; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); }));
-      [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { const [p0, p1] = seg(l, f); b.strokeStyle = th.road; b.lineWidth = l.major ? 10 : 5; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); }));
+      [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { const [p0, p1] = seg(l, f); b.strokeStyle = th.road; b.lineWidth = l.major ? 10 : 5; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); })); /* река поверх улиц; магистрали — мосты поверх реки */ b.save(); b.lineCap = 'butt'; b.beginPath(); b.moveTo(-80, H * .2); b.bezierCurveTo(W * .3, H * .55, W * .62, H * .02, W + 80, H * .34); b.strokeStyle = th.water; b.lineWidth = 54; b.stroke(); b.restore(); [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { if (!l.major) return; const [p0, p1] = seg(l, f); b.strokeStyle = th.majorCasing; b.lineWidth = 13; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); b.strokeStyle = th.road; b.lineWidth = 10; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); }));
       /* POI — кружки рубрик, как значки мест на картах */
       for (let k = 0; k < 16; k++) { const i = 1 + ((rnd() * (U.length - 3)) | 0), j = 1 + ((rnd() * (V.length - 3)) | 0), du = (U[i + 1].o - U[i].o) * (.25 + rnd() * .5), dv = (V[j + 1].o - V[j].o) * (.25 + rnd() * .5);
-        const [x, y] = S(U[i].o + du, V[j].o + dv); if (x < 20 || x > W - 20 || y < 20 || y > H - 20) continue;
+        const [x, y] = S(U[i].o + du, V[j].o + dv); if (x < 20 || x > W - 20 || y < 20 || y > H - 20) continue; if (wet(x, y, 8)) continue;
         b.fillStyle = '#fff'; b.beginPath(); b.arc(x, y, 6.5, 0, 7); b.fill(); b.fillStyle = th.poi[k % th.poi.length]; b.beginPath(); b.arc(x, y, 5, 0, 7); b.fill(); }
       cars = Array.from({ length: Math.round(W / 14) }, () => newCar()); pins = []; route = null;
     };
@@ -6398,7 +6399,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
     const visible = ([x, y], m = 0) => x > m && x < W - m && y > m && y < H - m;
     /* узел сетки в видимой зоне (выше карточки подвала) */
     const node = () => { for (let k = 0; k < 60; k++) { const i = (rnd() * U.length) | 0, j = (rnd() * V.length) | 0, p = S(U[i].o, V[j].o);
-      if (p[0] > W * .06 && p[0] < W * .94 && p[1] > H * .07 && p[1] < H * .42) return [i, j]; } return null; };
+      if (!wet(p[0], p[1], 10) && p[0] > W * .06 && p[0] < W * .94 && p[1] > H * .07 && p[1] < H * .42) return [i, j]; } return null; };
     /* маршрут «лесенкой», как на обложке: от точки «вы здесь» к метке бизнеса, поочерёдно по улицам двух направлений, 4 поворота */
     const NAMES = ['Ваш автосервис', 'Ваша клиника', 'Ваша кофейня', 'Ваш салон'];
     let nameK = 0;
@@ -6408,7 +6409,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
         const ia = a[0] + Math.round(di * (.3 + rnd() * .4)), jb = a[1] + Math.round(dj * (.3 + rnd() * .4));
         const steps = [[a[0], a[1]], [a[0], jb], [ia, jb], [ia, z[1]], [z[0], z[1]]];   /* вдоль u, вдоль v, вдоль u, вдоль v */
         const P = steps.map(([i, j]) => S(U[i].o, V[j].o)).filter((q, n, arr) => !n || Math.hypot(q[0] - arr[n - 1][0], q[1] - arr[n - 1][1]) > 1);
-        if (P.length >= 4 && P.every(q => visible(q, 24))) { route = { pts: P, t: 0, name: NAMES[nameK++ % NAMES.length] }; return; } }
+        const dry = st => st.slice(1).every(([i, j], n) => { const [pi, pj] = st[n], l = pi === i ? U[i] : V[j]; if (l.major) return true; const a = S(U[pi].o, V[pj].o), z2 = S(U[i].o, V[j].o); for (let s = 0; s <= 24; s++) { if (wet(a[0] + (z2[0] - a[0]) * s / 24, a[1] + (z2[1] - a[1]) * s / 24, 4)) return false; } return true; }); if (P.length >= 4 && P.every(q => visible(q, 24)) && dry(steps)) { route = { pts: P, t: 0, name: NAMES[nameK++ % NAMES.length] }; return; } }
       route = null; };
     /* метка: круг радиуса r на высоте L над остриём, бока — касательные из острия (ровная геометрия, без «капли» на кривых) */
     const pinPath = (L, r) => { const t = Math.acos(r / L); cx.beginPath(); cx.moveTo(0, 0); cx.arc(0, -L, r, Math.PI / 2 + t, Math.PI / 2 - t + Math.PI * 2); cx.closePath(); };
@@ -6417,7 +6418,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       cx.setTransform(1, 0, 0, 1, 0, 0); cx.drawImage(base, 0, 0); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
       /* машины: по своей полосе (сдвиг от оси дороги), со шлейфом */
       cars.forEach(c => { c.t += c.v * dt * (reduce ? 0 : 1); if (Math.abs(c.t) > R) Object.assign(c, newCar()); const off = c.side * (c.l.major ? 2.5 : 1.2);
-        const [x, y] = c.fam === 'U' ? S(c.l.o + off, c.t) : S(c.t, c.l.o + off); if (!visible([x, y], -10)) return;
+        const [x, y] = c.fam === 'U' ? S(c.l.o + off, c.t) : S(c.t, c.l.o + off); if (!visible([x, y], -10)) return; if (!c.l.major && wet(x, y, 3)) return;
         const dir = c.fam === 'U' ? [-sa, ca] : [ca, sa], tl = (c.l.major ? 14 : 8) * Math.sign(c.v);
         const g = cx.createLinearGradient(x, y, x - dir[0] * tl, y - dir[1] * tl), col = th.car[c.warm ? 1 : 0]; g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)');
         cx.strokeStyle = g; cx.lineWidth = c.l.major ? 2.2 : 1.5; cx.lineCap = 'round'; cx.beginPath(); cx.moveTo(x, y); cx.lineTo(x - dir[0] * tl, y - dir[1] * tl); cx.stroke(); });
@@ -6444,7 +6445,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
             cx.fillStyle = '#1c1f24'; cx.beginPath(); cx.roundRect(bx, by, bw, bh, 9); cx.fill(); cx.fillStyle = '#fff'; cx.textBaseline = 'middle'; cx.fillText(route.name, bx + 14, by + bh / 2 + 1); } }
         cx.restore(); if (route.t > 1) route = null; }
       /* метки конкурентов — на перекрёстках */
-      if (rnd() < dt * .8 && pins.length < 6) { const n = node(); if (n) { const i = n[0], j = n[1], du = (U[Math.min(i + 1, U.length - 1)].o - U[i].o) * .5, dv = (V[Math.min(j + 1, V.length - 1)].o - V[j].o) * .5; pins.push({ p: S(U[i].o + du, V[j].o + 8), t: 0 }); } }
+      if (rnd() < dt * .8 && pins.length < 6) { const n = node(); if (n) { const i = n[0], j = n[1], du = (U[Math.min(i + 1, U.length - 1)].o - U[i].o) * .5, dv = (V[Math.min(j + 1, V.length - 1)].o - V[j].o) * .5; const q0 = S(U[i].o + du, V[j].o + 8); if (!wet(q0[0], q0[1], 14)) pins.push({ p: q0, t: 0 }); } }
       pins = pins.filter(q => (q.t += dt / 6) < 1); pins.forEach(q => { const a = q.t < .12 ? q.t / .12 : q.t > .85 ? (1 - q.t) / .15 : 1, [x, y] = q.p;
         cx.save(); cx.globalAlpha = a; cx.translate(x, y - 1); cx.fillStyle = th.pin; cx.strokeStyle = th === MAPPAL.ya ? '#fff' : 'rgba(255,255,255,.7)'; cx.lineWidth = 2.5;
         pinPath(20, 8.5); cx.fill(); cx.lineJoin = 'round'; cx.stroke();
@@ -7172,7 +7173,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   const X0 = opts.x0 ?? .06, X1 = opts.x1 ?? .94, Y0 = opts.y0 ?? .07, Y1 = opts.y1 ?? .42;
   const th = { bg: '#f8f7f6', block: '#efebe7', house: '#e6dfda', park: '#dcf2c9', park2: '#cdecb2', water: '#94d4fa', road: '#ffffff', casing: 'rgba(149,153,161,.55)', majorCasing: 'rgba(149,153,161,.8)', car: ['rgba(40,120,238,.75)', 'rgba(255,100,20,.8)'], pin: '#8e949e', poi: ['#ffa15e', '#8ad9cb', '#d38fec', '#94b7f0'] };
   const cx = cv.getContext('2d'); let W = 0, H = 0, dpr = 1, base = null, U = [], V = [], cars = [], pins = [], route = null, vis = false, raf = 0, last = 0, R = 1000;
-  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647; let wet = () => false;
   const ang = -0.21, ca = Math.cos(ang), sa = Math.sin(ang); let OX = 0, OY = 0;
   const S = (u, v) => [OX + u * ca - v * sa, OY + u * sa + v * ca];
   const NAMES = (foot.dataset.pins || 'Ваш автосервис|Ваша клиника|Ваша кофейня|Ваш салон').split('|'); let nameK = 0;
@@ -7184,33 +7185,34 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
     base = document.createElement('canvas'); base.width = cv.width; base.height = cv.height; const b = base.getContext('2d'); b.scale(dpr, dpr);
     b.fillStyle = th.bg; b.fillRect(0, 0, W, H);
     const quad = (u0, v0, u1, v1, fill) => { b.fillStyle = fill; b.beginPath(); [S(u0, v0), S(u1, v0), S(u1, v1), S(u0, v1)].forEach(([x, y], k) => k ? b.lineTo(x, y) : b.moveTo(x, y)); b.closePath(); b.fill(); };
-    for (let i = 0; i < U.length - 1; i++) for (let j = 0; j < V.length - 1; j++) {
+    /* 15.11 (Никита: «река идёт прямо через дома и улицы») — берег: дома у воды не ставим, мелкие улицы обрываются у реки, через неё — только магистрали-мосты; машины, маршрут и метки на воду не заходят */ const bz = (t, a0, a1, a2, a3) => { const m = 1 - t; return m * m * m * a0 + 3 * m * m * t * a1 + 3 * m * t * t * a2 + t * t * t * a3; }; const RP = []; for (let k = 0; k <= 90; k++) { const t = k / 90; RP.push([bz(t, -80, W * .3, W * .62, W + 80), bz(t, H * .2, H * .55, H * .02, H * .34)]); } wet = (x, y, pad = 0) => { for (let k = 0; k < RP.length - 1; k++) { const [ax, ay] = RP[k], dx = RP[k + 1][0] - ax, dy = RP[k + 1][1] - ay, t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy))); if (Math.hypot(x - ax - dx * t, y - ay - dy * t) < 27 + pad) return true; } return false; }; const house = (u0, v0, u1, v1) => { const c = S((u0 + u1) / 2, (v0 + v1) / 2); if (!wet(c[0], c[1], 14)) quad(u0, v0, u1, v1, th.house); };
+      for (let i = 0; i < U.length - 1; i++) for (let j = 0; j < V.length - 1; j++) {
       const g = 7, u0 = U[i].o + g, u1 = U[i + 1].o - g, v0 = V[j].o + g, v1 = V[j + 1].o - g; if (u1 - u0 < 20 || v1 - v0 < 20) continue;
       const c = S((u0 + u1) / 2, (v0 + v1) / 2); if (c[0] < -150 || c[0] > W + 150 || c[1] < -150 || c[1] > H + 150) continue;
       if (rnd() < .1) { quad(u0, v0, u1, v1, th.park); quad(u0 + 8, v0 + 8, u1 - 8, v1 - 8, th.park2); continue; }
       quad(u0, v0, u1, v1, th.block);
-      for (let u = u0 + 2; u < u1 - 10; u += 14 + rnd() * 16) { const w = 10 + rnd() * 12, d = 12 + rnd() * 10; if (u + w > u1 - 2) break; quad(u, v0 + 2, u + w, v0 + 2 + d, th.house); quad(u, v1 - 2 - d, u + w, v1 - 2, th.house); }
-      for (let v = v0 + 26; v < v1 - 30; v += 16 + rnd() * 14) { const h = 10 + rnd() * 10, d = 12 + rnd() * 8; quad(u0 + 2, v, u0 + 2 + d, v + h, th.house); quad(u1 - 2 - d, v, u1 - 2, v + h, th.house); }
+      for (let u = u0 + 2; u < u1 - 10; u += 14 + rnd() * 16) { const w = 10 + rnd() * 12, d = 12 + rnd() * 10; if (u + w > u1 - 2) break; house(u, v0 + 2, u + w, v0 + 2 + d); house(u, v1 - 2 - d, u + w, v1 - 2); }
+      for (let v = v0 + 26; v < v1 - 30; v += 16 + rnd() * 14) { const h = 10 + rnd() * 10, d = 12 + rnd() * 8; house(u0 + 2, v, u0 + 2 + d, v + h); house(u1 - 2 - d, v, u1 - 2, v + h); }
     }
-    b.save(); b.lineCap = 'butt'; b.beginPath(); b.moveTo(-80, H * .2); b.bezierCurveTo(W * .3, H * .55, W * .62, H * .02, W + 80, H * .34); b.strokeStyle = th.water; b.lineWidth = 54; b.stroke(); b.restore();
+    /* река — после дорог, см. ниже */
     const seg = (l, fam) => fam === 'U' ? [S(l.o, -R), S(l.o, R)] : [S(-R, l.o), S(R, l.o)];
     [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { const [p0, p1] = seg(l, f); b.strokeStyle = l.major ? th.majorCasing : th.casing; b.lineWidth = l.major ? 12 : 7; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); }));
-    [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { const [p0, p1] = seg(l, f); b.strokeStyle = th.road; b.lineWidth = l.major ? 10 : 5; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); }));
+    [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { const [p0, p1] = seg(l, f); b.strokeStyle = th.road; b.lineWidth = l.major ? 10 : 5; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); })); /* река поверх улиц; магистрали — мосты поверх реки */ b.save(); b.lineCap = 'butt'; b.beginPath(); b.moveTo(-80, H * .2); b.bezierCurveTo(W * .3, H * .55, W * .62, H * .02, W + 80, H * .34); b.strokeStyle = th.water; b.lineWidth = 54; b.stroke(); b.restore(); [['U', U], ['V', V]].forEach(([f, arr]) => arr.forEach(l => { if (!l.major) return; const [p0, p1] = seg(l, f); b.strokeStyle = th.majorCasing; b.lineWidth = 13; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); b.strokeStyle = th.road; b.lineWidth = 10; b.beginPath(); b.moveTo(...p0); b.lineTo(...p1); b.stroke(); }));
     for (let k = 0; k < 16; k++) { const i = 1 + ((rnd() * (U.length - 3)) | 0), j = 1 + ((rnd() * (V.length - 3)) | 0), du = (U[i + 1].o - U[i].o) * (.25 + rnd() * .5), dv = (V[j + 1].o - V[j].o) * (.25 + rnd() * .5);
-      const [x, y] = S(U[i].o + du, V[j].o + dv); if (x < 20 || x > W - 20 || y < 20 || y > H - 20) continue;
+      const [x, y] = S(U[i].o + du, V[j].o + dv); if (x < 20 || x > W - 20 || y < 20 || y > H - 20) continue; if (wet(x, y, 8)) continue;
       b.fillStyle = '#fff'; b.beginPath(); b.arc(x, y, 6.5, 0, 7); b.fill(); b.fillStyle = th.poi[k % th.poi.length]; b.beginPath(); b.arc(x, y, 5, 0, 7); b.fill(); }
     cars = Array.from({ length: Math.round(W / 14) }, () => newCar()); pins = []; route = null;
   };
   const newCar = () => { const fam = rnd() < .5 ? 'U' : 'V', arr = fam === 'U' ? U : V, l = arr[(rnd() * arr.length) | 0];
     return { fam, l, t: -R + rnd() * 2 * R, v: (l.major ? 70 : 38) * (rnd() < .5 ? -1 : 1) * (.7 + rnd() * .6), side: rnd() < .5 ? -1 : 1, warm: rnd() < .35 }; };
   const visible = ([x, y], m = 0) => x > m && x < W - m && y > m && y < H - m;
-  const node = () => { for (let k = 0; k < 60; k++) { const i = (rnd() * U.length) | 0, j = (rnd() * V.length) | 0, p = S(U[i].o, V[j].o); if (p[0] > W * X0 && p[0] < W * X1 && p[1] > H * Y0 && p[1] < H * Y1) return [i, j]; } return null; };
+  const node = () => { for (let k = 0; k < 60; k++) { const i = (rnd() * U.length) | 0, j = (rnd() * V.length) | 0, p = S(U[i].o, V[j].o); if (!wet(p[0], p[1], 10) && p[0] > W * X0 && p[0] < W * X1 && p[1] > H * Y0 && p[1] < H * Y1) return [i, j]; } return null; };
   const newRoute = () => {
     for (let k = 0; k < 40; k++) { const a = node(), z = node(); if (!a || !z) continue;
       const di = z[0] - a[0], dj = z[1] - a[1]; if (Math.abs(di) < 2 || Math.abs(dj) < 2) continue;
       const ia = a[0] + Math.round(di * (.3 + rnd() * .4)), jb = a[1] + Math.round(dj * (.3 + rnd() * .4));
-      const P = [[a[0], a[1]], [a[0], jb], [ia, jb], [ia, z[1]], [z[0], z[1]]].map(([i, j]) => S(U[i].o, V[j].o)).filter((q, n, arr) => !n || Math.hypot(q[0] - arr[n - 1][0], q[1] - arr[n - 1][1]) > 1);
-      if (P.length >= 4 && P.every(q => visible(q, 24))) { route = { pts: P, t: 0, name: NAMES[nameK++ % NAMES.length] }; return; } }
+      const steps = [[a[0], a[1]], [a[0], jb], [ia, jb], [ia, z[1]], [z[0], z[1]]], P = steps.map(([i, j]) => S(U[i].o, V[j].o)).filter((q, n, arr) => !n || Math.hypot(q[0] - arr[n - 1][0], q[1] - arr[n - 1][1]) > 1);
+      const dry = st => st.slice(1).every(([i, j], n) => { const [pi, pj] = st[n], l = pi === i ? U[i] : V[j]; if (l.major) return true; const a = S(U[pi].o, V[pj].o), z2 = S(U[i].o, V[j].o); for (let s = 0; s <= 24; s++) { if (wet(a[0] + (z2[0] - a[0]) * s / 24, a[1] + (z2[1] - a[1]) * s / 24, 4)) return false; } return true; }); if (P.length >= 4 && P.every(q => visible(q, 24)) && dry(steps)) { route = { pts: P, t: 0, name: NAMES[nameK++ % NAMES.length] }; return; } }
     route = null; };
   const pinPath = (L, r) => { const t = Math.acos(r / L); cx.beginPath(); cx.moveTo(0, 0); cx.arc(0, -L, r, Math.PI / 2 + t, Math.PI / 2 - t + Math.PI * 2); cx.closePath(); };
   const font = getComputedStyle(document.body).fontFamily || 'sans-serif';
@@ -7218,7 +7220,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
     if (!vis || !base) return; raf = requestAnimationFrame(frame); if (now - last < 32) return; const dt = Math.min(.05, (now - last) / 1000); last = now;
     cx.setTransform(1, 0, 0, 1, 0, 0); cx.drawImage(base, 0, 0); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cars.forEach(c => { c.t += c.v * dt * (reduce ? 0 : 1); if (Math.abs(c.t) > R) Object.assign(c, newCar()); const off = c.side * (c.l.major ? 2.5 : 1.2);
-      const [x, y] = c.fam === 'U' ? S(c.l.o + off, c.t) : S(c.t, c.l.o + off); if (!visible([x, y], -10)) return;
+      const [x, y] = c.fam === 'U' ? S(c.l.o + off, c.t) : S(c.t, c.l.o + off); if (!visible([x, y], -10)) return; if (!c.l.major && wet(x, y, 3)) return;
       const dir = c.fam === 'U' ? [-sa, ca] : [ca, sa], tl = (c.l.major ? 14 : 8) * Math.sign(c.v);
       const g = cx.createLinearGradient(x, y, x - dir[0] * tl, y - dir[1] * tl); g.addColorStop(0, th.car[c.warm ? 1 : 0]); g.addColorStop(1, 'rgba(0,0,0,0)');
       cx.strokeStyle = g; cx.lineWidth = c.l.major ? 2.2 : 1.5; cx.lineCap = 'round'; cx.beginPath(); cx.moveTo(x, y); cx.lineTo(x - dir[0] * tl, y - dir[1] * tl); cx.stroke(); });
@@ -7238,7 +7240,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
           const tw = cx.measureText(route.name).width, bw = tw + 28, bh = 32, bx = x + 22, by = y - 3 - 31 - bh / 2;
           cx.fillStyle = '#1c1f24'; cx.beginPath(); cx.roundRect(bx, by, bw, bh, 9); cx.fill(); cx.fillStyle = '#fff'; cx.textBaseline = 'middle'; cx.fillText(route.name, bx + 14, by + bh / 2 + 1); } }
       cx.restore(); if (route.t > 1) route = null; }
-    if (rnd() < dt * .8 && pins.length < 6) { const n = node(); if (n) { const i = n[0], j = n[1], du = (U[Math.min(i + 1, U.length - 1)].o - U[i].o) * .5; pins.push({ p: S(U[i].o + du, V[j].o + 8), t: 0 }); } }
+    if (rnd() < dt * .8 && pins.length < 6) { const n = node(); if (n) { const i = n[0], j = n[1], du = (U[Math.min(i + 1, U.length - 1)].o - U[i].o) * .5; const q0 = S(U[i].o + du, V[j].o + 8); if (!wet(q0[0], q0[1], 14)) pins.push({ p: q0, t: 0 }); } }
     pins = pins.filter(q => (q.t += dt / 6) < 1); pins.forEach(q => { const a = q.t < .12 ? q.t / .12 : q.t > .85 ? (1 - q.t) / .15 : 1, [x, y] = q.p;
       cx.save(); cx.globalAlpha = a; cx.translate(x, y - 1); cx.fillStyle = th.pin; cx.strokeStyle = '#fff'; cx.lineWidth = 2.5; pinPath(20, 8.5); cx.fill(); cx.lineJoin = 'round'; cx.stroke();
       cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(0, -20, 3.2, 0, 7); cx.fill(); cx.restore(); });
