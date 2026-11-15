@@ -6095,6 +6095,17 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .rmc__pin-r { fill: none; stroke: rgb(255 100 20 / .55); stroke-width: 1; transform-box: fill-box; transform-origin: center; opacity: 0; }
 @media (prefers-reduced-motion: no-preference) { .rmc__pin-r { animation: rmc-pin 2.4s cubic-bezier(.22, 1, .36, 1) infinite; } }
 @keyframes rmc-pin { 0% { opacity: .9; scale: .4; } 100% { opacity: 0; scale: 1.6; } }
+/* 15.11 (Никита): «Дальше — каждый месяц, с отчётом» — от руки, со стрелкой-петлёй к месяцам; стрелка дорисовывается при появлении блока */
+.rmc__cap.rmc__hand { top: -.375rem; display: flex; align-items: flex-start; gap: .25rem; font: 400 1.375rem/1 var(--font-script, "Caveat", cursive); letter-spacing: 0; text-transform: none; color: var(--text-muted); }
+.rmc__hand > span { rotate: -3deg; white-space: nowrap; padding-top: .125rem; }
+@media (max-width: 700px) { .rmc__cap.rmc__hand { font-size: 1.125rem; } .rmc__hand svg { width: 2.5rem; height: 2.375rem; } }
+.rmc__hand svg { flex: none; width: 3.25rem; height: 3rem; margin-top: .5rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.rmc__hand path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .rmc__hand path { stroke-dashoffset: 1; }
+  .lt.is-in .rm6[data-v="c"] .rmc__hand path { stroke-dashoffset: 0; transition: stroke-dashoffset .9s cubic-bezier(.65, 0, .35, 1) 1.5s; }
+  .lt.is-in .rm6[data-v="c"] .rmc__hand path.hd { transition: stroke-dashoffset .3s cubic-bezier(.22, 1, .36, 1) 2.35s; }
+}
 .rmc__note { position: absolute; right: 0; bottom: .5rem; display: inline-flex; align-items: center; gap: .4375rem; }
 .rmc__note b { display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: 50%; background: #2878ee; color: #fff; }
 .rmc__note svg { width: .625rem; height: .625rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }

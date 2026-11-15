@@ -5859,7 +5859,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   const C = [
     `<span class="rmc__cap rmv__mono"><em class="rmc__pin" aria-hidden="true"><svg viewBox="0 0 24 30"><ellipse class="rmc__pin-r" cx="12" cy="27" rx="7" ry="2.2"/><ellipse cx="12" cy="27" rx="4" ry="1.3" fill="rgb(15 21 29 / .22)"/><path class="rmc__pin-b" d="M12 1.5C6.2 1.5 1.8 5.9 1.8 11.4c0 6.9 8.2 13.6 9.4 14.6.5.4 1.1.4 1.6 0 1.2-1 9.4-7.7 9.4-14.6C22.2 5.9 17.8 1.5 12 1.5Z"/><circle cx="12" cy="11.2" r="3.9" fill="#fff"/></svg></em>Старт</span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .1)}</div>`,
     `<div class="rmc"><span class="rmc__ax"></span>${st(0, 84, 'plan', 'План и условия', .45)}</div>`,
-    `<span class="rmc__cap r rmv__mono">Дальше — каждый месяц, с&nbsp;отчётом</span><div class="rmc"><span class="rmc__ax"></span>${mo(0, 28, '1 мес', .8)}${mo(31, 28, '2 мес', .95)}${mo(62, 28, '3 мес', 1.1)}<span class="rmc__more" style="--d:1.4s"><i></i><i></i><i></i></span></div>
+    `<span class="rmc__cap r rmc__hand"><svg viewBox="0 0 60 56" aria-hidden="true"><path pathLength="1" d="M58.5 8.6C46.2 3.9 31.4 6.6 27.6 15.8c-2.6 6.3 4.9 9.8 8.3 4.7 3.9-5.9-5.6-11.5-14.2-3.4-6.6 6.2-9.9 18.9-10.6 31.6"/><path class="hd" pathLength="1" d="M5.2 42.6c2.3 2.7 4.3 5.4 6 8.4 1.9-3 4-5.5 6.6-7.6"/></svg><span>Дальше&nbsp;— каждый месяц, с&nbsp;отчётом</span></span><div class="rmc"><span class="rmc__ax"></span>${mo(0, 28, '1 мес', .8)}${mo(31, 28, '2 мес', .95)}${mo(62, 28, '3 мес', 1.1)}<span class="rmc__more" style="--d:1.4s"><i></i><i></i><i></i></span></div>
 `,
   ];
   cards.forEach((c, i) => { const r = c.querySelector('.rm6__ruler');
@@ -5908,6 +5908,17 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .rmc__pin-r { fill: none; stroke: rgb(255 100 20 / .55); stroke-width: 1; transform-box: fill-box; transform-origin: center; opacity: 0; }
 @media (prefers-reduced-motion: no-preference) { .rmc__pin-r { animation: rmc-pin 2.4s cubic-bezier(.22, 1, .36, 1) infinite; } }
 @keyframes rmc-pin { 0% { opacity: .9; scale: .4; } 100% { opacity: 0; scale: 1.6; } }
+/* 15.11 (Никита): «Дальше — каждый месяц, с отчётом» — от руки, со стрелкой-петлёй к месяцам; стрелка дорисовывается при появлении блока */
+.rmc__cap.rmc__hand { top: -.375rem; display: flex; align-items: flex-start; gap: .25rem; font: 400 1.375rem/1 var(--font-script, "Caveat", cursive); letter-spacing: 0; text-transform: none; color: var(--text-muted); }
+.rmc__hand > span { rotate: -3deg; white-space: nowrap; padding-top: .125rem; }
+@media (max-width: 700px) { .rmc__cap.rmc__hand { font-size: 1.125rem; } .rmc__hand svg { width: 2.5rem; height: 2.375rem; } }
+.rmc__hand svg { flex: none; width: 3.25rem; height: 3rem; margin-top: .5rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.rmc__hand path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .rmc__hand path { stroke-dashoffset: 1; }
+  .lt.is-in .rm6[data-v="c"] .rmc__hand path { stroke-dashoffset: 0; transition: stroke-dashoffset .9s cubic-bezier(.65, 0, .35, 1) 1.5s; }
+  .lt.is-in .rm6[data-v="c"] .rmc__hand path.hd { transition: stroke-dashoffset .3s cubic-bezier(.22, 1, .36, 1) 2.35s; }
+}
 .rmc__note { position: absolute; right: 0; bottom: .5rem; display: inline-flex; align-items: center; gap: .4375rem; }
 .rmc__note b { display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: 50%; background: #2878ee; color: #fff; }
 .rmc__note svg { width: .625rem; height: .625rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
