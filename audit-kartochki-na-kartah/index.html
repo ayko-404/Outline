@@ -3119,7 +3119,8 @@ html.rvs-lock { overflow: hidden; }
 .fin .ft__bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgb(255 255 255 / .1); font-size: .8125rem; color: rgb(255 255 255 / .72); }
 .fin .ft__bot a { color: rgb(255 255 255 / .72); }
 .fin .ft__top { display: grid; gap: 2rem; font-size: .9375rem; }
-.fin .ft__top { grid-template-columns: 1.3fr repeat(4, 1fr); }
+/* 15.11 (Никита): подвал по сетке сайта — 6 колонок с шагом 1,25rem, как .o-split и .o-grid-3; логотип — 2 колонки, «Кому помогаем» — от средней оси */
+.fin .ft__top { grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 1.25rem; row-gap: 2rem; } .fin .ft__brand { grid-column: span 2; }
 .finl .ft__brand .lg__word--light { display: block !important; } .finl .ft__brand .lg__word--dark { display: none !important; }
 .finl h4 { color: var(--text-muted) !important; } .finl a { color: var(--text-default); } .finl a:hover { color: #0f151d; } .finl .ft__phone { color: #0f151d !important; }
 .finl .ft__brand p, .finl .ft__bot { color: var(--text-muted); } .finl .ft__bot { border-top-color: rgb(15 21 29 / .08); } .finl .ft__bot a { color: var(--text-muted); }
@@ -4114,7 +4115,8 @@ html.o-lock { overflow: hidden; }
 .o-footer__grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px); background-size: 32px 32px;
   -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); }
 .o-footer__cin > :not(.o-footer__grid) { position: relative; }
-.o-footer__top { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: var(--space-8); font-size: var(--fs-sm); }
+/* 15.11: по сетке сайта — 6 колонок, шаг как у .o-split; бренд — 2 колонки, «Кому помогаем» — от средней оси */
+.o-footer__top { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: var(--space-5); row-gap: var(--space-8); font-size: var(--fs-sm); } .o-footer__brand { grid-column: span 2; }
 .o-footer__brand img { display: block; height: 1.75rem; width: auto; }
 .o-footer__brand p { margin: var(--space-4) 0 0; max-width: 16rem; line-height: 1.5; color: var(--text-muted); }
 .o-footer h4 { margin: 0 0 var(--space-4); font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
@@ -6160,14 +6162,12 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       <g class="b draw">${base}</g><g class="h" mask="url(#${id}m)">${hl}</g></svg>`; };
   const unit = (svg, vbw) => { const f = () => svg.clientWidth && svg.style.setProperty('--u', (vbw / svg.clientWidth).toFixed(4)); new ResizeObserver(f).observe(svg); f(); };
   const bindOutline = svg => { unit(svg, 460);
-    const spot = svg.querySelector('.spot'); let auto = true, t0 = performance.now(), raf = 0, vis = false;
+    const spot = svg.querySelector('.spot'); let auto = true, raf = 0, vis = false, cx = -40, cy = 45, ph = 0, last = 0;
     const pt = e => { const r = svg.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 460 - 2, (e.clientY - r.top) / r.height * 94 - 2]; };
-    svg.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; auto = false; const [x, y] = pt(e); spot.setAttribute('cx', x); spot.setAttribute('cy', y); svg.classList.add('is-lit'); });
-    svg.addEventListener('pointerleave', () => { auto = true; t0 = performance.now(); });
-    /* без мыши (телефон) — фонарик сам медленно проходит по логотипу */
-    const loop = now => { if (!vis) return; if (auto && !reduce) { const k = ((now - t0) / 5200) % 1, x = -40 + k * 540, y = 45 + Math.sin(k * Math.PI * 2) * 22;
-      spot.setAttribute('cx', x.toFixed(1)); spot.setAttribute('cy', y.toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
-    new IntersectionObserver(es => es.forEach(e => { vis = e.isIntersecting; if (vis) { svg.classList.add('is-in'); cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); } }), { threshold: .2 }).observe(svg);
+    svg.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; auto = false; [cx, cy] = pt(e); spot.setAttribute('cx', cx); spot.setAttribute('cy', cy); svg.classList.add('is-lit'); });
+    svg.addEventListener('pointerleave', () => { auto = true; ph = Math.acos(Math.max(-1, Math.min(1, (230 - cx) / 270))) / (Math.PI * 2); });
+    /* 15.11: фонарик ходит туда-обратно с замедлением у краёв, без скачка в начало; после курсора продолжает с того же места */ const loop = now => { if (!vis) return; const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now; if (auto && !reduce) { ph = (ph + dt / 11) % 1; const tx = 230 - 270 * Math.cos(ph * Math.PI * 2), ty = 45 + Math.sin(ph * Math.PI * 4) * 20, f = Math.min(1, dt * 5); cx += (tx - cx) * f; cy += (ty - cy) * f; spot.setAttribute('cx', cx.toFixed(1)); spot.setAttribute('cy', cy.toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
+    new IntersectionObserver(es => es.forEach(e => { vis = e.isIntersecting; if (vis) { svg.classList.add('is-in'); cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(loop); } }), { threshold: .2 }).observe(svg);
   };
 
   /* ===== А · живая карта (canvas) ===== */
@@ -6997,12 +6997,12 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       <mask id="${id}m" maskUnits="userSpaceOnUse" x="-200" y="-200" width="860" height="500"><circle class="spot" cx="-200" cy="45" r="70" fill="url(#${id}g)"/></mask></defs><g class="b draw">${base}</g><g class="h" mask="url(#${id}m)">${hl}</g></svg>`;
     const svg = foot.querySelector('.o-olg'), spot = svg.querySelector('.spot');
     const unit = () => svg.clientWidth && svg.style.setProperty('--u', (460 / svg.clientWidth).toFixed(4)); new ResizeObserver(unit).observe(svg); unit();
-    let auto = true, t0 = performance.now(), raf = 0, vis = false;
+    let auto = true, raf = 0, vis = false, cx = -40, cy = 45, ph = 0, last = 0;
     const pt = e => { const r = svg.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 460 - 2, (e.clientY - r.top) / r.height * 94 - 2]; };
-    svg.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; auto = false; const [x, y] = pt(e); spot.setAttribute('cx', x); spot.setAttribute('cy', y); svg.classList.add('is-lit'); });
-    svg.addEventListener('pointerleave', () => { auto = true; t0 = performance.now(); });
-    const loop = now => { if (!vis) return; if (auto && !reduce) { const k = ((now - t0) / 5200) % 1; spot.setAttribute('cx', (-40 + k * 540).toFixed(1)); spot.setAttribute('cy', (45 + Math.sin(k * Math.PI * 2) * 22).toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
-    new IntersectionObserver(es => es.forEach(e => { vis = e.isIntersecting; if (vis) { svg.classList.add('is-in'); cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); } }), { threshold: .2 }).observe(svg);
+    svg.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; auto = false; [cx, cy] = pt(e); spot.setAttribute('cx', cx); spot.setAttribute('cy', cy); svg.classList.add('is-lit'); });
+    svg.addEventListener('pointerleave', () => { auto = true; ph = Math.acos(Math.max(-1, Math.min(1, (230 - cx) / 270))) / (Math.PI * 2); });
+    /* 15.11: фонарик ходит туда-обратно с замедлением у краёв, без скачка в начало; после курсора продолжает с того же места */ const loop = now => { if (!vis) return; const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now; if (auto && !reduce) { ph = (ph + dt / 11) % 1; const tx = 230 - 270 * Math.cos(ph * Math.PI * 2), ty = 45 + Math.sin(ph * Math.PI * 4) * 20, f = Math.min(1, dt * 5); cx += (tx - cx) * f; cy += (ty - cy) * f; spot.setAttribute('cx', cx.toFixed(1)); spot.setAttribute('cy', cy.toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
+    new IntersectionObserver(es => es.forEach(e => { vis = e.isIntersecting; if (vis) { svg.classList.add('is-in'); cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(loop); } }), { threshold: .2 }).observe(svg);
   }
 
   /* ── подвал: живая карта «как в Яндексе» (canvas). Перенесено с главной (src/fin-variants.tpl.html, вариант А, 03.11):

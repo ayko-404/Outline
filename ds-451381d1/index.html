@@ -518,7 +518,8 @@ html.o-lock { overflow: hidden; }
 .o-footer__grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px); background-size: 32px 32px;
   -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 100%); }
 .o-footer__cin > :not(.o-footer__grid) { position: relative; }
-.o-footer__top { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: var(--space-8); font-size: var(--fs-sm); }
+/* 15.11: по сетке сайта — 6 колонок, шаг как у .o-split; бренд — 2 колонки, «Кому помогаем» — от средней оси */
+.o-footer__top { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: var(--space-5); row-gap: var(--space-8); font-size: var(--fs-sm); } .o-footer__brand { grid-column: span 2; }
 .o-footer__brand img { display: block; height: 1.75rem; width: auto; }
 .o-footer__brand p { margin: var(--space-4) 0 0; max-width: 16rem; line-height: 1.5; color: var(--text-muted); }
 .o-footer h4 { margin: 0 0 var(--space-4); font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
