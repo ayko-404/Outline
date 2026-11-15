@@ -1,0 +1,2 @@
+(() => { const ls = [...document.querySelectorAll('.m-art__toc a')], hs = ls.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean); if (!hs.length) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) ls.forEach(a => a.classList.toggle('is-on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-20% 0px -70% 0px' }); hs.forEach(h => io.observe(h)); })();

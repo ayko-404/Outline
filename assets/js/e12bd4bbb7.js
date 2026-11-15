@@ -1,0 +1,3 @@
+(() => { const bs = [...document.querySelectorAll('.m-z__b')], bar = document.querySelector('.m-prog'); if (!bs.length || !bar) return;
+  const upd = () => { const n = bs.filter(b => b.getAttribute('aria-pressed') === 'true').length; bar.querySelector('b').textContent = n; bar.style.setProperty('--p', n / bs.length); bar.classList.toggle('is-full', n === bs.length); };
+  bs.forEach(b => b.addEventListener('click', () => { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true'); upd(); })); upd(); })();

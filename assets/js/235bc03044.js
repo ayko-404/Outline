@@ -1,0 +1,3 @@
+(() => { /* поиск по статьям — по заголовку и описанию */
+  const inp = document.querySelector('.m-bls input'), n = document.querySelector('.m-bls__n'), cards = [...document.querySelectorAll('[data-q]')], none = document.querySelector('.m-blg__none'); if (!inp) return;
+  inp.addEventListener('input', () => { const q = inp.value.trim().toLowerCase(); let k = 0; cards.forEach(c => { const on = !q || c.dataset.q.includes(q); c.hidden = !on; if (on) k++; }); n.textContent = k; none.hidden = k > 0; }); })();

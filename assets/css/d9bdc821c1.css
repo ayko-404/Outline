@@ -1,0 +1,6 @@
+
+/* полоски прогресса — над текстом справа, не на видео: плеер Rutube кладёт сверху свою плашку и возрастную метку */
+.rvs__seg { left: calc(1rem + min(23rem, 40%) + 2.25rem); right: 6rem; top: 2rem; width: auto; }
+.rvs__seg i { background: rgb(15 21 29 / .1); } .rvs__seg i.on { background: #0f151d; }
+.rvs__body { padding-top: 2.75rem; }
+@media (max-width: 900px) { .rvs__seg { left: 16px; right: 16px; top: calc(58dvh + 12px); } .rvs__body { padding-top: 1.75rem; } }

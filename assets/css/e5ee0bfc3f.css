@@ -1,0 +1,3 @@
+
+.rmc__ax { left: -.125rem; right: -.125rem; background: #dcdee2; }   /* концы встречаются посередине зазора .25rem между карточками; сплошной цвет — без тёмной точки на стыке */
+.rm6__card:first-child .rmc__ax { left: 0; } .rm6__card:last-child .rmc__ax { right: 0; }

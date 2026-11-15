@@ -1,0 +1,8 @@
+
+/* шкала v5 (03.11, Никита: «слишком медленно, блик некрасивый»): без растушёвки — чёткий край маски, как в первом варианте;
+   быстрее (0,6 с) и с мягким замедлением в конце (ease-out), шаги идут плотнее; текст и иконка проявляются следом */
+.rmc__bar { -webkit-mask-image: none !important; mask-image: none !important; clip-path: inset(0 100% 0 0 round .75rem) !important; }
+.lt.is-in .rm6[data-v="c"] .rmc__bar { clip-path: inset(0 0 0 0 round .75rem) !important; transition: clip-path .6s cubic-bezier(0.23, 1, 0.32, 1) var(--d) !important; }
+.rmc__bar > :not(b), .rmc__bar { }
+.rm6[data-v="c"] .rmc__bar .rmc__t { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .rmc__bar { clip-path: none !important; } }

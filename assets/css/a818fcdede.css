@@ -1,0 +1,4 @@
+
+/* подпись внутри подсветки, справа по центру (строка поиска «Рекламы», 03.11) */
+.svc3 .xph .mph-spot.in b { top: 50%; left: auto; right: 2.4cqw; transform: translateY(-50%) scale(var(--ts, .9)); transform-origin: 100% 50%; }
+.svc3 .xph .mph-spot.in.lbl b { transform: translateY(-50%); }
