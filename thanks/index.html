@@ -5861,7 +5861,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   const st = (l, w, ic, t, d) => `<span class="rmc__bar s" style="left:${l}%;width:${w}%;--d:${d}s"><i>${IC[ic]}</i>${t}</span>`;
   const mo = (l, w, t, d) => `<span class="rmc__bar m" style="left:${l}%;width:${w}%;--d:${d}s">${t}<b style="--d:${(d + .3).toFixed(2)}s">${IC.doc}</b></span>`;
   const C = [
-    `<span class="rmc__cap rmv__mono"><em class="rmc__pin" aria-hidden="true"><svg viewBox="0 0 24 30"><ellipse class="rmc__pin-r" cx="12" cy="27" rx="7" ry="2.2"/><ellipse cx="12" cy="27" rx="4" ry="1.3" fill="rgb(15 21 29 / .22)"/><path class="rmc__pin-b" d="M12 1.5C6.2 1.5 1.8 5.9 1.8 11.4c0 6.9 8.2 13.6 9.4 14.6.5.4 1.1.4 1.6 0 1.2-1 9.4-7.7 9.4-14.6C22.2 5.9 17.8 1.5 12 1.5Z"/><circle cx="12" cy="11.2" r="3.9" fill="#fff"/></svg></em>Старт</span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .1)}</div>`,
+    `<span class="rmc__cap rmc__start"><em class="rmc__pin" aria-hidden="true"><svg viewBox="0 0 24 30"><ellipse class="rmc__pin-r" cx="12" cy="27" rx="7" ry="2.2"/><ellipse cx="12" cy="27" rx="4" ry="1.3" fill="rgb(15 21 29 / .22)"/><path class="rmc__pin-b" d="M12 1.5C6.2 1.5 1.8 5.9 1.8 11.4c0 6.9 8.2 13.6 9.4 14.6.5.4 1.1.4 1.6 0 1.2-1 9.4-7.7 9.4-14.6C22.2 5.9 17.8 1.5 12 1.5Z"/><circle cx="12" cy="11.2" r="3.9" fill="#fff"/></svg></em><span>Старт</span></span><div class="rmc"><span class="rmc__ax"></span>${st(0, 76, 'search', 'Разбор', .1)}</div>`,
     `<div class="rmc"><span class="rmc__ax"></span>${st(0, 84, 'plan', 'План и условия', .45)}</div>`,
     `<span class="rmc__cap r rmc__hand"><svg viewBox="0 0 60 56" aria-hidden="true"><path pathLength="1" d="M58.5 8.6C46.2 3.9 31.4 6.6 27.6 15.8c-2.6 6.3 4.9 9.8 8.3 4.7 3.9-5.9-5.6-11.5-14.2-3.4-6.6 6.2-9.9 18.9-10.6 31.6"/><path class="hd" pathLength="1" d="M5.2 42.6c2.3 2.7 4.3 5.4 6 8.4 1.9-3 4-5.5 6.6-7.6"/></svg><span>Дальше&nbsp;— каждый месяц, с&nbsp;отчётом</span></span><div class="rmc"><span class="rmc__ax"></span>${mo(0, 28, '1 мес', .8)}${mo(31, 28, '2 мес', .95)}${mo(62, 28, '3 мес', 1.1)}<span class="rmc__more" style="--d:1.4s"><i></i><i></i><i></i></span></div>
 `,
@@ -5912,6 +5912,10 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .rmc__pin-r { fill: none; stroke: rgb(255 100 20 / .55); stroke-width: 1; transform-box: fill-box; transform-origin: center; opacity: 0; }
 @media (prefers-reduced-motion: no-preference) { .rmc__pin-r { animation: rmc-pin 2.4s cubic-bezier(.22, 1, .36, 1) infinite; } }
 @keyframes rmc-pin { 0% { opacity: .9; scale: .4; } 100% { opacity: 0; scale: 1.6; } }
+/* 15.11 (Никита): «Старт» — тоже от руки, рядом с гео-меткой */
+.rmc__cap.rmc__start { top: .125rem; gap: .375rem; font: 400 1.375rem/1 var(--font-script, "Caveat", cursive); color: var(--text-muted); }
+.rmc__start > span { rotate: -3deg; }
+@media (max-width: 700px) { .rmc__cap.rmc__start { font-size: 1.125rem; } }
 /* 15.11 (Никита): «Дальше — каждый месяц, с отчётом» — от руки, со стрелкой-петлёй к месяцам; стрелка дорисовывается при появлении блока */
 .rmc__cap.rmc__hand { top: -.375rem; display: flex; align-items: flex-start; gap: .25rem; font: 400 1.375rem/1 var(--font-script, "Caveat", cursive); letter-spacing: 0; text-transform: none; color: var(--text-muted); }
 .rmc__hand > span { rotate: -3deg; white-space: nowrap; padding-top: .125rem; }
@@ -5999,11 +6003,11 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       <g class="b draw">${base}</g><g class="h" mask="url(#${id}m)">${hl}</g></svg>`; };
   const unit = (svg, vbw) => { const f = () => svg.clientWidth && svg.style.setProperty('--u', (vbw / svg.clientWidth).toFixed(4)); new ResizeObserver(f).observe(svg); f(); };
   const bindOutline = svg => { unit(svg, 460);
-    const spot = svg.querySelector('.spot'); let auto = true, raf = 0, vis = false, cx = -40, cy = 45, ph = 0, last = 0;
+    const spot = svg.querySelector('.spot'); let auto = true, raf = 0, vis = false, cx = -130, cy = 45, ph = 0, last = 0;
     const pt = e => { const r = svg.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 460 - 2, (e.clientY - r.top) / r.height * 94 - 2]; };
     svg.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; auto = false; [cx, cy] = pt(e); spot.setAttribute('cx', cx); spot.setAttribute('cy', cy); svg.classList.add('is-lit'); });
-    svg.addEventListener('pointerleave', () => { auto = true; ph = Math.acos(Math.max(-1, Math.min(1, (230 - cx) / 270))) / (Math.PI * 2); });
-    /* 15.11: фонарик ходит туда-обратно с замедлением у краёв, без скачка в начало; после курсора продолжает с того же места */ const loop = now => { if (!vis) return; const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now; if (auto && !reduce) { ph = (ph + dt / 11) % 1; const tx = 230 - 270 * Math.cos(ph * Math.PI * 2), ty = 45 + Math.sin(ph * Math.PI * 4) * 20, f = Math.min(1, dt * 5); cx += (tx - cx) * f; cy += (ty - cy) * f; spot.setAttribute('cx', cx.toFixed(1)); spot.setAttribute('cy', cy.toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
+    svg.addEventListener('pointerleave', () => { auto = true; ph = Math.max(0, Math.min(.99, (cx + 130) / 740)); });
+    /* 15.11 (Никита): фонарик идёт только слева направо — уходит за правый край и снова выходит слева; перенос в начало, пока пятно за пределами логотипа, поэтому незаметен */ const loop = now => { if (!vis) return; const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now; if (auto && !reduce) { const p0 = ph; ph = (ph + dt / 6.5) % 1; const tx = -130 + ph * 740, ty = 45 + Math.sin(ph * Math.PI * 2) * 20; if (ph < p0) { cx = tx; cy = ty; } else { const f = Math.min(1, dt * 5); cx += (tx - cx) * f; cy += (ty - cy) * f; } spot.setAttribute('cx', cx.toFixed(1)); spot.setAttribute('cy', cy.toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
     new IntersectionObserver(es => es.forEach(e => { vis = e.isIntersecting; if (vis) { svg.classList.add('is-in'); cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(loop); } }), { threshold: .2 }).observe(svg);
   };
 
@@ -6834,11 +6838,11 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
       <mask id="${id}m" maskUnits="userSpaceOnUse" x="-200" y="-200" width="860" height="500"><circle class="spot" cx="-200" cy="45" r="70" fill="url(#${id}g)"/></mask></defs><g class="b draw">${base}</g><g class="h" mask="url(#${id}m)">${hl}</g></svg>`;
     const svg = foot.querySelector('.o-olg'), spot = svg.querySelector('.spot');
     const unit = () => svg.clientWidth && svg.style.setProperty('--u', (460 / svg.clientWidth).toFixed(4)); new ResizeObserver(unit).observe(svg); unit();
-    let auto = true, raf = 0, vis = false, cx = -40, cy = 45, ph = 0, last = 0;
+    let auto = true, raf = 0, vis = false, cx = -130, cy = 45, ph = 0, last = 0;
     const pt = e => { const r = svg.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 460 - 2, (e.clientY - r.top) / r.height * 94 - 2]; };
     svg.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; auto = false; [cx, cy] = pt(e); spot.setAttribute('cx', cx); spot.setAttribute('cy', cy); svg.classList.add('is-lit'); });
-    svg.addEventListener('pointerleave', () => { auto = true; ph = Math.acos(Math.max(-1, Math.min(1, (230 - cx) / 270))) / (Math.PI * 2); });
-    /* 15.11: фонарик ходит туда-обратно с замедлением у краёв, без скачка в начало; после курсора продолжает с того же места */ const loop = now => { if (!vis) return; const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now; if (auto && !reduce) { ph = (ph + dt / 11) % 1; const tx = 230 - 270 * Math.cos(ph * Math.PI * 2), ty = 45 + Math.sin(ph * Math.PI * 4) * 20, f = Math.min(1, dt * 5); cx += (tx - cx) * f; cy += (ty - cy) * f; spot.setAttribute('cx', cx.toFixed(1)); spot.setAttribute('cy', cy.toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
+    svg.addEventListener('pointerleave', () => { auto = true; ph = Math.max(0, Math.min(.99, (cx + 130) / 740)); });
+    /* 15.11 (Никита): фонарик идёт только слева направо — уходит за правый край и снова выходит слева; перенос в начало, пока пятно за пределами логотипа, поэтому незаметен */ const loop = now => { if (!vis) return; const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now; if (auto && !reduce) { const p0 = ph; ph = (ph + dt / 6.5) % 1; const tx = -130 + ph * 740, ty = 45 + Math.sin(ph * Math.PI * 2) * 20; if (ph < p0) { cx = tx; cy = ty; } else { const f = Math.min(1, dt * 5); cx += (tx - cx) * f; cy += (ty - cy) * f; } spot.setAttribute('cx', cx.toFixed(1)); spot.setAttribute('cy', cy.toFixed(1)); svg.classList.add('is-lit'); } raf = requestAnimationFrame(loop); };
     new IntersectionObserver(es => es.forEach(e => { vis = e.isIntersecting; if (vis) { svg.classList.add('is-in'); cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(loop); } }), { threshold: .2 }).observe(svg);
   }
 
