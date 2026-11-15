@@ -4533,6 +4533,9 @@ html.p-lock { overflow: hidden; }
 .p-ncta__t em { margin-right: .12em; }
 /* 14.11 (Никита): бабл Лизы чуть короче — не вплотную к CTA */
 @media (min-width: 1001px) { .p-nrow .p-note { max-width: 34rem; } }
+/* 14.11 (Никита): «прочитано» как в мессенджере — две аккуратные галочки SVG вместо символов ✓✓ */
+.p-nt__msg small { display: flex; align-items: center; justify-content: flex-end; gap: .25rem; font-variant-numeric: tabular-nums; }
+.p-nt__rd { width: 1rem; height: .625rem; flex: none; }
 
 /* ════════ Страницы услуг (build_services.py, 12.11.2026) ════════ */
 /* обложка: летающие карточки карт вокруг иконки площадки */
