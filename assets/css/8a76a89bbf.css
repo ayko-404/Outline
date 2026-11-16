@@ -1675,17 +1675,48 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-bk__meta em { height: 2.5rem; padding: 0 1rem 0 1.125rem; border-radius: 99px; background: var(--action-contact); border: 1.5px solid var(--action-contact-border); box-shadow: var(--shadow-btn-contact); color: var(--text-on-action); font-size: var(--fs-sm); transition: background-color var(--dur-fast) ease, scale 225ms var(--spring-press); }
 .m-bk:active .m-bk__meta em { scale: .94; }
 @media (hover: hover) and (pointer: fine) { .m-bk:hover .m-bk__meta em { background: var(--action-contact-hover); } }
-/* край окна с сеткой — варианты (переключатель «Край сетки») */
-.m-bk__pic { border-radius: calc(var(--radius-xl) - var(--space-2-5)); }   /* скругление концентрично белой рамке */
-/* A — тонкая обводка окна */
-[data-vgs=be][data-v=a] .m-bk__pic { box-shadow: inset 0 0 0 1px var(--border-default); }
-/* B — сетка растворяется к краям в белую карточку, без границы */
-[data-vgs=be][data-v=b] .m-bk__pic { background: none; padding: 2.25rem; }
-[data-vgs=be][data-v=b] .m-bk__pic::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  background-image: linear-gradient(to right, rgb(15 21 29 / .09) 1px, transparent 1px), linear-gradient(to bottom, rgb(15 21 29 / .09) 1px, transparent 1px); background-size: 28px 28px; background-position: center;
-  -webkit-mask: linear-gradient(to right, transparent, #000 1.1rem calc(100% - 1.1rem), transparent), linear-gradient(transparent, #000 1.1rem calc(100% - 1.1rem), transparent); -webkit-mask-composite: source-in; mask: linear-gradient(to right, transparent, #000 1.1rem calc(100% - 1.1rem), transparent), linear-gradient(transparent, #000 1.1rem calc(100% - 1.1rem), transparent); mask-composite: intersect; }
-[data-vgs=be][data-v=b] .m-bk__img { position: relative; }
-/* C — окно до краёв карточки: сетка во всю верхнюю часть, снизу — линия */
-[data-vgs=be][data-v=c] .m-bk { padding: 0; overflow: hidden; }
-[data-vgs=be][data-v=c] .m-bk__pic { border-radius: 0; border-bottom: 1px solid var(--border-default); }
-[data-vgs=be][data-v=c] .m-bk__b { padding: var(--space-5) var(--space-5) var(--space-5); }
+/* 16.11 (Никита: выбран «C · в край»): окно с сеткой до краёв карточки, снизу линия */
+.m-bk { padding: 0; overflow: hidden; }
+.m-bk__pic { border-radius: 0; border-bottom: 1px solid var(--border-default); }
+.m-bk__b { padding: var(--space-5) var(--space-5) var(--space-5); }
+
+/* ── 16.11 (Никита, реф rox.com/articles) страница статьи: шапка, обложка в рамке с сеткой, слева оглавление + CTA, внизу «Читайте также». Варианты — переключатель «Статья» ── */
+.m-ar__cat { display: block; margin-bottom: var(--space-3); font: 400 1.625rem/1 var(--font-script); color: var(--text-script); }
+.m-ar .o-h1 { margin: 0; text-wrap: balance; }
+.m-ar__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); margin: var(--space-5) 0 0; font-size: var(--fs-sm); color: var(--text-subtle); }
+.m-ar__by { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-default); font-weight: 500; }
+.m-ar__av { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--action-contact); color: #fff; font: 700 .8125rem/1 var(--font-head); font-style: normal; }
+.m-ar__h .o-lead { margin: var(--space-5) 0 0; }
+.m-ar__cov { margin: 0; padding: 0; border-radius: var(--radius-xl); background: var(--surface-frame); box-shadow: var(--shadow-card); overflow: hidden; }
+.m-ar__grid { display: block; padding: var(--space-10); background-color: var(--surface-inset, #f2f2ef);
+  background-image: linear-gradient(to right, rgb(15 21 29 / .05) 1px, transparent 1px), linear-gradient(to bottom, rgb(15 21 29 / .05) 1px, transparent 1px); background-size: 28px 28px; background-position: center; }
+.m-ar__grid img { display: block; width: 100%; max-height: none; border-radius: var(--radius-md, .75rem); box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 1.25rem 2rem -1.25rem rgb(15 21 29 / .45); }
+.m-ar__in { display: grid; grid-template-columns: 18rem minmax(0, 44rem); justify-content: space-between; gap: var(--space-16); align-items: start; margin-top: var(--space-16); }
+.m-ar__side { position: sticky; top: 6rem; display: grid; gap: var(--space-6); }
+.m-ar__toc p { margin: 0 0 var(--space-4); font: 600 var(--fs-h6)/1.2 var(--font-head); color: var(--text-default); }
+.m-ar__toc ol { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-3); }
+.m-ar__toc a { display: grid; grid-template-columns: .875rem 1fr; gap: var(--space-3); font-size: var(--fs-sm); line-height: 1.35; color: var(--text-subtle); text-decoration: none; transition: color var(--dur-fast) ease; }
+.m-ar__toc a::before { content: ""; height: 1px; margin-top: .65em; background: currentColor; transition: width var(--dur-fast) ease; }
+.m-ar__toc a:hover, .m-ar__toc a.is-on { color: var(--text-default); }
+.m-ar__cta { padding: var(--space-5); border-radius: var(--radius-lg); background: var(--surface-frame); box-shadow: var(--shadow-card); }
+.m-ar__cta p { margin: 0 0 var(--space-4); font: 600 var(--fs-body)/1.35 var(--font-head); color: var(--text-default); }
+.m-ar__btn { display: inline-flex; align-items: center; gap: var(--space-2); height: 2.75rem; padding: 0 1rem 0 1.25rem; border-radius: 99px; background: var(--action-contact); border: 1.5px solid var(--action-contact-border); box-shadow: var(--shadow-btn-contact); color: var(--text-on-action); font-weight: 600; font-size: var(--fs-sm); text-decoration: none; transition: background-color var(--dur-fast) ease, scale 225ms var(--spring-press); }
+.m-ar__btn svg { width: 1rem; height: 1rem; } .m-ar__btn:active { scale: .94; }
+@media (hover: hover) and (pointer: fine) { .m-ar__btn:hover { background: var(--action-contact-hover); } }
+.m-ar__mh { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-8); } .m-ar__mh .o-h2 { margin: 0 !important; }
+.m-ar__all { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: 600; color: var(--text-accent); text-decoration: none; } .m-ar__all svg { width: 1rem; height: 1rem; }
+/* A — по центру, как в рефе: заголовок и подпись по центру, обложка во всю ширину контейнера */
+.m-ar[data-v=a] .m-ar__h { max-width: 54rem; margin: var(--space-6) auto var(--space-12); text-align: center; }
+.m-ar[data-v=a] .m-ar__meta { justify-content: center; } .m-ar[data-v=a] .o-lead { margin-inline: auto; max-width: 42rem; }
+/* B — шапка слева, обложка справа в одном экране */
+.m-ar[data-v=b] .m-ar__top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: var(--space-12); align-items: center; margin-top: var(--space-6); }
+.m-ar[data-v=b] .m-ar__grid { padding: var(--space-6); }
+/* C — шапка слева, обложка во всю ширину, текст слева, оглавление и CTA справа */
+.m-ar[data-v=c] .m-ar__h { max-width: 52rem; margin: var(--space-6) 0 var(--space-10); }
+.m-ar[data-v=c] .m-ar__in { grid-template-columns: minmax(0, 44rem) 18rem; } .m-ar[data-v=c] .m-ar__side { order: 2; }
+@media (max-width: 1000px) {
+  .m-ar[data-v] .m-ar__top { display: block; } .m-ar[data-v] .m-ar__h { margin: var(--space-4) 0 var(--space-8); text-align: left; } .m-ar[data-v] .m-ar__meta { justify-content: flex-start; }
+  .m-ar[data-v] .m-ar__in { grid-template-columns: 1fr; gap: var(--space-8); margin-top: var(--space-10); } .m-ar__side { position: static; order: 0 !important; }
+  .m-ar__grid { padding: var(--space-5) !important; }
+}
+@media (max-width: 640px) { .m-ar__toc { display: none; } .m-ar__mh { flex-direction: column; align-items: flex-start; } }
