@@ -1842,3 +1842,4 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-wl h3 { margin: 0; font: 600 var(--fs-h4)/1.15 var(--font-head); letter-spacing: -.02em; } .m-wl p { margin: 0; color: var(--text-muted); }
 @media (hover: hover) and (pointer: fine) { .m-wl:hover { background: var(--ink-950, #0f151d); color: #fff; border-color: transparent; } .m-wl:hover + .m-wl { border-top-color: transparent; } .m-wl:hover p, .m-wl:hover .m-wl__n { color: rgb(255 255 255 / .62); } }
 @media (max-width: 1000px) { .m-wl { grid-template-columns: 3rem 1fr; gap: var(--space-3) var(--space-4); padding: var(--space-6) var(--space-2); } .m-wl p, .m-wl__b { grid-column: 2; } }
+.m-ways[data-v=b] .m-wy__ill--pf { align-content: center; gap: .75rem; }
