@@ -1788,3 +1788,4 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-btb { top: calc(64px + 1.5rem); padding: 0; margin-inline: 0 !important; }
 .m-btb.is-stuck { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
 .m-csbar.is-stuck { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
+.m-btb { top: calc(64px + 2.5rem); }   /* 16.11 (Никита: «отступ выше побольше») */
