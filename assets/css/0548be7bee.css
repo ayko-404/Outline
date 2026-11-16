@@ -1804,3 +1804,4 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   [data-vgs=nav][data-v=c] .m-ar__cta .m-ar__btn { width: auto; flex: none; height: 2.5rem; font-size: 0; gap: 0; padding: 0 .875rem; } [data-vgs=nav][data-v=c] .m-ar__cta .m-ar__btn::before { content: "Разбор"; font-size: .875rem; margin-right: .375rem; }
 }
 @media (max-width: 1000px) { [data-vgs=nav]:not([data-v=c]) .m-ar__side { order: 2 !important; } }
+.m-ar__cta .m-ar__btn { white-space: nowrap; padding: 0 1rem; gap: .5rem; }
