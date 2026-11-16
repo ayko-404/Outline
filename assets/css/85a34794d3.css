@@ -858,7 +858,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--blue-ink); outl
   --text-subtle: rgb(15 21 29 / .45);
   --text-on-action: var(--paper-0);
   --text-script: var(--blue-600);
-  --text-accent: var(--orange-800);
+  --text-accent: rgb(15 21 29 / .62);   /* 16.11 (Никита: «не используй этот цвет нигде») — был orange-800 */
   --border-default: rgb(15 21 29 / .07);
   --border-strong: rgb(15 21 29 / .14);
   --border-focus: var(--blue-500);
@@ -893,7 +893,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--blue-ink); outl
   --text-muted: rgb(255 255 255 / .72);
   --text-subtle: rgb(255 255 255 / .45);
   --text-script: var(--blue-300);
-  --text-accent: var(--orange-300);
+  --text-accent: rgb(255 255 255 / .72);
   --border-default: rgb(255 255 255 / .06);
   --border-strong: rgb(255 255 255 / .1);
   --grid-line: rgb(255 255 255 / .03);
