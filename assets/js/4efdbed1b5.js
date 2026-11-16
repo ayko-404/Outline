@@ -23,5 +23,5 @@
   Cc.innerHTML = `<div class="m-fc"><div class="m-fc__back"></div>
     ${ph.map((i, k) => `<div class="m-fc__ph" style="--k:${k}"><span class="csv__dev"><span class="mph"><span class="mph__scr"><span class="mph__view"><img loading="lazy" decoding="async" src="${YA[C[i].id]}" alt=""></span><span class="mph__home"></span></span></span></span></div>`).join('')}
     ${sh.map((i, k) => `<div class="m-fc__sh" style="--k:${k}"><span class="m-fc__shh"><img loading="lazy" decoding="async" src="${IMG[C[i].id]}" alt=""><b>${C[i].name}</b></span><span class="m-fa__top">${C[i].big.replace('ТОП-', '<i>ТОП</i>')}</span>${C[i].rows.slice(0, 2).map(r => `<span class="m-fa__row"><span>${r[0]}</span><b>${r[1]}</b></span>`).join('')}</div>`).join('')}
-    <div class="m-fc__front"><span class="m-fc__lbl"><b>Кейсы</b><small>${N}&nbsp;проектов · ${[...new Set(C.map(c => c.niche))].length}&nbsp;ниш</small></span><span class="m-fc__av">${C.map(c => `<img loading="lazy" decoding="async" src="${IMG[c.id]}" alt="">`).join('')}</span></div></div>`;
+    <div class="m-fc__front"><span class="m-fc__lbl"><b>Кейсы</b><small>150+&nbsp;проектов · 30+&nbsp;ниш</small></span><span class="m-fc__av">${C.map(c => `<img loading="lazy" decoding="async" src="${IMG[c.id]}" alt="">`).join('')}</span></div></div>`;
 })();
