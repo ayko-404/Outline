@@ -1746,3 +1746,4 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   transition: background-color .25s ease, box-shadow .25s ease, backdrop-filter .25s ease; }
 .m-btb.is-stuck { background: rgb(255 255 255 / .82); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 .75rem 1.75rem -1rem rgb(15 21 29 / .28); }
 @media (max-width: 1000px) { .m-blg { padding-top: var(--space-8) !important; } .m-btb { gap: .5rem; } .m-btb .m-btabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; } }
+@media (max-width: 1000px) { .m-btb { overflow: hidden; } .m-btb .m-btabs { min-width: 0; max-width: 100%; } }
