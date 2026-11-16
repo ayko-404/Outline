@@ -1682,8 +1682,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 /* B — сетка растворяется к краям в белую карточку, без границы */
 [data-vgs=be][data-v=b] .m-bk__pic { background: none; }
 [data-vgs=be][data-v=b] .m-bk__pic::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  background-image: linear-gradient(to right, var(--grid-line, rgb(15 21 29 / .07)) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line, rgb(15 21 29 / .07)) 1px, transparent 1px); background-size: 28px 28px; background-position: center;
-  -webkit-mask: radial-gradient(closest-side, #000 55%, transparent); mask: radial-gradient(closest-side, #000 55%, transparent); }
+  background-image: linear-gradient(to right, rgb(15 21 29 / .09) 1px, transparent 1px), linear-gradient(to bottom, rgb(15 21 29 / .09) 1px, transparent 1px); background-size: 28px 28px; background-position: center;
+  -webkit-mask: radial-gradient(farthest-side, #000 62%, transparent); mask: radial-gradient(farthest-side, #000 62%, transparent); }
 [data-vgs=be][data-v=b] .m-bk__img { position: relative; }
 /* C — окно до краёв карточки: сетка во всю верхнюю часть, снизу — линия */
 [data-vgs=be][data-v=c] .m-bk { padding: 0; overflow: hidden; }
