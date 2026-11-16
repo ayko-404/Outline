@@ -1727,3 +1727,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-ar[data-v=c] .m-ar__h { max-width: 72rem; margin-inline: auto; } .m-ar[data-v=c] .m-ar__h .o-h1 { max-width: 52rem; }
 .m-ar[data-v=b] .m-ar__grid img { max-height: 28rem; object-fit: cover; }
 .m-art__cta .o-btn, .m-art__cta .o-btn:hover { color: var(--text-on-action) !important; }
+/* 16.11 (Никита): фильтр ближе к карточкам, от заголовка — небольшой отступ */
+.m-blh { padding-bottom: var(--space-6) !important; }
+.m-btb { margin-top: var(--space-12); }
+.m-blg { padding-top: 0 !important; }
+@media (max-width: 1000px) { .m-btb { margin-top: var(--space-8); } }
