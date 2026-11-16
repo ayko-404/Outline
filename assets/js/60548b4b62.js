@@ -46,17 +46,17 @@
     lbAnim.forEach(a => a.cancel());
     const fly = onScreen(lbSrc);
     if (matchMedia('(max-width: 760px)').matches) {   // 10.11: на телефоне — плавно, без пружины с перелётом и без поворота
-      lbAnim = [lbPh.animate(fly ? [{ transform: fromSrc(lbSrc, lbPh) }, { transform: 'none' }] : [{ transform: 'translateY(24px) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' })];
+      lbAnim = [lbPh.animate(fly ? [{ transform: fromSrc(lbSrc, lbPh) }, { transform: 'none' }] : [{ transform: 'translateY(24px) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 440, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' })];   // 16.11 (Никита: «очень медленно») 600 → 440
       if (fly) lbSrc.style.visibility = 'hidden';
       lbAnim[0].finished.then(() => { if (lbSrc) lbSrc.style.visibility = ''; }, () => {});
       return; }
     lbAnim = [
       // полёт: из карточки в центр, посадка на пружине
-      lbPh.animate(fly ? [{ transform: fromSrc(lbSrc, lbPh) }, { transform: 'none' }] : [{ transform: 'translateY(40px) scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 900, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }),   // 15.11 (Никита: «дёргается») — без пружины с перелётом, дольше и мягче
+      lbPh.animate(fly ? [{ transform: fromSrc(lbSrc, lbPh) }, { transform: 'none' }] : [{ transform: 'translateY(40px) scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 560, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }),   // 16.11: 900 → 560 («очень медленно»); 15.11 (Никита: «дёргается») — без пружины с перелётом, дольше и мягче
       // в полёте телефон чуть разворачивается к зрителю и выпрямляется
-      dev.animate([{ transform: 'rotateY(0) rotateX(0)' }, { transform: 'rotateY(-7deg) rotateX(3deg)', offset: .4 }, { transform: 'rotateY(0) rotateX(0)' }], { duration: 900, easing: 'cubic-bezier(0.45, 0, 0.55, 1)' }),
+      dev.animate([{ transform: 'rotateY(0) rotateX(0)' }, { transform: 'rotateY(-7deg) rotateX(3deg)', offset: .4 }, { transform: 'rotateY(0) rotateX(0)' }], { duration: 560, easing: 'cubic-bezier(0.45, 0, 0.55, 1)' }),
       // блик по стеклу, когда телефон сел
-      dev.querySelector('.cs-lb__glare').animate([{ transform: 'translateX(-55%)', opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: 1, offset: .75 }, { transform: 'translateX(55%)', opacity: 0 }], { duration: 900, delay: 620, easing: 'cubic-bezier(0.77, 0, 0.175, 1)', fill: 'both' }),
+      dev.querySelector('.cs-lb__glare').animate([{ transform: 'translateX(-55%)', opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: 1, offset: .75 }, { transform: 'translateX(55%)', opacity: 0 }], { duration: 700, delay: 400, easing: 'cubic-bezier(0.77, 0, 0.175, 1)', fill: 'both' }),
     ];
     if (fly) lbSrc.style.visibility = 'hidden';
     lbAnim[0].finished.then(() => { if (lbSrc) lbSrc.style.visibility = ''; }, () => {});
@@ -70,7 +70,7 @@
     if (!dev || reduceLb || !lbSrc || !onScreen(lbSrc)) { if (dev && !reduceLb) lbPh.animate([{ opacity: 1 }, { opacity: 0, transform: 'scale(.94)' }], { duration: 220, easing: 'cubic-bezier(0.23, 1, 0.32, 1)', fill: 'forwards' });
       setTimeout(lbDone, reduceLb ? 0 : 300); return; }
     // назад в карточку: тот же путь, быстрее, без пружины
-    const back = lbPh.animate([{ transform: 'none' }, { transform: fromSrc(lbSrc, lbPh) }], { duration: 520, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'forwards' });
+    const back = lbPh.animate([{ transform: 'none' }, { transform: fromSrc(lbSrc, lbPh) }], { duration: 400, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'forwards' });
     lbAnim = [back];
     back.finished.then(lbDone, () => {});
     setTimeout(() => { lbSrc.style.visibility = 'hidden'; }, 0); };
@@ -80,7 +80,7 @@
   /* тарифы: цены набираются при появлении */
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fmt = v => Math.round(v).toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
-  const prices = [...document.querySelectorAll('.tf__price b')]; if (prices.length)
+  const prices = [...document.querySelectorAll('.tf__price b')];
   if (!reduce) new IntersectionObserver((es, io) => es.forEach(e => { if (!e.isIntersecting) return; io.disconnect();
     prices.forEach((b, k) => { const to = +b.dataset.to, t0 = performance.now() + k * 120, dur = 900;
       const st = now => { const p = Math.min(1, Math.max(0, (now - t0) / dur)), ev = 1 - Math.pow(1 - p, 3); b.textContent = fmt(to * (.6 + .4 * ev)); if (p < 1) requestAnimationFrame(st); }; requestAnimationFrame(st); }); }), { threshold: .3 }).observe(document.querySelector('.tf'));
