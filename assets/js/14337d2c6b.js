@@ -28,6 +28,19 @@
     <div class="is-before">${side(r, 0)}</div><div class="is-after">${side(r, 1)}</div><span class="rvs__lbl l">Было</span><span class="rvs__lbl r">Стало</span><span class="rvs__knob"></span></div></div>`;
   const vid = r => `<img loading="lazy" decoding="async" src="${r.img}" alt=""><button type="button" class="rvf__play" aria-label="Смотреть видеоотзыв: ${r.name}">${PLAY}</button>${r.dur ? `<span class="rvf__dur">${r.dur}</span>` : ''}`;
 
+  /* 16.11 (Никита: «на странице отзывов — не слайдер, а отдельные карточки») — секция с data-grid: сетка карточек, видео Rutube играет прямо в карточке */
+  if (sec.dataset.grid) {
+    const g = document.createElement('div'); g.className = 'rvg';
+    g.innerHTML = R.map((r, k) => `<article class="rvg__c"><div class="rvf__vid rvg__vid" data-i="${k}">${vid(r)}</div>
+      <div class="rvg__b"><div class="rvf__who"><img loading="lazy" decoding="async" src="${r.img}" alt=""><span><b>${r.name}</b><small>${r.biz}</small></span></div><h3 class="rvg__h">${r.res}</h3>${did(r)}<a class="rvs__cta" href="#razbor">Хочу так же ${ARR}</a></div></article>`).join('');
+    track.before(g);
+    g.addEventListener('click', e => { const b = e.target.closest('.rvf__play'); if (!b) return; const v = b.closest('.rvg__vid'), r = R[+v.dataset.i];
+      g.querySelectorAll('.rvg__vid.is-play').forEach(x => { x.classList.remove('is-play'); x.querySelector('iframe')?.remove(); });
+      v.classList.add('is-play'); v.insertAdjacentHTML('beforeend', `<iframe title="Видеоотзыв: ${r.name}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen src="https://rutube.ru/play/embed/${r.v}/?autoplay=1"></iframe>`);
+      const f = v.querySelector('iframe'); f.addEventListener('load', () => f.classList.add('is-ready')); });
+    return;
+  }
+
   const box = document.createElement('div'); box.className = 'rvf';
   box.innerHTML = `<div class="rvf__vid">${vid(R[0])}</div>
     <div class="rvf__main" role="tabpanel" id="rvf-panel"><div class="rvf__top">${txt(R[0])}${cmp(R[0])}</div>

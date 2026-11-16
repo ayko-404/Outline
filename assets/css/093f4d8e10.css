@@ -1922,6 +1922,16 @@ html.rvs-lock { overflow: hidden; }
 .rvf__did + .rvs__cta { margin-top: max(1.75rem, auto); }
 @media (max-width: 700px) { .rvf__did { margin-top: 1.125rem; } .rvf__did li { font-size: .9375rem; } }
 
+/* 16.11 сетка карточек отзывов (страница «Отзывы») */
+.rvg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.rvg__c { display: flex; flex-direction: column; padding: .625rem; border-radius: 2rem; background: #fff; box-shadow: 0 10px 15px -3px rgb(0 0 0 / .08), 0 4px 6px -4px rgb(0 0 0 / .08), 0 0 0 1px rgb(15 21 29 / .04); }
+.rvg__vid { aspect-ratio: 4 / 5 !important; width: auto !important; min-height: 0 !important; border-radius: 1.5rem !important; }
+.rvg__b { display: flex; flex-direction: column; flex: 1; gap: .875rem; padding: 1.25rem .875rem .875rem; }
+.rvg__h { margin: 0; font: 600 1.25rem/1.25 var(--font-head, inherit); letter-spacing: -.015em; text-wrap: balance; }
+.rvg .rvf__did { margin: 0; } .rvg .rvs__cta { margin-top: auto; align-self: flex-start; }
+@media (max-width: 1100px) { .rvg { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .rvg { grid-template-columns: 1fr; } }
+
 
 /* «Как начинаем» — варианты иллюстраций вместо линеек (03.11, Никита: «красивые, но непонятные»; выбирает на сайте).
    А — маршрут через три шага с петлёй «каждый месяц»; Б — что клиент получает на каждом шаге; В — шкала: старт и дальше помесячно.
@@ -2671,6 +2681,50 @@ html.mn-lock { overflow: hidden; }
 @media (max-width: 760px) { .mn-dd { display: none; } }
 @media (min-width: 761px) { .mn-sheet { display: none; } }
 @media (prefers-reduced-motion: reduce) { .mn-dd, .mn-sheet { transition: none; } }
+/* 16.11 (Никита: «анимацию у иконок в меню — как в блоке «Выберите направление»») — те же живые иконки: играют один раз при открытии меню (ступенька 60 мс) и по наведению по кругу */
+.mn-ico { width: 1.75rem; height: 1.75rem; overflow: visible; } .mn-ico * { transform-box: fill-box; }
+.mn-it--n:hover i svg { animation: none; }
+.mn-ico .a-blade1, .mn-ico .a-blade2, .mn-ico .a-wheel, .mn-ico .a-yogi, .mn-ico .a-aura, .mn-ico .a-car { transform-box: view-box !important; }
+.mn-ico .a-blade1, .mn-ico .a-blade2 { transform-origin: 26px 24px !important; }
+.mn-ico .a-car { transform-origin: 24px 31px !important; }
+.mn-ico .a-yogi { transform-origin: 24px 40px !important; } .mn-ico .a-aura { transform-origin: 24px 24px !important; }
+.mn-ico .a-tooth { transform-origin: 50% 90%; } .mn-ico .a-spark { transform-origin: center; transform: scale(0); }
+.mn-ico .a-car { transform-origin: 50% 100%; } .mn-ico .a-wheel { transform-origin: center; } .mn-ico .a-speed { opacity: 0; }
+.mn-ico .a-steam { opacity: 0; } .mn-ico .a-blade1, .mn-ico .a-blade2 { transform-origin: 14% 50%; }
+.mn-ico .a-water { } .mn-ico .a-bub { opacity: 0; } .mn-ico .a-z { opacity: 0; } .mn-ico .a-block { transform-origin: 50% 100%; }
+.mn-ico .a-yogi { transform-origin: 50% 100%; } .mn-ico .a-aura { opacity: 0; transform-origin: center; }
+.mn-dd.is-open .mn-ico .ia, .mn-sheet.is-open .mn-ico .ia, .mn-it--n:hover .mn-ico .ia { animation-duration: 1.3s; animation-timing-function: cubic-bezier(.22, 1, .36, 1); animation-fill-mode: both; animation-delay: calc(var(--n) * 60ms + 120ms); }
+@media (hover: hover) and (pointer: fine) { .mn-it--n:hover .mn-ico .ia { animation-iteration-count: infinite; animation-delay: 0s; } }
+.mn-dd.is-open .mn-ico .a-tooth, .mn-sheet.is-open .mn-ico .a-tooth, .mn-it--n:hover .mn-ico .a-tooth { animation-name: i-wobble; }
+.mn-dd.is-open .mn-ico .a-spark, .mn-sheet.is-open .mn-ico .a-spark, .mn-it--n:hover .mn-ico .a-spark { animation-name: i-spark; }
+.mn-dd.is-open .mn-ico .a-car, .mn-sheet.is-open .mn-ico .a-car, .mn-it--n:hover .mn-ico .a-car { animation-name: i-drive; }
+.mn-dd.is-open .mn-ico .a-wheel, .mn-sheet.is-open .mn-ico .a-wheel, .mn-it--n:hover .mn-ico .a-wheel { animation-name: i-spin; animation-timing-function: linear; }
+.mn-dd.is-open .mn-ico .a-speed, .mn-sheet.is-open .mn-ico .a-speed, .mn-it--n:hover .mn-ico .a-speed { animation-name: i-speed; }
+.mn-dd.is-open .mn-ico .a-steam, .mn-sheet.is-open .mn-ico .a-steam, .mn-it--n:hover .mn-ico .a-steam { animation-name: i-steam; }
+.mn-dd.is-open .mn-ico .a-blade1, .mn-sheet.is-open .mn-ico .a-blade1, .mn-it--n:hover .mn-ico .a-blade1 { animation-name: i-snip1; }
+.mn-dd.is-open .mn-ico .a-blade2, .mn-sheet.is-open .mn-ico .a-blade2, .mn-it--n:hover .mn-ico .a-blade2 { animation-name: i-snip2; }
+.mn-dd.is-open .mn-ico .a-water, .mn-sheet.is-open .mn-ico .a-water, .mn-it--n:hover .mn-ico .a-water { animation-name: i-wave; }
+.mn-dd.is-open .mn-ico .a-bub, .mn-sheet.is-open .mn-ico .a-bub, .mn-it--n:hover .mn-ico .a-bub { animation-name: i-bub; }
+.mn-dd.is-open .mn-ico .a-z, .mn-sheet.is-open .mn-ico .a-z, .mn-it--n:hover .mn-ico .a-z { animation-name: i-z; }
+.mn-dd.is-open .mn-ico .a-block, .mn-sheet.is-open .mn-ico .a-block, .mn-it--n:hover .mn-ico .a-block { animation-name: i-block; }
+.mn-dd.is-open .mn-ico .a-yogi, .mn-sheet.is-open .mn-ico .a-yogi, .mn-it--n:hover .mn-ico .a-yogi { animation-name: i-breathe; }
+.mn-dd.is-open .mn-ico .a-aura, .mn-sheet.is-open .mn-ico .a-aura, .mn-it--n:hover .mn-ico .a-aura { animation-name: i-aura; }
+.mn-ico .a-steam:nth-of-type(2) { animation-delay: calc(var(--n) * 60ms + 270ms) !important; }
+@keyframes i-wobble { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-8deg); } 50% { transform: rotate(6deg); } 75% { transform: rotate(-2deg); } }
+@keyframes i-spark { 0%, 30% { transform: scale(0) rotate(0); } 55% { transform: scale(1.2) rotate(45deg); } 100% { transform: scale(0) rotate(90deg); } }
+@keyframes i-drive { 0% { transform: translateX(-3px); } 30% { transform: translateX(2px) translateY(-1px); } 60% { transform: translateX(0) translateY(0); } 100% { transform: translateX(-3px); } }
+@keyframes i-spin { to { transform: rotate(360deg); } }
+@keyframes i-speed { 0%, 100% { opacity: 0; transform: translateX(4px); } 40% { opacity: 1; transform: translateX(-2px); } }
+@keyframes i-steam { 0% { opacity: 0; transform: translateY(3px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-6px); } }
+@keyframes i-snip1 { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(-14deg); } 70% { transform: rotate(2deg); } }
+@keyframes i-snip2 { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(14deg); } 70% { transform: rotate(-2deg); } }
+@keyframes i-wave { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-3px); } }
+@keyframes i-bub { 0% { opacity: 0; transform: translateY(2px) scale(.6); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-8px) scale(1); } }
+@keyframes i-z { 0% { opacity: 0; transform: translate(0, 2px) scale(.7); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(4px, -8px) scale(1.1); } }
+@keyframes i-block { 0%, 100% { transform: translateY(0) rotate(8deg); } 35% { transform: translateY(-5px) rotate(-6deg); } 65% { transform: translateY(0) rotate(10deg); } }
+@keyframes i-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06, 1.08); } }
+@keyframes i-aura { 0% { opacity: 0; transform: scale(.7); } 45% { opacity: .9; } 100% { opacity: 0; transform: scale(1.35); } }
+@media (prefers-reduced-motion: reduce) { .mn-ico .ia { animation: none !important; } }
 
 
 /* 12.11 (Никита): ссылки на страницы, которых ещё нет, — тултип «Скоро» на наведении, переход не происходит */
