@@ -1720,3 +1720,10 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   .m-ar__grid { padding: var(--space-5) !important; }
 }
 @media (max-width: 640px) { .m-ar__toc { display: none; } .m-ar__mh { flex-direction: column; align-items: flex-start; } }
+.m-ar__lead { margin: 0 0 var(--space-8) !important; font-size: 1.25rem; line-height: 1.6; color: var(--text-default); }
+.m-ar__in { max-width: 72rem; margin-inline: auto; gap: var(--space-20, 5rem); }
+.m-ar[data-v=a] .m-ar__grid img, .m-ar[data-v=c] .m-ar__grid img { max-height: 30rem; object-fit: cover; }
+.m-ar[data-v=a] .m-ar__cov, .m-ar[data-v=c] .m-ar__cov { max-width: 72rem; margin-inline: auto; }
+.m-ar[data-v=c] .m-ar__h { max-width: 72rem; margin-inline: auto; } .m-ar[data-v=c] .m-ar__h .o-h1 { max-width: 52rem; }
+.m-ar[data-v=b] .m-ar__grid img { max-height: 28rem; object-fit: cover; }
+.m-art__cta .o-btn, .m-art__cta .o-btn:hover { color: var(--text-on-action) !important; }
