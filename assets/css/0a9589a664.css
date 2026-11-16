@@ -1886,6 +1886,6 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 @media (prefers-reduced-motion: reduce) { .m-notes .m-mk__o path, .m-notes .m-mk__l svg path { stroke-dashoffset: 0 !important; } .m-notes .m-mk__l em { opacity: 1; translate: 0 0; } }
 @media (max-width: 1000px) {
   .m-av .m-cxb__in { grid-template-columns: 1fr; } .m-lens__hand { position: static; margin-top: 1rem; } .m-lens__st { cursor: auto; }
-  .m-notes { padding-left: 0; justify-items: start; } .m-org { width: 17rem; } .m-org__ph { height: 7rem; } .m-mk--ph { height: 8rem; } .m-mk--time { top: 11.9rem; } .m-mk--svc { top: 14.45rem; }
-  .m-mk__l em { font-size: 1.25rem; } .m-mk__l svg { width: 1.75rem; }
+  .m-notes { padding-left: 0; justify-items: start; }
 }
+@media (max-width: 640px) { .m-notes__st { zoom: .72; } .m-mk__l { gap: .25rem; } .m-mk__l em { white-space: normal; max-width: 6.75rem; line-height: .95; } .m-mk__l svg { width: 1.75rem; } }
