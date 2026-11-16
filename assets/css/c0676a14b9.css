@@ -1784,3 +1784,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 }
 @media (max-width: 1000px) { [data-vgs=nav] .m-ar__side { order: 2 !important; } }
 .m-ar__cta .m-ar__btn { white-space: nowrap; padding: 0 1rem; gap: .5rem; }
+/* 16.11 (Никита): фильтр блога — ниже от шапки и без подложки; у кейсов подложки при прокрутке тоже нет */
+.m-btb { top: calc(64px + 1.5rem); padding: 0; margin-inline: 0 !important; }
+.m-btb.is-stuck { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
+.m-csbar.is-stuck { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
