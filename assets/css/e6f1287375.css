@@ -1738,3 +1738,11 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   -webkit-mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, #000 65%, transparent 100%); mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, #000 65%, transparent 100%); }
 .m-ar__grid img { position: relative; border-radius: 1.25rem; }
 @media (max-width: 640px) { .m-ar__cov { padding: .625rem; border-radius: 34px; } .m-ar__grid { border-radius: 26px; padding: 1rem !important; } .m-ar__grid img { border-radius: .875rem; } }
+/* 16.11 (Никита: «фильтры магнитятся по скроллу») — строка поиска и рубрик прилипает под шапкой (64 px), в залипании — матовая плашка с тенью */
+.m-blh { padding-bottom: 0 !important; }
+.m-blg { padding-top: var(--space-12) !important; }
+.m-btb__sen { display: block; height: 0; }
+.m-btb { position: sticky; top: calc(64px + .75rem); z-index: 20; margin: 0 0 var(--space-6) !important; padding: .5rem; margin-inline: -.5rem !important; border-radius: calc(var(--radius-lg) + .5rem);
+  transition: background-color .25s ease, box-shadow .25s ease, backdrop-filter .25s ease; }
+.m-btb.is-stuck { background: rgb(255 255 255 / .82); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 .75rem 1.75rem -1rem rgb(15 21 29 / .28); }
+@media (max-width: 1000px) { .m-blg { padding-top: var(--space-8) !important; } .m-btb { gap: .5rem; } .m-btb .m-btabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; } }

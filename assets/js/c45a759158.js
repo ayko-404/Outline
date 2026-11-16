@@ -1,3 +1,4 @@
+(() => { const b = document.querySelector('.m-btb'), sen = document.querySelector('.m-btb__sen'); if (b && sen) new IntersectionObserver(([e]) => b.classList.toggle('is-stuck', !e.isIntersecting && e.boundingClientRect.top < 100), { rootMargin: '-77px 0px 0px 0px' }).observe(sen); })();
 (() => { /* поиск и рубрики: по заголовку и описанию + по рубрике */
   const inp = document.querySelector('.m-bls input'), tabs = [...document.querySelectorAll('.m-btab')], none = document.querySelector('.m-blg__none'); if (!inp) return;
   let cat = 'all';
