@@ -1889,3 +1889,15 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   .m-notes { padding-left: 0; justify-items: start; }
 }
 @media (max-width: 640px) { .m-notes__st { zoom: .72; } .m-mk__l { gap: .25rem; } .m-mk__l em { white-space: normal; max-width: 6.75rem; line-height: .95; } .m-mk__l svg { width: 1.75rem; } }
+/* 16.11 (Никита: «лупа — поаккуратнее; подпись уехала, подпись серым») — на карте обложки, тонкое кольцо со стеклом, лёгкое увеличение, короткая ручка, подпись серым под углом карточки */
+.m-avl { display: grid; place-items: center; }
+.m-lens { position: relative; display: block; padding-bottom: 3.5rem; }
+.m-lens__st { --r: 4.5rem; rotate: 0deg; }
+.m-lens__good { clip-path: circle(var(--r) at var(--lx) var(--ly)); }
+.m-lens__zoom { transform-origin: var(--lx) var(--ly); scale: 1.12; }
+.m-lens__ring { box-shadow: 0 0 0 4px #1d2128, 0 0 0 5px rgb(255 255 255 / .55), 0 1.25rem 2rem -.75rem rgb(15 21 29 / .45), inset 0 0 0 1px rgb(255 255 255 / .6), inset 0 -.75rem 1.5rem rgb(15 21 29 / .08);
+  background: linear-gradient(135deg, rgb(255 255 255 / .45), rgb(255 255 255 / 0) 38%), radial-gradient(circle at 70% 80%, rgb(130 170 255 / .12), transparent 55%); }
+.m-lens__ring i { left: 84%; top: 84%; width: .875rem; height: 3.25rem; border-radius: .5rem; background: linear-gradient(90deg, #343a44, #1a1d23); box-shadow: 0 .5rem 1rem -.375rem rgb(15 21 29 / .5); translate: -50% 0; }
+.m-lens__hand { position: absolute; right: -.5rem; bottom: 0; left: auto; display: flex; align-items: flex-start; gap: .5rem; max-width: 17rem; margin: 0; color: var(--text-muted); font: 400 1.375rem/1.05 var(--font-script); rotate: -2deg; }
+.m-lens__hand svg { flex: none; width: 2.75rem; height: 1.875rem; rotate: 0deg; margin: -1.25rem 0 0; }
+@media (max-width: 1000px) { .m-lens { padding-bottom: 0; } .m-lens__hand { position: static; margin: 1rem 0 0 auto; justify-content: flex-end; } }
