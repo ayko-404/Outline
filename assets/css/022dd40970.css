@@ -2626,18 +2626,21 @@ html.rvs-lock { overflow: hidden; }
   .p-cva__in { padding-top: 40px !important; }
   html body .m-blh, html body .m-art, html body .m-pol, html body .m-cxb { padding-top: 30px !important; }
   /* «Состав сопровождения под вашу задачу»: сверху 48 px, как у остальных блоков (было 135) */
-  html body section.p-prc { padding-top: 3rem !important; }
+  html body #tarify.p-prc { padding-top: 3rem !important; }
   /* отзывы на главной: стрелки рядом, справа; счётчик слева */
   .rvf__ctl { justify-content: flex-start; gap: .5rem; } .rvf__cnt { margin-right: auto; }
   .rvf__nav { gap: 1rem; } .rvf__ctl { width: 100%; }
   /* Яндекс Карты, обложка: у подписи под телефоном — стрелка к телефону */
   .p-cva__note { flex-direction: row !important; align-items: flex-end; gap: .25rem; }
-  .p-cva__note svg { display: block !important; width: 3rem; height: 1.875rem; margin-bottom: 1.75rem; }   /* стрелка снизу вверх — к телефону */
+  .p-cva__note svg { display: none !important; }
+  .p-cva__note::before { content: ""; flex: none; width: 2.25rem; height: 2.5rem; margin: -1.75rem 0 0; background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 40' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M32 37C18 36 8 26 9 5'/%3E%3Cpath d='M3.5 11 9 4.5l5.5 6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 40' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M32 37C18 36 8 26 9 5'/%3E%3Cpath d='M3.5 11 9 4.5l5.5 6'/%3E%3C/svg%3E") center / contain no-repeat; }   /* своя короткая стрелка снизу вверх — к телефону */
   .p-cva__note span { padding-top: 0 !important; }
   /* ниши: 3D-иконка ниши поверх карточек, не под ними */
   .p-cl__app--3d { z-index: 30 !important; }
   /* тарифы: меньше пустоты под ценниками */
-  .m-tgv { min-height: 15.5rem !important; } #cv-a .p-cva__vis:has(.m-tgv) { padding-bottom: 0 !important; }
+  .m-tgv { min-height: 15.5rem !important; } html body .p-cva__vis.m-tgv { padding-bottom: 0 !important; } html body .p-cva:has(.m-tgv) .p-cva__in { padding-bottom: 1rem !important; } html body .m-tf#tarify { padding-top: 1.5rem !important; }
   /* сравнение тарифов: переключатели прилипают под шапкой */
   .m-sx__tabs { position: sticky !important; top: calc(64px + .75rem); z-index: 6; box-shadow: 0 0 0 4px var(--surface-frame, #fff), 0 .75rem 1.25rem -1rem rgb(15 21 29 / .35); }
   /* блог: поиск и рубрики — ровно; рубрики листаются вбок до края экрана, без обрезанной плашки */
