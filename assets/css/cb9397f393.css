@@ -2066,3 +2066,7 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-stx__list i { display: grid; place-items: center; flex: none; width: 1.375rem; height: 1.375rem; border-radius: 50%; background: rgb(25 164 99 / .2); color: #3ddc97; } .m-stx__list svg { width: .875rem; height: .875rem; }
 .m-stx__fin { color: rgb(255 255 255 / .6) !important; }
 @media (max-width: 760px) { .m-stx__chips li:nth-child(n) { margin-left: 0; } .m-stx__list { grid-template-columns: 1fr; } }
+.p-intro__txt .m-stx__big { font: 600 clamp(1.5rem, 2.2vw, 1.875rem)/1.2 var(--font-head); letter-spacing: -.02em; color: #fff; max-width: 30rem; }
+.p-intro__txt .m-stx__note, .p-intro__txt .m-stx__fin { font-size: 1rem; }
+.p-intro__txt .m-stx__cap { margin-top: 1.75rem !important; }
+.m-xr__r span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: .5rem; }
