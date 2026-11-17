@@ -2071,3 +2071,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .p-intro__txt .m-stx__cap { margin-top: 1.75rem !important; }
 .m-xr__r span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: .5rem; }
 .p-intro__txt p.m-stx__big { font-size: clamp(1.5rem, 2.2vw, 1.875rem) !important; line-height: 1.2 !important; } .p-intro__txt p.m-stx__note, .p-intro__txt p.m-stx__fin { font-size: 1rem !important; }
+/* 17.11 (Никита: «карточка-скан слишком узкая») */
+.m-xr { padding: 2.5rem clamp(1.5rem, 4vw, 3.5rem); }
+.m-xr__card { width: 100%; max-width: 30rem; padding: 1.375rem; }
+.m-xr__r { height: 2.875rem; font-size: .9375rem; }
+@keyframes m-xr-scan { 0% { translate: 0 -2.5rem; opacity: 0; } 10% { opacity: 1; } 88% { opacity: 1; } 100% { translate: 0 16.5rem; opacity: 0; } }

@@ -1,8 +1,8 @@
 
 (() => {
   /* кейсы: данные со старого outlineagency.ru; «до» — только где известно из текста кейса */
-  const IMG = { kamyshi: '/Outline/assets/img/b481607ee1.webp', michurinsky: '/Outline/assets/img/64b866435f.webp', baza: '/Outline/assets/img/e97cfee39e.webp', ucandles: '/Outline/assets/img/053fcde02b.webp', avtodush: '/Outline/assets/img/46ef478198.webp', notarius: '/Outline/assets/img/c50e82eacc.webp', aviator: '/Outline/assets/img/3eef69e18f.webp' };
-  const YA = { kamyshi: '/Outline/assets/img/18d6ad948f.webp', michurinsky: '/Outline/assets/img/78a03b8888.webp', baza: '/Outline/assets/img/18ee836f88.webp', ucandles: '/Outline/assets/img/f2c76e1650.webp', avtodush: '/Outline/assets/img/45a729ceed.webp', notarius: '/Outline/assets/img/3f5bda6440.webp', aviator: '/Outline/assets/img/1bc45e2645.webp' };
+  const IMG = { kamyshi: '/Outline/assets/img/b481607ee1.webp', michurinsky: '/Outline/assets/img/64b866435f.webp', baza: '/Outline/assets/img/e97cfee39e.webp', ucandles: '/Outline/assets/img/053fcde02b.webp', avtodush: '/Outline/assets/img/46ef478198.webp', notarius: '/Outline/assets/img/c50e82eacc.webp', aviator: '/Outline/assets/img/3eef69e18f.webp' , fil: '/Outline/assets/img/765fb4010b.webp', alatyr: '/Outline/assets/img/2d5f4966bc.webp', kamyshirest: '/Outline/assets/img/8779f70137.webp' };
+  const YA = { kamyshi: '/Outline/assets/img/18d6ad948f.webp', michurinsky: '/Outline/assets/img/78a03b8888.webp', baza: '/Outline/assets/img/18ee836f88.webp', ucandles: '/Outline/assets/img/f2c76e1650.webp', avtodush: '/Outline/assets/img/45a729ceed.webp', notarius: '/Outline/assets/img/3f5bda6440.webp', aviator: '/Outline/assets/img/1bc45e2645.webp' , fil: '/Outline/assets/img/eb5ee73c70.webp', alatyr: '/Outline/assets/img/547dcd938c.webp', kamyshirest: '/Outline/assets/img/6ac36836b4.webp' };
   const C = [
     { id: 'kamyshi', name: '«Камыши»', niche: 'Банный комплекс', city: 'Санкт-Петербург', period: 'дек 2024 — дек 2025', big: 'ТОП-3', cap: 'по всем ключевым запросам в Яндекс Картах более года', pos: 3, wasPos: 11, tbc: true,
       rows: [['Оборот с трафика карт в месяц', '6 млн ₽'], ['Просмотров профиля в месяц', '22 000+'], ['Цена целевого действия по рекламе', '6 ₽']] },
@@ -18,9 +18,17 @@
       rows: [['Записей за год', '×3'], ['Рейтинг на картах', '5,0'], ['Рост трафика в месяц', '+20%']] },
     { id: 'aviator', name: 'Aviator Boxing Club', niche: 'Боксёрский клуб', city: 'Пенза', period: 'с июня 2025', big: 'ТОП-1', cap: 'в Пензе по всем ключевым запросам', pos: 1, wasPos: 7, tbc: true,
       rows: [['Записей в первые месяцы', '×3'], ['Трафика', '×2'], ['Просмотров профиля в месяц', '3000+']] },
+    /* 17.11 (Никита: «добавь новые карточки кейсов, если есть») — кейсы старого сайта, которых не было в списке; только на /cases/ (more: true), главная — прежние 7.
+       Цифры — дословно со страниц кейсов (src/cases/old_cases.json), рейтинг и число оценок — со скриншотов карточек там же */
+    { id: 'fil', more: true, name: 'Dr. Margarita Fil', niche: 'Клиника косметологии', city: 'Мытищи', period: '2 месяца работы', big: 'ТОП-2', cap: 'по запросу «косметолог» — 16% всего спроса в локации', pos: 2, was: 'карточка в конце поисковой выдачи',
+      rows: [['Лидов с Яндекс Карт за 2 месяца', '210'], ['Доля спроса по запросу «косметолог»', '16%'], ['Позиция по запросу «косметолог»', 'ТОП-2']] },
+    { id: 'alatyr', more: true, name: 'Алатырь', niche: 'Премиальная баня', city: 'Московская область', period: 'мар — окт 2025', big: 'ТОП-1', cap: 'района по ключевым запросам — клиенты из рекламы по 20 ₽ при среднем чеке 100 000 ₽', pos: 1, was: 'низкие позиции, без отзывов и визуала',
+      rows: [['Переходов в профиль компании', '115 599'], ['Построенных маршрутов', '3 983'], ['Стоимость целевого клиента', '20 ₽']] },
+    { id: 'kamyshirest', more: true, name: 'Ресторан «Камыши»', niche: 'Ресторан при банном комплексе', city: 'Санкт-Петербург', period: 'больше года', big: 'ТОП-1', cap: 'Яндекс Карт — ресторан стал самостоятельной точкой, а не «по пути» из бани', pos: 1, was: 'не показывался в ресторанной выдаче',
+      rows: [['Переходов в карточку', '+945%'], ['Звонков в месяц', '827', '562'], ['Переходов за третий месяц', '34 595', '24 964']] },
   ];
   /* кейсы — карточки по референсу Ивана (29.10): по две в ряд с листанием; рейтинг и число оценок — со скриншотов карточек в Яндекс Картах */
-  const RT = { kamyshi: ['5,0', '2002'], michurinsky: ['5,0', '227'], baza: ['5,0', '507'], ucandles: ['5,0', '268'], avtodush: ['5,0', '109'], notarius: ['5,0', '97'], aviator: ['4,9', '37'] };
+  const RT = { kamyshi: ['5,0', '2002'], michurinsky: ['5,0', '227'], baza: ['5,0', '507'], ucandles: ['5,0', '268'], avtodush: ['5,0', '109'], notarius: ['5,0', '97'], aviator: ['4,9', '37'], fil: ['4,9', '33'], alatyr: ['5,0', '211'], kamyshirest: ['5,0', '124'] };
   window.__cases = { C, IMG, YA, RT };
   /* карточка в Яндекс Картах — крупно поверх страницы: тот же телефон, что в кейсе, перелетает из карточки в центр (FLIP) */
   const reduceLb = matchMedia('(prefers-reduced-motion: reduce)').matches;

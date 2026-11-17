@@ -5,7 +5,8 @@
   if (!K) return;
   const has = old && sec && root;   // 13.11: на /cases/ блока главной нет — функции отрисовки всё равно нужны (window.__csvR)
   if (has) { old.after(sec); old.remove(); sec.id = 'keysy'; }
-  const { C, IMG, YA, RT } = K, N = C.length, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const { IMG, YA, RT } = K, C = has ? K.C.filter(c => !c.more) : K.C, N = C.length,   /* 17.11: на главной — без новых кейсов (more) */
+  const _n = 0, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const plural = n => { n = +n; const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? 'оценка' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'оценки' : 'оценок'; };
   const ARR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   const SB = '<span class="mph__sb"><span>9:41</span><i></i><span><svg viewBox="0 0 64 12" fill="#0b0b0c"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/><path d="M29 4.2a8.6 8.6 0 0 1 11.6 0l-1.3 1.4a6.7 6.7 0 0 0-9 0Zm2.6 2.9a4.8 4.8 0 0 1 6.4 0l-1.3 1.4a2.9 2.9 0 0 0-3.8 0Zm3.2 3.4-1.3-1.4a1.9 1.9 0 0 1 2.6 0Z"/><rect x="44.5" y=".5" width="17" height="11" rx="3" fill="none" stroke="#0b0b0c" opacity=".4"/><rect x="46" y="2" width="13" height="8" rx="1.8"/><rect x="62.5" y="4" width="1.5" height="4" rx=".75" opacity=".4"/></svg></span></span>';
@@ -17,6 +18,9 @@
     ucandles: '<rect x="8" y="10" width="8" height="11" rx="1.5"/><path d="M12 10V8M12 2.5c1.6 1.8 2 3 0 4.5-2-1.5-1.6-2.7 0-4.5Z"/>',
     avtodush: '<path d="M2 16V8h11v8M13 11h4l3 3v2M2 16h18"/><circle cx="6" cy="18" r="2"/><circle cx="16.5" cy="18" r="2"/><path d="M19 2.5c1 1.3 1.6 2.1 1.6 2.8a1.6 1.6 0 0 1-3.2 0c0-.7.6-1.5 1.6-2.8Z"/>',
     notarius: '<circle cx="12" cy="5" r="2.5"/><path d="M10.6 7.2 10 12h4l-.6-4.8M5 14a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2H5ZM5 20h14"/>',
+    fil: '<path d="M12 3c2.5 2.6 3.8 5 3.8 7.2A3.8 3.8 0 0 1 12 14a3.8 3.8 0 0 1-3.8-3.8C8.2 8 9.5 5.6 12 3Z"/><path d="M5 21c1.2-3.3 3.8-5 7-5s5.8 1.7 7 5"/>',
+    alatyr: '<path d="M3 12h18v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-2ZM6.5 19l-1 2M17.5 19l1 2"/><path d="M12 3l1.2 2.6 2.8.4-2 2 .5 2.8L12 9.5l-2.5 1.3.5-2.8-2-2 2.8-.4Z"/>',
+    kamyshirest: '<path d="M6 3v7a2 2 0 0 0 4 0V3M8 10v11M17 3c-1.7 1.2-2.5 3.5-2.5 6.5V13H17v8"/>',
     aviator: '<path d="M7.5 20v-3.2C5.4 15.7 4 13.6 4 11V9a5 5 0 0 1 5-5h4a6 6 0 0 1 6 6v3.5c0 1.6-.8 2.7-2 3.3V20Z"/><path d="M4.2 11.5c1.9-.6 3.9.2 4.8 2M7.5 17h9.5"/>',
   };
   const ico = id => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[id].replace(/<(path|circle|rect)/g, '<$1 pathLength="1"')}</svg>`;
