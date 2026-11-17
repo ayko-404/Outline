@@ -2666,6 +2666,9 @@ html.rvs-lock { overflow: hidden; }
 /* 17.11 (Никита: «дефект у футера» на внутренних страницах): фон .page не перекрывает карту подвала под скруглёнными углами блока разбора (нижние 56 px) */
 .page { background: linear-gradient(#fafafa, #fafafa) no-repeat 0 0 / 100% calc(100% - 56px) !important; }
 
+/* 17.11: на телефоне под картинкой обложки меньше пустоты (кроме обложек с подписью внизу) */
+@media (max-width: 1000px) { html body .p-cva__vis:not(:has(.p-cva__note)) { padding-bottom: 1.5rem !important; } }
+
 
 /* Мост главной к дизайн-системе (05.11.2026): старые переменные блоков теперь берут значения из site/ds/tokens.css.
    Новые страницы этот файл не подключают: они строятся на ds/tokens.css + ds/components.css напрямую. */

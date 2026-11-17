@@ -13,7 +13,7 @@
     p.setAttribute('d', d + ' L100 100 L0 100 Z');
   });
   // нижний край перехода (светлый блок) выходит на экран, когда светлый слой уже поднялся снизу
-  const target = () => { const r = wrap.getBoundingClientRect(); return Math.min(1, Math.max(0, (innerHeight * .62 - r.top) / (innerHeight * .7))); };
+  const target = () => { const r = wrap.getBoundingClientRect(); /* 17.11 (Никита: «большие разрывы у анимаций»): начинает подниматься сразу, как показалась снизу (было с 62% экрана — сначала пустая тёмная полоса); финиш тот же */ return Math.min(1, Math.max(0, (innerHeight * .98 - r.top) / (innerHeight * 1.06))); };
   const ready = v => { sec6.classList.toggle('is-ready', v >= .8); wrap.dataset.done = v >= .8 ? '1' : ''; };
   let cur = 0, tgt = 0, raf = 0;
   const tick = () => { cur += (tgt - cur) * .16; if (Math.abs(tgt - cur) < .001) cur = tgt; draw(cur); ready(cur); raf = cur === tgt ? 0 : requestAnimationFrame(tick); };
@@ -25,7 +25,7 @@
   const mo = new MutationObserver(() => { if (sec6.classList.contains('is-ready')) setTimeout(() => sec6.classList.add('is-in'), 300); }); mo.observe(sec6, { attributes: true, attributeFilter: ['class'] });
 
   /* графики отчёта (02.11): строятся под размер окна, рисуются при появлении слева направо, потом — тихий цикл импульсов (CSS) */
-  const card = document.querySelector('.fun7'); if (!card) return;
+  const card = document.querySelector('.fun7');
   const MON = ['май', 'июн', 'июл', 'авг', 'сен', 'окт'];
   // иллюстрация месячного отчёта, метрики — content.md «Макет месячного отчёта»; заменить на обезличенный отчёт клиента от Ивана
   const VIEWS = [1990, 2040, 1960, 2080, 2110, 2060, 2170, 2140, 2230, 2190, 2280, 2350, 2310, 2400, 2460, 2420, 2530, 2580, 2540, 2650, 2700, 2660, 2760, 2810, 2850, 2910];
