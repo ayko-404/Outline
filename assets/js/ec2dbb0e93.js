@@ -5,8 +5,7 @@
   if (!K) return;
   const has = old && sec && root;   // 13.11: на /cases/ блока главной нет — функции отрисовки всё равно нужны (window.__csvR)
   if (has) { old.after(sec); old.remove(); sec.id = 'keysy'; }
-  const { IMG, YA, RT } = K, C = has ? K.C.filter(c => !c.more) : K.C, N = C.length,   /* 17.11: на главной — без новых кейсов (more) */
-  const _n = 0, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const { IMG, YA, RT } = K, C = has ? K.C.filter(c => !c.more) : K.C, N = C.length, /* 17.11: на главной — без новых кейсов (more) */ reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const plural = n => { n = +n; const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? 'оценка' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'оценки' : 'оценок'; };
   const ARR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   const SB = '<span class="mph__sb"><span>9:41</span><i></i><span><svg viewBox="0 0 64 12" fill="#0b0b0c"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/><path d="M29 4.2a8.6 8.6 0 0 1 11.6 0l-1.3 1.4a6.7 6.7 0 0 0-9 0Zm2.6 2.9a4.8 4.8 0 0 1 6.4 0l-1.3 1.4a2.9 2.9 0 0 0-3.8 0Zm3.2 3.4-1.3-1.4a1.9 1.9 0 0 1 2.6 0Z"/><rect x="44.5" y=".5" width="17" height="11" rx="3" fill="none" stroke="#0b0b0c" opacity=".4"/><rect x="46" y="2" width="13" height="8" rx="1.8"/><rect x="62.5" y="4" width="1.5" height="4" rx=".75" opacity=".4"/></svg></span></span>';
