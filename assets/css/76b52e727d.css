@@ -2017,3 +2017,16 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-bdg { width: 21.5%; }
 @media (max-width: 760px) { .m-pth__drop { left: calc(1rem + (100% - 2rem) * (var(--k) * .25)); font-size: .9375rem; } .m-pth__drop[style*="--k:2"] { top: 9.75rem; } .m-pth__drop[style*="--k:2"]::before { height: 6.75rem; } .m-pth__fix { margin-top: 6.5rem; } }
 @media (max-width: 760px) { .m-pth li { font-size: .625rem; gap: .5rem; } .m-pth li span { padding: 0 2px; hyphens: auto; } .m-pth ol { gap: 4px; } }
+
+/* 17.11 (Никита: «мозаика — аккуратнее»): ровная сетка 3×2 без сдвигов, у каждого портрета белая рамка карточки сайта, имя и роль под фото */
+.m-mos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; max-width: 36rem; }
+.m-mos__t, .m-mos__n { aspect-ratio: auto; translate: none !important; }
+.m-mos__t { display: flex; flex-direction: column; padding: .375rem; border-radius: 1.5rem; background: #fff; overflow: visible;
+  box-shadow: 0 0 0 1px rgb(15 21 29 / .05), 0 1rem 2rem -1.5rem rgb(15 21 29 / .4); }
+.m-mos__t img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 20%; border-radius: 1.125rem; background: #2878ee; }
+.m-mos__t figcaption { position: static; padding: .625rem .375rem .375rem; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border-radius: 0; }
+.m-mos__t b { font-size: .9375rem; } .m-mos__t small { margin-top: .125rem; font-size: .6875rem; line-height: 1.3; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-mos__n { border-radius: 1.5rem; padding: 1rem; box-shadow: 0 1rem 2rem -1.5rem rgb(15 21 29 / .5); }
+.m-mos__n b { font-size: 3rem; }
+@media (max-width: 1000px) { .m-mos { gap: .625rem; max-width: 26rem; } .m-mos__t { padding: .25rem; border-radius: 1.125rem; } .m-mos__t img { border-radius: .875rem; }
+  .m-mos__t b { font-size: .8125rem; } .m-mos__t small { font-size: .625rem; } .m-mos__n b { font-size: 2.25rem; } }
