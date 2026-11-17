@@ -2016,3 +2016,4 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 }
 .m-bdg { width: 21.5%; }
 @media (max-width: 760px) { .m-pth__drop { left: calc(1rem + (100% - 2rem) * (var(--k) * .25)); font-size: .9375rem; } .m-pth__drop[style*="--k:2"] { top: 9.75rem; } .m-pth__drop[style*="--k:2"]::before { height: 6.75rem; } .m-pth__fix { margin-top: 6.5rem; } }
+@media (max-width: 760px) { .m-pth li { font-size: .625rem; gap: .5rem; } .m-pth li span { padding: 0 2px; hyphens: auto; } .m-pth ol { gap: 4px; } }
