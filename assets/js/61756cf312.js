@@ -2,7 +2,7 @@
 /* HOME-POPUPS — поп-апы главной: разбор и кейсы */
 (() => {
   const ARR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-  const mk = (cls, html) => { const d = document.createElement('dialog'); d.className = 'hp-pop ' + cls; d.innerHTML = `<div class="hp-pop__box"><button class="hp-pop__x" type="button" aria-label="Закрыть">×</button>${html}</div>`; document.body.append(d);
+  const mk = (cls, html) => { const d = document.createElement('dialog'); d.className = 'hp-pop ' + cls; d.innerHTML = `<div class="hp-pop__box"><button class="hp-pop__x" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>${html}</div>`; document.body.append(d);
     d.querySelector('.hp-pop__x').addEventListener('click', () => d.close()); d.addEventListener('click', e => { if (e.target === d) d.close(); }); d.addEventListener('close', () => document.documentElement.classList.remove('hp-lock')); return d; };
   const open = d => { document.documentElement.classList.add('hp-lock'); d.showModal(); };
   const init = () => {

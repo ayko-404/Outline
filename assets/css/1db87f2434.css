@@ -1228,6 +1228,8 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 .cs-lb__x { position: absolute; top: 0; right: -3.75rem; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 50%; background: rgb(255 255 255 / .12); color: #fff; font-size: 1.375rem; line-height: 1; cursor: pointer; }
 @media (hover: hover) and (pointer: fine) { .cs-lb__x:hover { background: rgb(255 255 255 / .22); } }
 .cs-lb__x:active { scale: .94; }
+/* 17.11 (Никита: «крестик не по центру»): вместо символа «×» — нарисованный крестик, ровно по центру круга */
+.cs-lb__x { display: grid; place-items: center; padding: 0; } .cs-lb__x svg { width: 1.125rem; height: 1.125rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 @media (max-width: 760px) { .cs-lb__x { right: 0; top: -3.5rem; } .cs-lb__ph .csv__dev { width: min(34vh, 80vw); } }
 @media (prefers-reduced-motion: reduce) { .cs-lb::before, .cs-lb__cap, .cs-lb__x { transition: opacity 200ms ease !important; transform: none !important; } }
 /* ===== тарифы ===== */
@@ -1418,7 +1420,7 @@ body[data-tg="glass"] .signal-tag__icon svg circle[fill="#ff6414"] { fill: #1416
 /* ===== FAQ ===== */
 .fq { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem; align-items: start; }
 .fq__side { position: sticky; top: 6rem; }
-.fq__side p { margin: 1rem 0 0; max-width: 22rem; font-size: 1.0625rem; line-height: 1.5; color: var(--text-muted); }
+.fq__side p { margin: 1.5rem 0 0; max-width: 22rem; font-size: 1.0625rem; line-height: 1.5; color: var(--text-muted); }
 .fq__side a { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.25rem; height: 2.75rem; padding: 0 1.125rem; border-radius: 99px; background: #eef0f3; color: #0f151d; text-decoration: none; font-weight: 500; font-size: .9375rem; }
 .fq__list { display: flex; flex-direction: column; gap: .5rem; }
 .fq__it { border-radius: 1.25rem; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06); transition: box-shadow 200ms ease; }
@@ -1642,6 +1644,8 @@ body .ft__brand .lg { --H: 1.375rem; }
 @media (max-width: 1000px) { .rvb__panel { border-radius: 2rem; padding: .5rem; } .rvb__in { border-radius: 1.625rem; padding: 1.25rem 0; } .rvb .rvb__track { padding: 0 1rem .25rem; grid-auto-columns: 14rem; } .rvb__bar { padding: 1rem 1rem 0; } }
 /* ===== Отзывы В · тёмная полоса: крупный результат + лица ===== */
 .rvc { padding: 6rem 0; background: #121417; color: #f2f3f5; }
+/* 17.11 (Никита: «текст прижат к заголовку»): в одну колонку подзаголовок не стоит вплотную к заголовку */
+@media (max-width: 1000px) { .vx__head .vx__lead { margin-top: .875rem; } }
 .rvc .vx__h { color: #fff; } .rvc .vx__lead { color: rgb(255 255 255 / .72); }
 .rvc__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .rvc__big { position: relative; display: block; min-height: 30rem; overflow: hidden; border-radius: 2rem; text-decoration: none; color: #fff; }
@@ -2260,6 +2264,10 @@ html.rvs-lock { overflow: hidden; }
   .csv__row { grid-template-columns: 2.25rem 2.25rem minmax(0, 1fr); } .csv__row .rt { display: none; }
   .csv__tbl th.b, .csv__tbl td.b { width: 4.5rem; padding-right: .75rem; }
 }
+/* 17.11 (Никита: «переключатели кейсов — магнитом к шапке, чтобы не листать вверх»): список прилипает под шапкой (64 px + 24 px); лентой — каждая плашка белая, без общей подложки */
+.csv__list { position: sticky; top: calc(64px + 1.5rem); z-index: 5; }
+@media (max-width: 1280px) { .csv__list { top: calc(64px + .75rem); padding: .375rem .25rem .5rem; }
+  .csv__it { background: rgb(255 255 255 / .94); box-shadow: 0 0 0 1px rgb(15 21 29 / .06), 0 .5rem 1rem -.75rem rgb(15 21 29 / .35); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); } }
 
 
 /* Широкие экраны (28.10.2026): весь сайт в rem — растим корневой размер от окна, чтобы на 1920 и 2560 блоки
@@ -2543,7 +2551,7 @@ html.rvs-lock { overflow: hidden; }
   .svc3[data-v="b"] .sv.is-act .sv__pic, .svc3[data-v="b"] .sv.is-act .sv__pic:has(.xph) { display: grid !important; position: relative !important; inset: auto !important; height: auto !important; min-height: 15rem; margin: 1rem -2.5rem 0 0; padding: 1rem !important; opacity: 1 !important; clip-path: none !important; transform: none !important; border-radius: 1.25rem; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .06); overflow: hidden; }
   .svc3[data-v="b"] .sv.is-act .sv__pic > :not(.xw) { transform: none !important; }
   .svc3[data-v="b"] .sv.is-act .sv__pic:has(.xph) { display: flex !important; flex-direction: column; align-items: center; gap: 1rem; container-type: normal; padding: 1.25rem 1rem !important; }
-  .svc3[data-v="b"] .sv.is-act .sv__pic > .xph { width: 19.5rem !important; flex: none; margin: 0 auto !important; transform: scale(.62) !important; transform-origin: 50% 0; }   /* 10.11: scale, а не zoom — Safari на iPhone с zoom неверно считает cqw, и статус-бар телефона раздувался; лишнюю высоту убирает скрипт ниже */   /* телефон в настольном размере, уменьшен целиком — подписи внутри не раздуваются */
+  .svc3[data-v="b"] .sv.is-act .sv__pic > .xph { width: 19.5rem !important; flex: none; margin: 0 auto !important; transform: scale(.62) !important; transform-origin: 50% 0; container-type: inline-size; }   /* 17.11 (Никита: «скругления слишком большие»): без своего контейнера доли cqw считались от экрана — радиус 66 px на телефоне 193 px; теперь от ширины телефона */   /* 10.11: scale, а не zoom — Safari на iPhone с zoom неверно считает cqw, и статус-бар телефона раздувался; лишнюю высоту убирает скрипт ниже */   /* телефон в настольном размере, уменьшен целиком — подписи внутри не раздуваются */
   .svc3[data-v="b"] .sv h3::before { left: -1.5rem !important; }   /* точки — ровно на линии (у списка на телефоне отступ 1,5rem) */
   /* «Как начинаем»: шкала мягче и медленнее */
   .lt.is-in .rm6[data-v="c"] .rm6__card.is-vis .rmc__bar { transition: clip-path 1.2s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--d) * 1.4 + .2s) !important; }
@@ -2749,6 +2757,7 @@ a.is-soon { cursor: default; }
 .hp-pop__box { position: relative; max-height: calc(100dvh - 2rem); overflow: auto; overscroll-behavior: contain; padding: 2rem; border-radius: 2rem; background: var(--paper-0, #fff); box-shadow: 0 2rem 4rem -1.5rem rgb(0 0 0 / .45); }
 .hp-pop__x { position: absolute; right: .75rem; top: .75rem; z-index: 2; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 0; border-radius: 50%; background: rgb(15 21 29 / .06); color: inherit; font: 400 1.5rem/1 sans-serif; cursor: pointer; }
 .hp-pop__x:hover { background: rgb(15 21 29 / .12); }
+.hp-pop__x { padding: 0; } .hp-pop__x svg { width: 1.125rem; height: 1.125rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }   /* 17.11: нарисованный крестик по центру */
 .hp-pop__t { margin: 0 2.5rem .5rem 0; font: 600 1.75rem/1.1 var(--font-head); letter-spacing: -.03em; }
 .hp-pop__t em { font-family: var(--font-script); font-style: normal; font-weight: 400; font-size: 1.15em; color: var(--text-script, #2563eb); }
 .hp-pop__lead { margin: 0 0 1.25rem; color: var(--text-muted, #5b6470); line-height: 1.5; }

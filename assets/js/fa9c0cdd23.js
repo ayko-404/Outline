@@ -26,7 +26,7 @@
   const reduceLb = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SPRING = 'linear(0, 0.022, 0.078, 0.155, 0.242, 0.334, 0.425, 0.511, 0.59, 0.662, 0.725, 0.78, 0.827, 0.866, 0.899, 0.925, 0.947, 0.964, 0.977, 0.987, 0.994, 0.999, 1.003, 1.005, 1.007, 1.008, 1.008, 1.008, 1.007, 1.006, 1.006, 1.005, 1.004, 1.004, 1.003, 1.003, 1.002, 1.002, 1.001, 1)';   // spring_linear.py --duration 0.55 --bounce 0.16 → 764 мс
   const lb = document.createElement('div'); lb.className = 'cs-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-hidden', 'true');
-  lb.innerHTML = '<div class="cs-lb__in"><div class="cs-lb__ph"></div><p class="cs-lb__cap"></p><button class="cs-lb__x" type="button" aria-label="Закрыть">×</button></div>';
+  lb.innerHTML = '<div class="cs-lb__in"><div class="cs-lb__ph"></div><p class="cs-lb__cap"></p><button class="cs-lb__x" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>';
   document.body.append(lb);
   const lbPh = lb.querySelector('.cs-lb__ph'), lbCap = lb.querySelector('.cs-lb__cap'), lbX = lb.querySelector('.cs-lb__x'); let lbFrom = null, lbSrc = null, lbAnim = [];
   // сдвиг и масштаб, которые ставят телефон окна на место телефона в кейсе
@@ -80,7 +80,7 @@
   /* тарифы: цены набираются при появлении */
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fmt = v => Math.round(v).toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
-  const prices = [...document.querySelectorAll('.tf__price b')];
+  const prices = [...document.querySelectorAll('.tf__price b')]; if (prices.length)
   if (!reduce) new IntersectionObserver((es, io) => es.forEach(e => { if (!e.isIntersecting) return; io.disconnect();
     prices.forEach((b, k) => { const to = +b.dataset.to, t0 = performance.now() + k * 120, dur = 900;
       const st = now => { const p = Math.min(1, Math.max(0, (now - t0) / dur)), ev = 1 - Math.pow(1 - p, 3); b.textContent = fmt(to * (.6 + .4 * ev)); if (p < 1) requestAnimationFrame(st); }; requestAnimationFrame(st); }); }), { threshold: .3 }).observe(document.querySelector('.tf'));
