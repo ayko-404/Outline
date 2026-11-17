@@ -2030,3 +2030,39 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-mos__n b { font-size: 3rem; }
 @media (max-width: 1000px) { .m-mos { gap: .625rem; max-width: 26rem; } .m-mos__t { padding: .25rem; border-radius: 1.125rem; } .m-mos__t img { border-radius: .875rem; }
   .m-mos__t b { font-size: .8125rem; } .m-mos__t small { font-size: .625rem; } .m-mos__n b { font-size: 2.25rem; } }
+/* 17.11 (Никита: выбран «рентген», «поаккуратнее»): луч ходит только по списку, не по шапке; итог «3 точки роста» — строкой внутри карточки */
+.m-xr { justify-content: center; padding: 2.5rem 2rem; }
+.m-xr__card { width: min(23rem, 100%); padding: 1.125rem; border-radius: 1.5rem; background: linear-gradient(#262a31, #212429); }
+.m-xr__hd { padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgb(255 255 255 / .07); }
+.m-xr__pin { width: 2.5rem; height: 2.5rem; border-radius: .75rem; }
+.m-xr__body { position: relative; overflow: hidden; margin: -.25rem; padding: .25rem; border-radius: .875rem; }
+.m-xr ul { gap: .375rem; }
+.m-xr__r { height: 2.625rem; padding: 0 .625rem 0 .875rem; border-radius: .75rem; background: rgb(255 255 255 / .04); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .04); font-size: .875rem; }
+.m-xr__r i { width: 1.375rem; height: 1.375rem; }
+.m-xr__beam { height: 2.25rem; background: linear-gradient(transparent, rgb(120 170 255 / .14) 75%, rgb(150 190 255 / .4)); border-bottom: 1.5px solid rgb(160 198 255 / .85); box-shadow: 0 6px 14px -6px rgb(120 170 255 / .6); }
+@keyframes m-xr-scan { 0% { translate: 0 -2.5rem; opacity: 0; } 10% { opacity: 1; } 88% { opacity: 1; } 100% { translate: 0 15rem; opacity: 0; } }
+.m-xr__ft { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .07); color: rgb(255 255 255 / .7); font-size: .8125rem; }
+.m-xr__ft b { display: grid; place-items: center; min-width: 2rem; height: 2rem; padding: 0 .5rem; border-radius: 99px; background: rgb(255 100 20 / .18); color: #ff8a4c; font: 700 .9375rem/1 var(--font-head); }
+.m-xr__sum { display: none; }
+
+/* ── 17.11 «Разбираем вашу ситуацию»: текст слева — варианты (переключатель «Текст слева»), слова Ивана без изменений ── */
+.m-stx > div { display: none; } .m-stx[data-v=a] .m-stx__a, .m-stx[data-v=b] .m-stx__b, .m-stx[data-v=c] .m-stx__c { display: block; }
+.m-stx p { margin: 0; }
+/* B · акценты: первая фраза крупно, три «сложно» — плашками с иконками, остальное — мельче */
+.m-stx__big { font: 600 clamp(1.5rem, 2.2vw, 1.875rem)/1.2 var(--font-head) !important; letter-spacing: -.02em; color: #fff !important; text-wrap: balance; }
+.m-stx__big em { font-style: normal; color: rgb(255 255 255 / .5); }
+.m-stx__chips { display: grid; gap: .5rem; margin: 1.5rem 0 1.75rem !important; padding: 0 !important; list-style: none; }
+.m-stx__chips li { display: flex; align-items: center; gap: .75rem; width: fit-content; padding: .5rem 1rem .5rem .5rem; border-radius: 99px; background: rgb(255 255 255 / .06);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); color: #fff; font-size: 1rem; }
+.m-stx__chips li:nth-child(2) { margin-left: 1.5rem; } .m-stx__chips li:nth-child(3) { margin-left: 3rem; }
+.m-stx__chips i { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: rgb(255 100 20 / .16); color: #ff8a4c; } .m-stx__chips svg { width: 1.125rem; height: 1.125rem; }
+.m-stx__note { max-width: 30rem; color: rgb(255 255 255 / .6) !important; font-size: 1rem !important; }
+/* C · списком: что оценим — пунктами с галочками */
+.m-stx__lead { color: rgb(255 255 255 / .82) !important; }
+.m-stx__cap { margin-top: 1.5rem !important; font: 500 .75rem/1 var(--font-mono) !important; letter-spacing: .08em; text-transform: uppercase; color: rgb(255 255 255 / .5) !important; }
+.m-stx__list { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin: .875rem 0 1.25rem !important; padding: 0 !important; list-style: none; }
+.m-stx__list li { display: flex; align-items: center; gap: .625rem; padding: .625rem .75rem; border-radius: .875rem; background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .06); color: #fff; font-size: .9375rem; line-height: 1.25; }
+.m-stx__list li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.m-stx__list i { display: grid; place-items: center; flex: none; width: 1.375rem; height: 1.375rem; border-radius: 50%; background: rgb(25 164 99 / .2); color: #3ddc97; } .m-stx__list svg { width: .875rem; height: .875rem; }
+.m-stx__fin { color: rgb(255 255 255 / .6) !important; }
+@media (max-width: 760px) { .m-stx__chips li:nth-child(n) { margin-left: 0; } .m-stx__list { grid-template-columns: 1fr; } }
