@@ -25,7 +25,7 @@
   const mo = new MutationObserver(() => { if (sec6.classList.contains('is-ready')) setTimeout(() => sec6.classList.add('is-in'), 300); }); mo.observe(sec6, { attributes: true, attributeFilter: ['class'] });
 
   /* графики отчёта (02.11): строятся под размер окна, рисуются при появлении слева направо, потом — тихий цикл импульсов (CSS) */
-  const card = document.querySelector('.fun7'); if (!card) return;
+  const card = document.querySelector('.fun7');
   const MON = ['май', 'июн', 'июл', 'авг', 'сен', 'окт'];
   // иллюстрация месячного отчёта, метрики — content.md «Макет месячного отчёта»; заменить на обезличенный отчёт клиента от Ивана
   const VIEWS = [1990, 2040, 1960, 2080, 2110, 2060, 2170, 2140, 2230, 2190, 2280, 2350, 2310, 2400, 2460, 2420, 2530, 2580, 2540, 2650, 2700, 2660, 2760, 2810, 2850, 2910];
@@ -54,14 +54,12 @@
     let s = o.grid.map(v => `<line class="gl" x1="0" x2="${W}" y1="${f(Y(v))}" y2="${f(Y(v))}"/>`).join('') + `<line class="bl" x1="0" x2="${W}" y1="${base + .5}" y2="${base + .5}"/>`;
     let ax = '', P;
     // заливка под линией: мягкий градиент + точки, как частицы прежней ленты
+    // заливка под линией: мягкий вертикальный градиент + точки. 17.11 (Никита: на iPhone вместо заливки — сплошной прямоугольник):
+    // без SVG-масок (Safari их рисует неверно) — путь заливается градиентом напрямую, точки — узором с прозрачностью
     const area = (P, x0, x1) => { const d = curve(P) + ` L${f(x1)} ${base} L${f(x0)} ${base} Z`;
-      defs += `<linearGradient id="${id}v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-        <linearGradient id="${id}fv" gradientUnits="userSpaceOnUse" x1="0" y1="${TOP}" x2="0" y2="${base}"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
-        <pattern id="${id}p" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#fff"/></pattern>
-        <mask id="${id}mf" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${base}" fill="url(#${id}fv)"/></mask>
-        <mask id="${id}ma" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><path d="${d}" fill="url(#${id}v)"/></mask>
-        <mask id="${id}md" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><g mask="url(#${id}mf)"><path d="${d}" fill="url(#${id}p)"/></g></mask>`;
-      return `<g class="ar7"><rect width="${W}" height="${base}" fill="url(#${id}g)" mask="url(#${id}ma)" opacity=".5"/><rect width="${W}" height="${base}" fill="url(#${id}g)" mask="url(#${id}md)" opacity=".7"/></g>`; };
+      defs += `<linearGradient id="${id}af" gradientUnits="userSpaceOnUse" x1="0" y1="${TOP}" x2="0" y2="${base}"><stop offset="0" stop-color="${o.g[1]}" stop-opacity=".34"/><stop offset="1" stop-color="${o.g[1]}" stop-opacity="0"/></linearGradient>
+        <pattern id="${id}pa" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="${o.g[1]}" fill-opacity=".45"/></pattern>`;
+      return `<g class="ar7"><path d="${d}" fill="url(#${id}af)"/><path d="${d}" fill="url(#${id}pa)" opacity=".55"/></g>`; };
     const label = (x, i, anchor = 'middle') => `<text class="ax" x="${f(x)}" y="${H - 6}" text-anchor="${anchor}">${MON[i]}</text>`;
     if (c.k === 'views') {
       P = VIEWS.map((v, i) => [2 + i / (VIEWS.length - 1) * (W - 8), Y(v)]);

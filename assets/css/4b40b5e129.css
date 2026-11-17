@@ -2669,6 +2669,13 @@ html.rvs-lock { overflow: hidden; }
 /* 17.11: на телефоне под картинкой обложки меньше пустоты (кроме обложек с подписью внизу) */
 @media (max-width: 1000px) { html body .p-cva__vis:not(:has(.p-cva__note)) { padding-bottom: 1.5rem !important; } }
 
+/* 17.11 (Никита: «на мобиле большие отступы» у волн): волны ниже, наезд следующего блока — в той же доле; после «Обсудить задачу» меньше отступ */
+@media (max-width: 760px) {
+  html body .wavex { height: 46vh; } html body #komu-pomogaem.nw { margin-top: -19vh; }
+  html body .wavel { height: 52vh; } html body #kak-nachinaem { margin-top: -32vh; }
+  html body #komu-pomogaem.nw { padding-bottom: 3rem; }
+}
+
 
 /* Мост главной к дизайн-системе (05.11.2026): старые переменные блоков теперь берут значения из site/ds/tokens.css.
    Новые страницы этот файл не подключают: они строятся на ds/tokens.css + ds/components.css напрямую. */
