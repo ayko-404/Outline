@@ -2672,7 +2672,9 @@ html.rvs-lock { overflow: hidden; }
 /* 17.11 (Никита: «на мобиле большие отступы» у волн): волны ниже, наезд следующего блока — в той же доле; после «Обсудить задачу» меньше отступ */
 @media (max-width: 760px) {
   html body .wavex { height: 46vh; } html body #komu-pomogaem.nw { margin-top: -19vh; }
+  html body #komu-pomogaem.nw { background: linear-gradient(transparent 0, transparent calc(19vh - 3px), var(--bg) calc(19vh - 3px)); }
   html body .wavel { height: 52vh; } html body #kak-nachinaem { margin-top: -32vh; }
+  html body #kak-nachinaem { background: linear-gradient(transparent 0, transparent calc(32vh - 3px), var(--page, #fafafa) calc(32vh - 3px)); }
   html body #komu-pomogaem.nw { padding-bottom: 3rem; }
 }
 
