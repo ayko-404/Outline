@@ -12,8 +12,9 @@
   const toast = (kind, title, sub) => {
     if (cur) cur.remove();
     const pos = document.createElement('div'); pos.className = 'lt-pos';
+    pos.setAttribute('popover', 'manual');   /* верхний слой — поверх открытого всплывающего окна */
     pos.innerHTML = `<div class="lt-pill ${kind}" role="${kind === 'ok' ? 'status' : 'alert'}" aria-live="polite" style="width:3.5rem"><span class="lt-ic">${kind === 'ok' ? OK : BAD}</span></div>`;
-    document.body.append(pos); cur = pos;
+    document.body.append(pos); cur = pos; try { pos.showPopover(); } catch (x) {}
     const pill = pos.firstElementChild; let timers = [];
     const close = () => { timers.forEach(clearTimeout); pill.classList.add('is-leave'); setTimeout(() => pos.remove(), 220); document.removeEventListener('keydown', esc); };
     const esc = e => { if (e.key === 'Escape') close(); };
