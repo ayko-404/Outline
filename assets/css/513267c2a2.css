@@ -2014,3 +2014,5 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
   .o-js .m-kak.is-in .m-sti > *, .o-js .lt.is-in .m-sti > * { opacity: 1; translate: 0 0; transition: opacity .5s ease, translate .6s cubic-bezier(.22, 1, .36, 1); }
   .o-js .m-kak.is-in .m-sti > :nth-child(2) { transition-delay: .12s; } .o-js .m-kak.is-in .m-sti > :nth-child(3) { transition-delay: .24s; } .o-js .m-kak.is-in .m-sti > :nth-child(4) { transition-delay: .36s; } .o-js .m-kak.is-in .m-sti > :nth-child(5) { transition-delay: .48s; }
 }
+.m-bdg { width: 21.5%; }
+@media (max-width: 760px) { .m-pth__drop { left: calc(1rem + (100% - 2rem) * (var(--k) * .25)); font-size: .9375rem; } .m-pth__drop[style*="--k:2"] { top: 9.75rem; } .m-pth__drop[style*="--k:2"]::before { height: 6.75rem; } .m-pth__fix { margin-top: 6.5rem; } }
