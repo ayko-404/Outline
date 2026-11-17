@@ -1901,3 +1901,8 @@ section#kak-nachinaem.m-kak { margin-top: 0 !important; padding-top: var(--space
 .m-lens__hand { position: absolute; right: -.5rem; bottom: 0; left: auto; display: flex; align-items: flex-start; gap: .5rem; max-width: 17rem; margin: 0; color: var(--text-muted); font: 400 1.375rem/1.05 var(--font-script); rotate: -2deg; }
 .m-lens__hand svg { flex: none; width: 2.75rem; height: 1.875rem; rotate: 0deg; margin: -1.25rem 0 0; }
 @media (max-width: 1000px) { .m-lens { padding-bottom: 0; } .m-lens__hand { position: static; margin: 1rem 0 0 auto; justify-content: flex-end; } }
+/* 17.11 страницы кейсов: скриншоты с подписями */
+.m-cs__img { margin: var(--space-8) 0; } .m-cs__img img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); background: #fff; }
+.m-cs__img figcaption { margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--text-subtle); text-align: center; }
+.m-cs .m-ar__grid img { max-height: none !important; object-fit: contain !important; }
+.m-csall .m-blg__grid { margin-top: 0; }

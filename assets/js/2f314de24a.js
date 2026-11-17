@@ -20,7 +20,7 @@
         <div class="rvw__who"><span><b>${m.name}</b><small>${m.biz}</small></span></div>
         <a class="rvw__btn" href="${url(m)}" target="_blank" rel="noopener">Смотреть отзыв ${ARR}</a></div></article>
     <div class="rvw__list">${R.slice(1).map(r => `<a class="rvw__row" href="${url(r)}" target="_blank" rel="noopener"><img src="${r.img}" alt="" loading="lazy"><span><b>${r.name} · ${r.biz}</b><span>${r.res}</span></span><i>${PLAY}</i></a>`).join('')}
-      <a class="rvw__more" href="#" aria-disabled="true">Отзывы о&nbsp;нас на&nbsp;Яндекс Картах ${ARR}</a></div>`;
+      <a class="rvw__more" href="https://yandex.ru/maps/org/outline_agency/99195779557/reviews/" target="_blank" rel="noopener">Отзывы о&nbsp;нас на&nbsp;Яндекс Картах ${ARR}</a></div>`;
   /* форма: без согласия кнопка не активна (152-ФЗ, ст. 9 ч. 1) */
   const ag = document.getElementById('cta8-agree'), btn = document.getElementById('cta8-btn');
   ag.addEventListener('change', () => { btn.disabled = !ag.checked; });
