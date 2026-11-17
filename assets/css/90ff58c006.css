@@ -1,7 +1,0 @@
-
-/* 03.11 (Никита): плашки шкалы начинаются с начала текста карточки (отступ 2,5rem), а не от её края; линия по-прежнему проходит через стыки */
-.rm6__card .rmv--c .rmc { left: 2.5rem; right: 2.5rem; }
-.rm6__card:first-child .rmv--c .rmc { left: 0; } .rm6__card:last-child .rmv--c .rmc { right: 0; }
-.rm6__card .rmv--c .rmc__ax { left: -2.625rem; right: -2.625rem; }
-.rm6__card:first-child .rmv--c .rmc__ax { left: 0; } .rm6__card:last-child .rmv--c .rmc__ax { right: 0; }
-@media (max-width: 1000px) { .rm6__card .rmv--c .rmc { left: 0; right: 0; } .rm6__card .rmv--c .rmc__ax { left: 0; right: 0; } }

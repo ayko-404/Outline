@@ -1,7 +1,0 @@
-
-/* экран целиком (02.11, Никита): без белой подложки у статус-бара и индикатора «домой» — скриншот уходит под статус-бар,
-   лента начинается ниже него (отступ внутри ленты) и при прокрутке заходит под время и Dynamic Island */
-.svc3 .xph .mph__sb { position: absolute; z-index: 4; left: 0; right: 0; top: 0; width: 100%; background: transparent; }
-.svc3 .xph .mph__view { top: 0; }
-.svc3 .xph .mph__feed { padding-top: 12.6cqw; background-color: #fff; }
-.svc3 .xph .mph__scr { background: #fff; }

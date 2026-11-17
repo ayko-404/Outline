@@ -1,5 +1,0 @@
-
-/* под статус-баром — мягкий «край прокрутки», как в iOS 26: не плашка, а растворение; наверху ленты его не видно */
-.svc3 .xph .mph__sb::before { content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0; height: 160%; pointer-events: none;
-  border-radius: 13.2cqw 13.2cqw 0 0;   /* по внутреннему скруглению экрана; без backdrop-filter — Chrome не обрезает его по скруглению, и в углах торчал прямоугольник */
-  background: linear-gradient(to bottom, rgb(255 255 255 / .96) 0%, rgb(255 255 255 / .86) 50%, rgb(255 255 255 / 0) 100%); }
