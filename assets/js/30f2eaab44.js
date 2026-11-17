@@ -1,6 +1,6 @@
 
 (() => {
-  const ck = document.querySelector('.ck'); if (!ck) return;
+  const ck = document.querySelector('.ol-ck'); if (!ck) return;
   let ok = false; try { ok = localStorage.getItem('ol-cookie') === '1'; } catch (e) {}
   if (ok) { ck.remove(); return; }
   ck.hidden = false; setTimeout(() => ck.classList.add('is-on'), 900);
