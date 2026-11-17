@@ -39,7 +39,7 @@
 @media (max-width: 700px) { .rmc__cap.rmc__hand { font-size: 1.125rem; } .rmc__hand svg { width: 2.5rem; height: 2.375rem; } }
 /* 17.11 (Никита: «на телефоне стрелка уходит под плашки — поаккуратнее»): ниже стыка карточек, стрелка кончается над плашкой «1 мес», текст в ширину карточки */
 @media (max-width: 700px) { .rm6[data-v="c"] .rm6__card:last-child .rmv--c { height: 10rem; } .rm6__card:last-child .rmv--c .rmc { top: 5.5rem; }
-  .rmc__cap.rmc__hand { top: -2.625rem; left: 0; right: 0; font-size: 1.0625rem; gap: .125rem; } .rmc__hand > span { white-space: normal; padding-top: .25rem; }
+  .rmc__cap.rmc__hand { top: 2.25rem; left: 0; right: 0; font-size: 1.0625rem; gap: .125rem; } .rmc__hand > span { white-space: normal; padding-top: .25rem; }
   .rmc__hand svg { width: 2rem; height: 1.875rem; margin-top: .375rem; } }
 .rmc__hand svg { flex: none; width: 3.25rem; height: 3rem; margin-top: .5rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
 .rmc__hand path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
