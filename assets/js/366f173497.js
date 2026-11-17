@@ -21,7 +21,9 @@
   const setT = t => { if (t === 'none') delete document.body.dataset.tag; else document.body.dataset.tag = t; tb.forEach(x => x.setAttribute('aria-pressed', x.dataset.t === t)); };
   tb.forEach(x => x.addEventListener('click', () => setT(x.dataset.t))); setT('b');
   const btns = [...document.querySelectorAll('.vsw [data-h]')];
-  const set = k => { const v = V[k]; h1.innerHTML = v.html; h1.setAttribute('aria-label', v.label); lead.innerHTML = v.lead; window.__rewordH1 && window.__rewordH1(); btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.h === k)); if (location.hash !== '#' + k) history.replaceState(null, '', '#' + k); };
+  const set = k => { const v = V[k]; h1.innerHTML = v.html; h1.setAttribute('aria-label', v.label); lead.innerHTML = v.lead; window.__rewordH1 && window.__rewordH1(); btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.h === k)); };
   btns.forEach(b => b.addEventListener('click', () => set(b.dataset.h)));
   set(location.hash === '#offer' ? 'offer' : 'now');
+  /* 17.11 (Никита: «убери #now из адреса»): вариант заголовка больше не пишется в адрес; старые ссылки с #now / #offer — чистим */
+  if (/^#(now|offer)$/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
 })();
