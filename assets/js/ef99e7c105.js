@@ -18,7 +18,7 @@
   });
   const activate = i => { if (i === act) return; act = i; cards.forEach((c, k) => c.classList.toggle('is-act', k === i)); num.textContent = String(i + 1).padStart(2, '0'); sec.querySelectorAll('.svc3__seg i').forEach((x, k) => x.classList.toggle('on', k <= i)); runCounters(cards[i]); };
   const onScroll = () => {
-    if (!pinned()) { if (!matchMedia('(max-width: 760px)').matches) activate(Math.max(act, 0)); return; }   // 10.11: на телефоне пункты — выпадающие, сами не открываются
+    if (!pinned()) { if (!matchMedia('(max-width: 760px)').matches) activate(Math.max(act, 0)); else if (!sec._o0) { sec._o0 = 1; activate(0); } return; }   // 10.11: на телефоне пункты — выпадающие; 17.11 (Никита): первый открыт сразу, чтобы было видно, что внутри
     const total = sec.offsetHeight - innerHeight, prog = Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / total));
     const f = prog * N, i = Math.min(N - 1, Math.floor(f));
     activate(i); cards[i].style.setProperty('--p', Math.min(1, f - i).toFixed(3)); sec.querySelector('.svc3__grid').style.setProperty('--gp', prog.toFixed(4));

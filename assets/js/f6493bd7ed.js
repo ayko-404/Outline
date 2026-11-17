@@ -21,7 +21,7 @@
   const rc = $('.p-rc');
   if (rc) {
     const sum = $('.p-rc__sum', rc), to = +sum.dataset.to, fmt = n => Math.round(n).toLocaleString('ru-RU').replace(/\s/g, '\u00a0') + '\u00a0₽';
-    if (reduce) { rc.classList.add('is-in'); sum.textContent = fmt(to); }
+    if (reduce || matchMedia('(max-width: 760px)').matches) { rc.classList.add('is-in', 'is-static'); sum.textContent = fmt(to); }   // 17.11 (Никита): на телефоне чек показан сразу целиком, без выезда по прокрутке
     else {
       rc.classList.add('is-scroll'); sum.textContent = fmt(0);
       const paper = $('.p-rc__paper', rc), parts = [...rc.querySelectorAll('.p-rc__l, .p-rc__tot, .p-rc__bar, .p-rc__foot')], tot = $('.p-rc__tot', rc);

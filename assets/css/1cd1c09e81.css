@@ -2620,6 +2620,42 @@ html.rvs-lock { overflow: hidden; }
   body[data-ph="pill"] .hdr .hdr__phone { padding: 0 .3125rem !important; }
 }
 
+/* ── 17.11 (Никита, мобильная версия): отступы по системе, подписи, липкие переключатели ── */
+@media (max-width: 760px) {
+  /* обложки: от шапки до хлебных крошек везде 40 px (было 16 на большинстве страниц и 106–146 на блоге, статьях, политике, контактах) */
+  .p-cva__in { padding-top: 40px !important; }
+  .m-blh, .m-art, .m-pol, .m-cxb { padding-top: 30px !important; }
+  /* «Состав сопровождения под вашу задачу»: сверху 48 px, как у остальных блоков (было 135) */
+  .p-prc { padding-top: 3rem !important; }
+  /* отзывы на главной: стрелки рядом, справа; счётчик слева */
+  .rvf__ctl { justify-content: flex-start; gap: .5rem; } .rvf__cnt { margin-right: auto; }
+  .rvf__nav { gap: 1rem; } .rvf__ctl { width: 100%; }
+  /* Яндекс Карты, обложка: у подписи под телефоном — стрелка к телефону */
+  .p-cva__note { flex-direction: row !important; align-items: flex-end; gap: .25rem; }
+  .p-cva__note svg { display: block !important; width: 2.75rem; height: 2rem; margin-bottom: 1.5rem; scale: -1 1; rotate: 12deg; }
+  .p-cva__note span { padding-top: 0 !important; }
+  /* ниши: 3D-иконка ниши поверх карточек, не под ними */
+  .p-cl__app--3d { z-index: 30 !important; }
+  /* тарифы: меньше пустоты под ценниками */
+  .m-tgv { min-height: 0 !important; }
+  /* сравнение тарифов: переключатели прилипают под шапкой */
+  .m-sx__tabs { position: sticky !important; top: calc(64px + .75rem); z-index: 6; box-shadow: 0 0 0 4px var(--surface-frame, #fff), 0 .75rem 1.25rem -1rem rgb(15 21 29 / .35); }
+  /* блог: поиск и рубрики — ровно; рубрики листаются вбок до края экрана, без обрезанной плашки */
+  .m-btb { overflow: visible !important; }
+  .m-btb .m-bls { width: 100%; }
+  .m-bls input { -webkit-appearance: none; appearance: none; font-size: 16px; }
+  .m-bls input::-webkit-search-decoration, .m-bls input::-webkit-search-cancel-button { -webkit-appearance: none; }
+  .m-btb .m-btabs { flex-wrap: nowrap !important; overflow-x: auto; margin-inline: -16px; padding: .125rem 16px .375rem; scrollbar-width: none; scroll-padding-inline: 16px; max-width: none !important; }
+  .m-btb .m-btabs::-webkit-scrollbar { display: none; }
+  /* кейсы, обложка: папка ниже ростом — без пустоты сверху, карточки «ТОП» по бокам вернулись */
+  .m-cvv .m-fc, .m-fc { height: 25rem; margin-top: 0 !important; }
+  .m-fc__sh { display: grid !important; width: 8.75rem; padding: .625rem; bottom: 6.5rem; gap: .25rem; font-size: .75rem; }
+  .m-fc__sh[style*="--k:0"] { left: -.5rem; } .m-fc__sh[style*="--k:1"] { right: -.5rem; }
+  .m-fc__sh .m-fa__top { font-size: 1.625rem; margin: 0; }
+  .m-fc__shh { font-size: .6875rem; } .m-fc__shh img { width: 1.125rem; height: 1.125rem; }
+  #cv-a .p-cva__vis:has(.m-fc) { padding-bottom: 1.5rem !important; margin-top: 1.5rem !important; }
+}
+
 
 /* Мост главной к дизайн-системе (05.11.2026): старые переменные блоков теперь берут значения из site/ds/tokens.css.
    Новые страницы этот файл не подключают: они строятся на ds/tokens.css + ds/components.css напрямую. */
@@ -2734,6 +2770,18 @@ html.mn-lock { overflow: hidden; }
 @keyframes i-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06, 1.08); } }
 @keyframes i-aura { 0% { opacity: 0; transform: scale(.7); } 45% { opacity: .9; } 100% { opacity: 0; transform: scale(1.35); } }
 @media (prefers-reduced-motion: reduce) { .mn-ico .ia { animation: none !important; } }
+/* 17.11 (Никита: «в бургере ниши зажаты, синяя точка в тексте, услуги — на подложку»): услуги и ниши — белыми плашками, ниши в одну колонку,
+   текущая страница — тонированная строка с меткой справа, а не точка в тексте */
+.mn-sheet .mn-plate { display: grid; gap: .125rem; padding: .375rem; border-radius: 1.5rem; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .05), 0 .75rem 1.5rem -1.25rem rgb(15 21 29 / .25); }
+.mn-sheet .mn-grid { grid-template-columns: 1fr; }
+.mn-sheet .mn-it { padding: .5rem 2.5rem .5rem .5rem; }
+.mn-sheet .mn-it--n i { width: 2.5rem; height: 2.5rem; }
+.mn-sheet .mn-it--n b { font-size: .9375rem; }
+.mn-sheet .mn-it[aria-current="page"] { background: rgb(40 120 238 / .08); }
+.mn-sheet .mn-it--n[aria-current="page"] { background: rgb(var(--t) / .14); }
+.mn-sheet .mn-it[aria-current="page"]::after { right: .875rem; width: auto; height: auto; margin-top: 0; translate: 0 -50%; padding: .1875rem .5rem; border-radius: 99px; background: #fff; box-shadow: 0 0 0 1px rgb(15 21 29 / .08);
+  content: "вы здесь"; font: 500 .625rem/1 "Geist Mono", monospace; letter-spacing: .04em; color: rgb(15 21 29 / .6); }
+.mn-sheet .mn-it[aria-current="page"] { padding-right: 5rem; }
 
 
 /* 12.11 (Никита): ссылки на страницы, которых ещё нет, — тултип «Скоро» на наведении, переход не происходит */

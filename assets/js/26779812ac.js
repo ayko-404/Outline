@@ -46,7 +46,7 @@
   const burger = hdr.querySelector('.nav-toggle');
   if (burger) {
     const sh = document.createElement('div'); sh.className = 'mn-sheet'; sh.id = 'mn-sheet'; sh.inert = true;
-    sh.innerHTML = `<h4>Услуги</h4>${svcHTML}<h4>Кому помогаем</h4><div class="mn-grid">${nicheHTML}</div><hr><div class="mn-main"><a href="${base}tarify/">Тарифы</a><a href="${base}cases/">Кейсы</a><a href="${base}blog/">Блог</a><a href="${base}contacts/">Контакты</a></div><a class="mn-cta" href="#razbor">Получить бесплатный разбор</a>`;
+    sh.innerHTML = `<h4>Услуги</h4><div class="mn-plate">${svcHTML}</div><h4>Кому помогаем</h4><div class="mn-grid mn-plate">${nicheHTML}</div><hr><div class="mn-main"><a href="${base}tarify/">Тарифы</a><a href="${base}cases/">Кейсы</a><a href="${base}blog/">Блог</a><a href="${base}contacts/">Контакты</a></div><a class="mn-cta" href="#razbor">Получить бесплатный разбор</a>`;
     document.body.append(sh);
     const set = v => { sh.classList.toggle('is-open', v); sh.inert = !v; burger.setAttribute('aria-expanded', String(v)); document.documentElement.classList.toggle('mn-lock', v); };
     burger.setAttribute('aria-controls', 'mn-sheet');
