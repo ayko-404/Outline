@@ -2624,20 +2624,20 @@ html.rvs-lock { overflow: hidden; }
 @media (max-width: 760px) {
   /* обложки: от шапки до хлебных крошек везде 40 px (было 16 на большинстве страниц и 106–146 на блоге, статьях, политике, контактах) */
   .p-cva__in { padding-top: 40px !important; }
-  .m-blh, .m-art, .m-pol, .m-cxb { padding-top: 30px !important; }
+  html body .m-blh, html body .m-art, html body .m-pol, html body .m-cxb { padding-top: 30px !important; }
   /* «Состав сопровождения под вашу задачу»: сверху 48 px, как у остальных блоков (было 135) */
-  .p-prc { padding-top: 3rem !important; }
+  html body section.p-prc { padding-top: 3rem !important; }
   /* отзывы на главной: стрелки рядом, справа; счётчик слева */
   .rvf__ctl { justify-content: flex-start; gap: .5rem; } .rvf__cnt { margin-right: auto; }
   .rvf__nav { gap: 1rem; } .rvf__ctl { width: 100%; }
   /* Яндекс Карты, обложка: у подписи под телефоном — стрелка к телефону */
   .p-cva__note { flex-direction: row !important; align-items: flex-end; gap: .25rem; }
-  .p-cva__note svg { display: block !important; width: 2.75rem; height: 2rem; margin-bottom: 1.5rem; scale: -1 1; rotate: 12deg; }
+  .p-cva__note svg { display: block !important; width: 3rem; height: 1.875rem; margin-bottom: 1.75rem; }   /* стрелка снизу вверх — к телефону */
   .p-cva__note span { padding-top: 0 !important; }
   /* ниши: 3D-иконка ниши поверх карточек, не под ними */
   .p-cl__app--3d { z-index: 30 !important; }
   /* тарифы: меньше пустоты под ценниками */
-  .m-tgv { min-height: 0 !important; }
+  .m-tgv { min-height: 15.5rem !important; } #cv-a .p-cva__vis:has(.m-tgv) { padding-bottom: 0 !important; }
   /* сравнение тарифов: переключатели прилипают под шапкой */
   .m-sx__tabs { position: sticky !important; top: calc(64px + .75rem); z-index: 6; box-shadow: 0 0 0 4px var(--surface-frame, #fff), 0 .75rem 1.25rem -1rem rgb(15 21 29 / .35); }
   /* блог: поиск и рубрики — ровно; рубрики листаются вбок до края экрана, без обрезанной плашки */
@@ -2647,6 +2647,9 @@ html.rvs-lock { overflow: hidden; }
   .m-bls input::-webkit-search-decoration, .m-bls input::-webkit-search-cancel-button { -webkit-appearance: none; }
   .m-btb .m-btabs { flex-wrap: nowrap !important; overflow-x: auto; margin-inline: -16px; padding: .125rem 16px .375rem; scrollbar-width: none; scroll-padding-inline: 16px; max-width: none !important; }
   .m-btb .m-btabs::-webkit-scrollbar { display: none; }
+  /* чек тарифа на телефоне — сразу целиком, без печати строк */
+  .o-js .p-rc.is-static .p-rc__paper { translate: 0 0 !important; transition: none !important; }
+  .p-rc.is-static :is(.p-rc__l, .p-rc__tot, .p-rc__bar, .p-rc__foot) { opacity: 1 !important; animation: none !important; }
   /* кейсы, обложка: папка ниже ростом — без пустоты сверху, карточки «ТОП» по бокам вернулись */
   .m-cvv .m-fc, .m-fc { height: 25rem; margin-top: 0 !important; }
   .m-fc__sh { display: grid !important; width: 8.75rem; padding: .625rem; bottom: 6.5rem; gap: .25rem; font-size: .75rem; }
