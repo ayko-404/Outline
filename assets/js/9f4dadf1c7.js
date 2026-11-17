@@ -16,7 +16,7 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // прогресс по прокрутке + мягкое догоняние (без рывков между кадрами колеса)
   let cur = 0, tgt = 0, raf = 0;
-  const target = () => { const r = wrap.getBoundingClientRect(); /* как у nomu: нижний край перехода выходит на экран, когда тёмный слой уже поднялся */ return Math.min(1, Math.max(0, (innerHeight * .62 - r.top) / (innerHeight * .52))); };
+  const target = () => { const r = wrap.getBoundingClientRect(); /* как у nomu: нижний край перехода выходит на экран, когда тёмный слой уже поднялся */ /* 17.11 (Никита: «дыра после обложки»): на внутренних страницах (.p-cv) волна начинает подниматься сразу, как показалась снизу; финиш тот же */ const inner = !!document.querySelector('.p-cv'), st = inner ? .98 : .62; return Math.min(1, Math.max(0, (innerHeight * st - r.top) / (innerHeight * (st - .1)))); };
   const nwSec = document.getElementById('komu-pomogaem');
   const ready = v => nwSec && nwSec.classList.toggle('is-ready', v >= .97);
   const tick = () => { cur += (tgt - cur) * .16; if (Math.abs(tgt - cur) < .001) cur = tgt; draw(cur); ready(cur); raf = cur === tgt ? 0 : requestAnimationFrame(tick); };
