@@ -54,7 +54,7 @@
 
   /* ── кнопки тарифа подставляют тариф в форму ── */
   $$('[data-tariff]').forEach(a => a.addEventListener('click', () => { const f = document.querySelector('.o-form input[name="tariff"]'); if (f) f.value = a.dataset.tariff; }));
-  $$('form.o-form').forEach(f => f.addEventListener('submit', e => { e.preventDefault(); const b = f.querySelector('button[type="submit"]'); if (b) b.textContent = 'Форма подключается на боевом сайте'; }));
+  $$('form.o-form:not([data-lead])').forEach(f => f.addEventListener('submit', e => { e.preventDefault(); const b = f.querySelector('button[type="submit"]'); if (b) b.textContent = 'Форма подключается на боевом сайте'; }));
 
   /* ── появление: элементы .o-rv скрыты заранее (класс .o-js на <html>), проявляются переходом ── */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });

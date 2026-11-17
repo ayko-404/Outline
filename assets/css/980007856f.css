@@ -2855,3 +2855,36 @@ html.hp-lock { overflow: hidden; }
 @media (hover: hover) and (pointer: fine) { .ol-ck button:hover { background: #2b3038; } }
 @media (max-width: 760px) { .ol-ck { left: 16px; right: 16px; bottom: 16px; max-width: none; } }
 @media (prefers-reduced-motion: reduce) { .ol-ck { transition: opacity .2s ease; translate: 0 0; } }
+
+
+/* 17.11 (Никита: «формы не работают; поля — имя, телефон, ссылка на карточку; ошибка — как ref-183, успех — как ref-184; без автогалочки»).
+   Все формы с атрибутом data-lead: проверка полей, отправка на /lead.php, уведомление внизу экрана. */
+.lf { position: relative; display: block; width: 100%; }
+.lf > input { width: 100%; }
+.lf__trap { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; opacity: 0 !important; }
+.lf__err { height: 0; margin: 0; overflow: visible; font: 500 .75rem/1.3 var(--f-body, "Geist", sans-serif); color: #dc2626; }
+.lf.is-err .lf__err { height: auto; margin: .375rem 0 0 .25rem; animation: lf-err-in .18s ease-out both; }
+.lf.is-err > input, .lf.is-err > input:focus { border-color: #ef4444 !important; box-shadow: inset 0 0 0 1.5px #ef4444, 0 0 0 3px rgb(239 68 68 / .14) !important; transition: border-color .15s, box-shadow .15s; }
+.lf--agree.is-err input[type=checkbox] { box-shadow: inset 0 0 0 1.5px #ef4444, 0 0 0 3px rgb(239 68 68 / .14) !important; }
+.cx .lf__err, .cta8 .lf__err { color: #ff8a80; } [data-theme=light] .lf__err, .hp-pop .lf__err, .p-pop .lf__err { color: #dc2626; }
+@keyframes lf-err-in { from { opacity: 0; transform: translateY(-2px); filter: blur(3px); } to { opacity: 1; transform: none; filter: blur(0); } }
+form[data-lead].is-busy button[type=submit] { opacity: .7; pointer-events: none; }
+/* уведомление (ref-184): сначала круглая иконка, потом пружиной раскрывается в «пилюлю» с текстом */
+.lt-pos { position: fixed; left: 0; right: 0; bottom: 1.5rem; z-index: 1300; display: flex; justify-content: center; pointer-events: none; padding: 0 1rem; }
+.lt-pill { box-sizing: border-box; display: flex; align-items: center; height: 3.5rem; max-width: 100%; overflow: hidden; border-radius: 999px; pointer-events: auto; background: transparent; border: 1px solid transparent;
+  transition: width .5s linear(0, .0811, .2671, .4708, .6524, .7929, .8901, .9512, .9852, 1.0014, 1.0068, 1.0068, 1.0049, 1.0029, 1.0013, 1.0003, 1), padding .2s, background-color .2s, box-shadow .2s, opacity .2s ease-out, transform .2s ease-out;
+  animation: lt-in .36s cubic-bezier(.16, 1, .3, 1) both; font-family: var(--f-body, "Geist", sans-serif); }
+.lt-pill.is-open { padding: .375rem; background: #fff; border-color: rgb(229 229 229 / .6); box-shadow: 0 .75rem 2rem -.75rem rgb(15 21 29 / .35), 0 2px 4px -2px rgb(10 10 10 / .06); }
+.lt-pill.is-leave { opacity: 0; transform: translateY(8px) scale(.82); animation: none; }
+@keyframes lt-in { from { opacity: 0; transform: translateY(34px) scale(.64); } to { opacity: 1; transform: none; } }
+.lt-ic { display: grid; place-items: center; flex: none; width: 2.75rem; height: 2.75rem; border-radius: 999px; }
+.lt-ic svg { width: 1.375rem; height: 1.375rem; }
+.lt-pill.ok .lt-ic { background: #dcfce7; color: #16a34a; } .lt-pill.err .lt-ic { background: #fee2e2; color: #dc2626; }
+.lt-body { display: flex; align-items: center; flex: 1; min-width: 0; gap: .5rem; padding-left: .625rem; white-space: nowrap; animation: lt-text .16s ease-out both; }
+.lt-body b { display: block; font-size: .9375rem; line-height: 1.2; font-weight: 600; color: #171717; } .lt-body small { display: block; font-size: .8125rem; line-height: 1.25; color: #737373; }
+.lt-body a { color: #1a5fd0; font-weight: 600; text-decoration: none; }
+@keyframes lt-text { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+.lt-x { margin-left: auto; display: grid; place-items: center; flex: none; width: 2.25rem; height: 2.25rem; border: 0; border-radius: 999px; background: transparent; color: #737373; cursor: pointer; transition: background-color .15s, color .15s; }
+.lt-x:hover { background: #ececec; color: #262626; } .lt-x svg { width: 1rem; height: 1rem; }
+@media (prefers-reduced-motion: reduce) { .lt-pill { animation: lt-fade .15s both; transition: none; } .lt-body { animation-duration: .1s; } .lf.is-err .lf__err { animation: none; } }
+@keyframes lt-fade { from { opacity: 0; } to { opacity: 1; } }

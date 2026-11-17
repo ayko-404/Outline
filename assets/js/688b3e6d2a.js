@@ -53,16 +53,19 @@
     const tg = (document.querySelector('a[href*="t.me/"]') || {}).href || 'https://t.me/ivanb01';
     const tgIco = (document.querySelector('.cx__tg span') || {}).innerHTML || '';   // значок — тот же, что под формой CTA
     const form = mk('p-pop--form', `<p class="p-pop__t">Бесплатный <em>разбор</em> карточки</p><p class="p-pop__lead">Пришлите ссылку на&nbsp;карточку или название бизнеса и&nbsp;город. Покажем, что исправить в&nbsp;первую очередь.</p>
-      <form class="o-form" novalidate><div class="o-form__who"><span class="o-form__av"><img loading="lazy" decoding="async" src="${(document.querySelector('.cx__av img') || {}).src || ''}" alt=""></span><span><b>Иван, сооснователь</b><small>Ответит за&nbsp;5&nbsp;минут в&nbsp;рабочее время</small></span></div>
-      <input class="o-field" type="tel" name="phone" placeholder="Телефон" aria-label="Телефон" autocomplete="tel" required>
-      <input class="o-field" type="text" name="what" placeholder="Ссылка на карточку или название" aria-label="Ссылка на карточку или название и город">
+      <form class="o-form" data-lead novalidate><div class="o-form__who"><span class="o-form__av"><img loading="lazy" decoding="async" src="${(document.querySelector('.cx__av img') || {}).src || ''}" alt=""></span><span><b>Иван, сооснователь</b><small>Ответит за&nbsp;5&nbsp;минут в&nbsp;рабочее время</small></span></div>
+      <div class="lf"><input class="o-field" type="text" name="name" placeholder="Имя" aria-label="Имя" autocomplete="name" required><p class="lf__err" role="alert"></p></div>
+      <div class="lf"><input class="o-field" type="tel" name="phone" placeholder="Телефон" aria-label="Телефон" autocomplete="tel" inputmode="tel" required><p class="lf__err" role="alert"></p></div>
+      <div class="lf"><input class="o-field" type="text" name="link" placeholder="Ссылка на карточку" aria-label="Ссылка на карточку в Яндекс Картах, 2ГИС или Google Maps" inputmode="url"><p class="lf__err" role="alert"></p></div>
+      <input type="text" name="website" class="lf__trap" tabindex="-1" autocomplete="off" aria-hidden="true">
       <input type="hidden" name="tariff" value="">
-      <label class="o-check-field"><input type="checkbox" name="agree" required><span>Согласен на&nbsp;обработку персональных данных</span></label>
+      <div class="lf lf--agree"><label class="o-check-field"><input type="checkbox" name="agree" value="1"><span>Согласен на&nbsp;<a href="${((document.querySelector('.plate__logo') || {}).getAttribute ? document.querySelector('.plate__logo').getAttribute('href') : '') || ''}policy/">обработку персональных данных</a></span></label><p class="lf__err" role="alert"></p></div>
       <button class="o-btn o-btn--primary o-btn--lg o-btn--block" type="submit">Получить бесплатный разбор</button>
       <a class="cx__tg p-pop__tg" href="${tg}" target="_blank" rel="noopener"><span>${tgIco}</span>или напишите в&nbsp;Telegram</a></form>
       <div class="p-pop__done"><b>Заявка принята</b><span>Ответим в&nbsp;течение 5&nbsp;минут в&nbsp;рабочее время.</span></div>`);
     const f = form.querySelector('form');
-    f.addEventListener('submit', e => { e.preventDefault(); if (!f.reportValidity()) return; form.classList.add('is-sent'); /* отправка заявки подключается на боевом сайте */ });
+    /* 17.11: отправка — общий обработчик форм с data-lead (src/leadform.html); после успеха закрываем окно */
+    f.addEventListener('lead:sent', () => { try { form.close(); } catch (x) {} });
     /* 14.11 (Никита: «плохо вмещаются поп-апы в экран»): если содержимое выше окна — поп-ап целиком уменьшается под высоту (не меньше 0,75), без прокрутки внутри; на телефоне — прокрутка как была */
     const fit = d => { const b = d.querySelector('.p-pop__box'); if (!b) return; b.style.zoom = ''; b.style.maxHeight = '';
       if (innerWidth <= 700) return; const avail = innerHeight - 32, need = b.scrollHeight;
