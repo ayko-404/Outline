@@ -44,6 +44,9 @@
   document.addEventListener('change', e => { if (e.target.name === 'agree' && e.target.closest('form[data-lead]')) clearErr(e.target.closest('.lf')); });
   document.addEventListener('focusin', e => { const i = e.target; if (i.name === 'phone' && i.closest && i.closest('form[data-lead]') && !i.value) i.value = '+7 '; });
 
+  /* 19.11 (Никита: «ошибка горит на форме в подвале, хотя я её не трогал»): на главной поп-ап переносит в себя ту же форму, что внизу страницы,
+     и возвращает её при закрытии — вместе с подсветкой ошибок. При закрытии окна ошибки снимаем. */
+  document.addEventListener('close', e => { if (e.target.tagName === 'DIALOG') document.querySelectorAll('form[data-lead] .lf.is-err').forEach(clearErr); }, true);
   document.addEventListener('submit', async e => {
     const f = e.target; if (!f.matches || !f.matches('form[data-lead]')) return;
     e.preventDefault(); if (f.classList.contains('is-busy')) return;
