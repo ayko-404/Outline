@@ -33,7 +33,7 @@
   const shake = el => { if (reduce || !el.animate) return; el.animate([0, -4, 3, -2, 1, 0].map(x => ({ transform: `translateX(${x}px)`, easing: 'ease-out' })), { duration: 260 }); };
   const setErr = (wrap, msg) => { if (!wrap) return; const p = wrap.querySelector('.lf__err'); wrap.classList.remove('is-err'); void wrap.offsetWidth; if (p) p.textContent = msg; wrap.classList.add('is-err'); const inp = wrap.querySelector('input'); inp && inp.setAttribute('aria-invalid', 'true'); shake(wrap); };
   const clearErr = wrap => { if (!wrap) return; wrap.classList.remove('is-err'); const inp = wrap.querySelector('input'); inp && inp.removeAttribute('aria-invalid'); };
-  const MSG = { name: 'Как к вам обращаться?', phone: 'Проверьте номер — нужно 10 цифр после +7', agree: 'Нужно согласие на обработку данных' };
+  const MSG = { contact: 'Укажите телефон или ник в Telegram', name: 'Как к вам обращаться?', phone: 'Проверьте номер — нужно 10 цифр после +7', agree: 'Нужно согласие на обработку данных' };
 
   /* телефон: +7 999 123-45-67 */
   const fmtPhone = v => { let d = v.replace(/\D/g, ''); if (d[0] === '8') d = '7' + d.slice(1); if (d && d[0] !== '7') d = '7' + d; d = d.slice(0, 11); const r = d.slice(1);
@@ -53,11 +53,14 @@
     const v = n => (f.elements[n] && f.elements[n].value || '').trim(), box = n => f.elements[n] && f.elements[n].closest('.lf');
     const bad = [];
     if (v('name').length < 2) bad.push('name');
-    if (v('phone').replace(/\D/g, '').length !== 11) bad.push('phone');
+    /* 20.11: страница сайтов — одно поле «Телефон или Telegram» (contact) */
+    if (f.elements.contact) { const c = v('contact'), d = c.replace(/\D/g, ''), tg = c.replace(/^(https?:\/\/)?(t\.me\/)?@?/i, '');
+      if (!((!/[A-Za-zА-Яа-я]/.test(c) && d.length >= 10 && d.length <= 15) || /^[A-Za-z][A-Za-z0-9_]{3,31}$/.test(tg))) bad.push('contact'); }
+    else if (v('phone').replace(/\D/g, '').length !== 11) bad.push('phone');
     if (!(f.elements.agree && f.elements.agree.checked)) bad.push('agree');
-    ['name', 'phone', 'agree'].forEach(n => bad.includes(n) ? setErr(box(n), MSG[n]) : clearErr(box(n)));
+    ['name', 'phone', 'contact', 'agree'].forEach(n => bad.includes(n) ? setErr(box(n), MSG[n]) : clearErr(box(n)));
     if (bad.length) { const first = f.elements[bad[0]]; first && first.focus({ preventScroll: false }); return; }
-    const fd = new FormData(); ['name', 'phone', 'link', 'website', 'tariff'].forEach(n => fd.append(n, v(n))); fd.append('agree', '1'); fd.append('page', location.pathname);
+    const fd = new FormData(); ['name', 'phone', 'contact', 'link', 'website', 'tariff', 'service'].forEach(n => fd.append(n, v(n))); fd.append('agree', '1'); fd.append('page', location.pathname);
     const btn = f.querySelector('button[type=submit]'), label = btn && btn.textContent; f.classList.add('is-busy'); if (btn) btn.textContent = 'Отправляем…';
     let ok = false, err = '';
     try { const r = await fetch(ENDPOINT, { method: 'POST', body: fd }); const j = await r.json().catch(() => ({})); ok = !!j.ok; err = j.error || ('http ' + r.status); } catch (x) { err = 'net'; }
