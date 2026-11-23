@@ -28,6 +28,12 @@
   /* 23.11 обложка со связкой брелоков: сцена после загрузки страницы */
   const kh = document.querySelector('.os-kh');
   if (kh) {
+    /* варианты обложки (временно): ?v=a|b|c|d и переключатель */
+    const setV = v => { kh.dataset.v = v; kh.querySelectorAll('[data-kv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kv === v)));
+      if (window.__keysLayout && v !== 'c') requestAnimationFrame(() => window.__keysLayout(v)); };
+    const q = new URLSearchParams(location.search).get('v'); if (q && /^[abcd]$/.test(q)) setV(q);
+    kh.addEventListener('click', e => { const b = e.target.closest('[data-kv]'); if (!b) return; setV(b.dataset.kv);
+      const u = new URL(location.href); u.searchParams.set('v', b.dataset.kv); history.replaceState(null, '', u); });
     const st = kh.querySelector('.os-kh__stage[data-keys-src]');
     const go = () => { const sc = document.createElement('script'); sc.src = st.dataset.keysSrc; document.body.appendChild(sc); };
     const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(go, { timeout: 2000 }) : setTimeout(go, 200));
