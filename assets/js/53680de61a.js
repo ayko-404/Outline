@@ -31,7 +31,7 @@
     /* варианты обложки (временно): ?v=a|b|c|d и переключатель */
     const setV = v => { kh.dataset.v = v; kh.querySelectorAll('[data-kv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kv === v)));
       if (window.__keysLayout && v !== 'c') requestAnimationFrame(() => window.__keysLayout(v)); };
-    const q = new URLSearchParams(location.search).get('v'); if (q && /^[abcd]$/.test(q)) setV(q);
+    const q = new URLSearchParams(location.search).get('v'); if (q && /^[a-f]$/.test(q)) setV(q);
     kh.addEventListener('click', e => { const b = e.target.closest('[data-kv]'); if (!b) return; setV(b.dataset.kv);
       const u = new URL(location.href); u.searchParams.set('v', b.dataset.kv); history.replaceState(null, '', u); });
     const st = kh.querySelector('.os-kh__stage[data-keys-src]');
