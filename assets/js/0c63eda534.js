@@ -79,35 +79,46 @@
     addEventListener('scroll', on, { passive: true }); addEventListener('resize', on); cur = tgt = reduce ? 1 : target(); draw(cur); };
   wave(document.getElementById('ocw-in'), 0); wave(document.getElementById('ocw-out'), 1);
 
-  /* 24.11 кейсы крупно — три раскладки на выбор (временно): ?cases=vt|stk|bento, переход ?tr=wave|sheet */
+  /* 24.11 кейсы на полке (реф shopify.com/editions): фильтр, наклон за курсором, раскрытие с перелётом обложки; переход ?tr=wave|sheet (временно) */
   const oc = document.querySelector('.oc');
   if (oc) {
-    const cards = [...oc.querySelectorAll('.oc-card')], tabs = [...oc.querySelectorAll('.oc-tab')], list = oc.querySelector('.oc-list'); let cur = 0;
-    const press = (sel, v, attr) => oc.querySelectorAll(sel).forEach(b => b.setAttribute('aria-pressed', String(b.dataset[attr] === v)));
-    const show = i => { cur = (i + cards.length) % cards.length; cards.forEach((c, k) => c.classList.toggle('is-on', k === cur)); tabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === cur)));
-      const bar = tabs[cur] && tabs[cur].querySelector('.oc-tab__bar'); if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; } };
-    const setCs = v => { oc.dataset.cs = v; press('[data-ocs]', v, 'ocs'); cards.forEach(c => { c.style.removeProperty('--s'); c.style.removeProperty('--b'); }); show(cur); stk(); };
-    const setTr = v => { R.dataset.otr = v; press('[data-otr]', v, 'otr'); dispatchEvent(new Event('scroll')); };
-    const qs = new URLSearchParams(location.search);
-    oc.addEventListener('click', e => { const b = e.target.closest('[data-ocs],[data-otr]'), t = e.target.closest('.oc-tab');
-      if (t) { show(+t.dataset.i); return; } if (!b) return; const u = new URL(location.href);
-      if (b.dataset.ocs) { setCs(b.dataset.ocs); u.searchParams.set('cases', b.dataset.ocs); } else { setTr(b.dataset.otr); u.searchParams.set('tr', b.dataset.otr); } history.replaceState(null, '', u); });
-    tabs.forEach(t => t.querySelector('.oc-tab__bar').addEventListener('animationend', () => { if ((oc.dataset.cs || 'vt') === 'vt') show(cur + 1); }));
-    list.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') oc.classList.add('is-hold'); }); list.addEventListener('pointerleave', () => oc.classList.remove('is-hold'));
-    new IntersectionObserver(es => es.forEach(e => oc.classList.toggle('is-play', e.isIntersecting && !reduce)), { threshold: .35 }).observe(list);
-    /* окно сайта листается, когда карточка на экране */
-    const lio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-live', e.isIntersecting)), { threshold: .45 });
-    cards.forEach(c => lio.observe(c));
-    /* «Стопка»: входящая карточка подрастает (как у chipsa), накрытая — уменьшается и темнеет */
-    let raf3 = 0;
-    function stk() { raf3 = 0; if (oc.dataset.cs !== 'stk' || reduce) return;
-      cards.forEach((c, i) => { const r = c.getBoundingClientRect(), top = parseFloat(getComputedStyle(c).top) || 0, h = r.height / (parseFloat(c.style.getPropertyValue('--s')) || 1);
-        const grow = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * .55)));
-        const nx = cards[i + 1] ? cards[i + 1].getBoundingClientRect().top : Infinity, p = Math.min(1, Math.max(0, (top + h - nx) / h));
-        c.style.setProperty('--s', ((.92 + .08 * grow) * (1 - p * .08)).toFixed(4)); c.style.setProperty('--b', (1 - p * .45).toFixed(3)); }); }
-    addEventListener('scroll', () => { if (!raf3) raf3 = requestAnimationFrame(stk); }, { passive: true });
-    const qc = qs.get('cases'), qt = qs.get('tr');
-    setTr(qt === 'sheet' ? 'sheet' : 'wave'); setCs(/^(vt|stk|bento)$/.test(qc || '') ? qc : 'vt');
+    const covs = [...oc.querySelectorAll('.oc-cov')], dets = [...oc.querySelectorAll('.oc-det')], idx = [...oc.querySelectorAll('.oc-idx button')], box = oc.querySelector('.oc-dets');
+    const mob = () => matchMedia('(max-width: 760px)').matches; let cur = -1, busy = false;
+    const setTr = v => { R.dataset.otr = v; oc.querySelectorAll('[data-otr]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.otr === v))); dispatchEvent(new Event('scroll')); };
+    setTr(new URLSearchParams(location.search).get('tr') === 'sheet' ? 'sheet' : 'wave');
+    /* фильтр */
+    const filt = f => { oc.querySelectorAll('[data-flt]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.flt === f)));
+      covs.forEach(c => c.classList.toggle('is-out', f !== 'all' && c.dataset.f !== f)); idx.forEach(b => b.classList.toggle('is-out', f !== 'all' && b.dataset.f !== f)); };
+    /* наведение: обложка выпрямляется и поднимается, слегка поворачивается за курсором; подпись внизу подчёркнута */
+    const hov = (i, on) => { covs[i] && covs[i].classList.toggle('is-hov', on); idx[i] && idx[i].classList.toggle('is-hov', on); if (!on && covs[i]) covs[i].querySelector('.oc-cov__in').style.removeProperty('--ry'); };
+    covs.forEach((c, i) => { const inn = c.querySelector('.oc-cov__in');
+      c.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hov(i, true); });
+      c.addEventListener('pointerleave', () => hov(i, false));
+      c.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse' || reduce) return; const r = c.getBoundingClientRect(); inn.style.setProperty('--ry', (((e.clientX - r.left) / r.width - .5) * 14).toFixed(2) + 'deg'); }); });
+    idx.forEach((b, i) => { b.addEventListener('pointerenter', () => hov(i, true)); b.addEventListener('pointerleave', () => hov(i, false)); });
+    /* перелёт: сцена кейса стартует из прямоугольника обложки (FLIP) */
+    const flip = (stage, from, back, done) => { const to = stage.getBoundingClientRect();
+      const t = `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${from.width / to.width}, ${from.height / to.height})`;
+      stage.style.transition = 'none'; stage.style.transform = back ? 'none' : t; stage.style.borderRadius = back ? '' : `${4 * to.width / from.width}px`; void stage.offsetWidth;
+      stage.style.transition = 'transform .75s cubic-bezier(.22, 1, .36, 1), border-radius .75s'; stage.style.transform = back ? t : 'none'; stage.style.borderRadius = '';
+      setTimeout(done || (() => {}), 760); };
+    const show = (i, fromCover) => { const d = dets[i]; dets.forEach(x => { x.hidden = x !== d; }); cur = i; oc.classList.add('is-det');
+      covs.forEach((c, k) => c.style.opacity = k === i ? '0' : '');
+      if (fromCover && !mob() && !reduce) { busy = true; flip(d.querySelector('.oc-det__stage'), covs[i].querySelector('.oc-cov__art').getBoundingClientRect(), false, () => { busy = false; }); }
+      if (mob()) document.documentElement.style.overflow = 'hidden'; };
+    const close = () => { if (cur < 0 || busy) return; const d = dets[cur], i = cur;
+      const end = () => { d.hidden = true; d.querySelector('.oc-det__stage').style.cssText = ''; covs[i].style.opacity = ''; busy = false; };
+      oc.classList.remove('is-det'); document.documentElement.style.overflow = ''; cur = -1;
+      if (!mob() && !reduce && !covs[i].classList.contains('is-out')) { busy = true; covs[i].style.opacity = '0'; flip(d.querySelector('.oc-det__stage'), covs[i].querySelector('.oc-cov__art').getBoundingClientRect(), true, end); } else end(); };
+    const step = s => { const vis = covs.map((c, k) => k).filter(k => !covs[k].classList.contains('is-out')); if (!vis.length) return; const p = vis.indexOf(cur); show(vis[(p + s + vis.length) % vis.length], false); };
+    oc.addEventListener('click', e => { const t = e.target;
+      const fb = t.closest('[data-flt]'); if (fb) { if (cur >= 0) close(); filt(fb.dataset.flt); return; }
+      const tb = t.closest('button[data-otr]'); if (tb) { setTr(tb.dataset.otr); const u = new URL(location.href); u.searchParams.set('tr', tb.dataset.otr); history.replaceState(null, '', u); return; }
+      const ob = t.closest('[data-open]'); if (ob) { const i = +ob.dataset.open; if (cur >= 0) show(i, false); else show(i, true); hov(i, false); return; }
+      if (t.closest('[data-close]')) { close(); return; }
+      const sb = t.closest('[data-step]'); if (sb) { step(+sb.dataset.step); return; }
+      if (cur >= 0 && (t === box || t.classList.contains('oc-det'))) close(); });
+    addEventListener('keydown', e => { if (cur < 0) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); });
   }
 
   /* иллюстрации и линии — когда видны */
