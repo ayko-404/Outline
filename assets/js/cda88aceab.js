@@ -54,26 +54,43 @@
     /* 24.11: отсчёт фраз начинается, когда лист поднялся почти до середины экрана — без пустого тёмного экрана до заголовка;
        --e на :root — погружение: лист расширяется до краёв, обложка уходит в глубину под вуаль; шапка темнеет над тёмным листом */
     const why = wi.closest('.os-why'), veil = document.querySelector('.os-veil'), R = document.documentElement, B = document.body;
+    /* 24.11 (лаги): --e пишем только тем, кто его читает, а не на :root — иначе каждый кадр пересчитывались стили всей страницы */
+    const eEls = [veil, why, ...document.querySelectorAll('.os-kh[data-v="e"] .os-kh__in, .os-kh[data-v="e"] .os-kh__bg')].filter(Boolean); let lastE = '';
     const upd = () => { raf2 = 0; const r = wi.getBoundingClientRect(), off = innerHeight * .55, span = r.height - innerHeight + off;
       const q = Math.max(0, Math.min(1, (off - r.top) / Math.max(1, span)));
       wi.style.setProperty('--q', q.toFixed(4)); if (ink) ink.classList.toggle('is-in', q > 0.74);
       const wr = why.getBoundingClientRect(), e = Math.max(0, Math.min(1, 1 - wr.top / (innerHeight * .9)));
-      R.style.setProperty('--e', e.toFixed(4)); if (veil) veil.classList.toggle('is-gone', e <= 0 || e >= 1);
+      const ev = e.toFixed(3); if (ev !== lastE) { lastE = ev; eEls.forEach(el => el.style.setProperty('--e', ev)); } if (veil) veil.classList.toggle('is-gone', e <= 0 || e >= 1);
       B.classList.toggle('why-dark', wr.top <= 32 && wr.bottom > 32); };
     upd(); addEventListener('scroll', () => { if (!raf2) raf2 = requestAnimationFrame(upd); }, { passive: true }); addEventListener('resize', upd);
   }
 
   const R = document.documentElement;
 
+  /* 24.11 (лаги): бесконечные анимации (живые демо, схема, тарифы) — на паузе, пока блок за экраном */
+  if ('IntersectionObserver' in window) { const pio2 = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-off', !e.isIntersecting)), { rootMargin: '100px 0px' });
+    document.querySelectorAll('.os-ill, .os-multi, .os-tf, .os-steps, .os-eyebrow, .os-timer').forEach(el => pio2.observe(el)); }
+
+  /* 24.11 (Никита) из тёмного 2-го блока в светлые кейсы — волна, механика главной (#wavel, nomu): 4 слоя, 10 точек, у каждой своя задержка */
+  const wave = (wrap, k) => { if (!wrap) return; const paths = [...wrap.querySelectorAll('path')], P = 10;
+    const noise = (i, L) => k ? (Math.sin(i * .9 + L * 1.3 + 2) + Math.sin(i * .37 + L * 2.1)) / 4 + .5 : (Math.sin(i * .9 + L * 1.7) + Math.sin(i * .37 + L * 2.9 + 1)) / 4 + .5;
+    const delays = paths.map((_, L) => Array.from({ length: P }, (_, i) => L * .13 + noise(i, L) * .1)), smooth = t => t * t * (3 - 2 * t);
+    const draw = prog => paths.forEach((p, L) => { const ys = delays[L].map(d => 100 * (1 - smooth(Math.min(1, Math.max(0, (prog - d) / .5)))));
+      const step = 100 / (P - 1); let d = `M0 ${ys[0].toFixed(3)} C`;
+      for (let i = 1; i < P; i++) { const x0 = (i - 1) * step, x1 = i * step, h = step / 2; d += ` ${(x0 + h).toFixed(3)} ${ys[i - 1].toFixed(3)} ${(x0 + h).toFixed(3)} ${ys[i].toFixed(3)} ${x1.toFixed(3)} ${ys[i].toFixed(3)}`; }
+      p.setAttribute('d', d + ' L100 100 L0 100 Z'); });
+    const target = () => { const r = wrap.getBoundingClientRect(); return Math.min(1, Math.max(0, (innerHeight * .98 - r.top) / (innerHeight * (k ? 1.06 : .88)))); };
+    let cur = 0, tgt = 0, raf = 0, last = -1;
+    const tick = () => { cur += (tgt - cur) * .16; if (Math.abs(tgt - cur) < .001) cur = tgt; if (cur !== last) { draw(cur); last = cur; } raf = cur === tgt ? 0 : requestAnimationFrame(tick); };
+    const on = () => { const r = wrap.getBoundingClientRect(); if (r.bottom < -innerHeight || r.top > innerHeight * 2) return; tgt = reduce ? 1 : target(); if (reduce) return draw(1); if (!raf) raf = requestAnimationFrame(tick); };
+    addEventListener('scroll', on, { passive: true }); addEventListener('resize', on); cur = tgt = reduce ? 1 : target(); draw(cur); last = cur; };
+  wave(document.getElementById('ocw-out'), 1);
+
   /* 24.11 кейсы на полке (реф shopify.com/editions): фильтр, наклон за курсором, раскрытие с перелётом обложки; переход ?tr=wave|sheet (временно) */
   const oc = document.querySelector('.oc');
   if (oc) {
     const covs = [...oc.querySelectorAll('.oc-cov')], dets = [...oc.querySelectorAll('.oc-det')], idx = [...oc.querySelectorAll('.oc-idx button')], box = oc.querySelector('.oc-dets');
     const mob = () => matchMedia('(max-width: 760px)').matches; let cur = -1, busy = false;
-    /* «Лист»: светлый блок наезжает на тёмный и расширяется до краёв */
-    let raf4 = 0; const rise = () => { raf4 = 0; const r = oc.getBoundingClientRect(), e = Math.max(0, Math.min(1, 1 - r.top / (innerHeight * .9)));
-      oc.style.setProperty('--e2', e.toFixed(4)); oc.classList.toggle('is-rise', e < 1 && cur < 0 && !reduce); };
-    addEventListener('scroll', () => { if (!raf4) raf4 = requestAnimationFrame(rise); }, { passive: true }); addEventListener('resize', rise); rise();
     const scene = oc.querySelector('.oc-scene');
     const place = () => { if (mob()) return; const sr = scene.getBoundingClientRect(), H = Math.min(sr.height - 48, innerHeight - 150, 640);
       const top = Math.max(24, Math.min(sr.height - H - 24, innerHeight / 2 + 30 - H / 2 - sr.top)); box.style.setProperty('--dt', top + 'px'); box.style.setProperty('--dh', H + 'px'); };
@@ -93,7 +110,7 @@
       stage.style.transition = 'none'; stage.style.transform = back ? 'none' : t; stage.style.borderRadius = back ? '' : `${4 * to.width / from.width}px`; void stage.offsetWidth;
       stage.style.transition = 'transform .75s cubic-bezier(.22, 1, .36, 1), border-radius .75s'; stage.style.transform = back ? t : 'none'; stage.style.borderRadius = '';
       setTimeout(done || (() => {}), 760); };
-    const show = (i, fromCover) => { const d = dets[i]; if (cur < 0) place(); dets.forEach(x => { x.hidden = x !== d; }); cur = i; oc.classList.add('is-det'); oc.classList.remove('is-rise');
+    const show = (i, fromCover) => { const d = dets[i]; if (cur < 0) place(); dets.forEach(x => { x.hidden = x !== d; }); cur = i; oc.classList.add('is-det');
       covs.forEach((c, k) => c.style.opacity = k === i ? '0' : '');
       if (fromCover && !mob() && !reduce) { busy = true; flip(d.querySelector('.oc-det__stage'), covs[i].querySelector('.oc-cov__art').getBoundingClientRect(), false, () => { busy = false; }); }
       if (mob()) document.documentElement.style.overflow = 'hidden'; };
