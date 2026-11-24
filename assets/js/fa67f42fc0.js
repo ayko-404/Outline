@@ -56,6 +56,12 @@
     upd(); addEventListener('scroll', () => { if (!raf2) raf2 = requestAnimationFrame(upd); }, { passive: true }); addEventListener('resize', upd);
   }
 
+  /* 24.11 варианты блока с карточками (временно): ?cards=now|demo|bento */
+  const why = document.querySelector('.os-why');
+  if (why) { const setC = v => { why.dataset.cards = v; why.querySelectorAll('[data-kcards]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kcards === v))); };
+    const qc = new URLSearchParams(location.search).get('cards'); if (qc && /^(now|demo|bento)$/.test(qc)) setC(qc);
+    why.addEventListener('click', e => { const b = e.target.closest('[data-kcards]'); if (!b) return; setC(b.dataset.kcards); const u = new URL(location.href); u.searchParams.set('cards', b.dataset.kcards); history.replaceState(null, '', u); }); }
+
   /* иллюстрации и линии — когда видны */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: .25 });
   document.querySelectorAll('.os-card, .os-tf__grid, .os-steps__track, .os-no').forEach(el => io.observe(el));
