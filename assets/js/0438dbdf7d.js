@@ -63,6 +63,53 @@
     upd(); addEventListener('scroll', () => { if (!raf2) raf2 = requestAnimationFrame(upd); }, { passive: true }); addEventListener('resize', upd);
   }
 
+  /* 24.11 волны между светлым и тёмным — механика главной (#wavex/#wavel, nomu): 4 слоя, 10 точек, у каждой своя задержка */
+  const R = document.documentElement;
+  const wave = (wrap, k) => { if (!wrap) return; const paths = [...wrap.querySelectorAll('path')], P = 10;
+    const noise = (i, L) => k ? (Math.sin(i * .9 + L * 1.3 + 2) + Math.sin(i * .37 + L * 2.1)) / 4 + .5 : (Math.sin(i * .9 + L * 1.7) + Math.sin(i * .37 + L * 2.9 + 1)) / 4 + .5;
+    const delays = paths.map((_, L) => Array.from({ length: P }, (_, i) => L * .13 + noise(i, L) * .1)), smooth = t => t * t * (3 - 2 * t);
+    const draw = prog => paths.forEach((p, L) => { const ys = delays[L].map(d => 100 * (1 - smooth(Math.min(1, Math.max(0, (prog - d) / .5)))));
+      const step = 100 / (P - 1); let d = `M0 ${ys[0].toFixed(3)} C`;
+      for (let i = 1; i < P; i++) { const x0 = (i - 1) * step, x1 = i * step, h = step / 2; d += ` ${(x0 + h).toFixed(3)} ${ys[i - 1].toFixed(3)} ${(x0 + h).toFixed(3)} ${ys[i].toFixed(3)} ${x1.toFixed(3)} ${ys[i].toFixed(3)}`; }
+      p.setAttribute('d', d + ' L100 100 L0 100 Z'); });
+    const target = () => { const r = wrap.getBoundingClientRect(); return Math.min(1, Math.max(0, (innerHeight * .98 - r.top) / (innerHeight * (k ? 1.06 : .88)))); };
+    let cur = 0, tgt = 0, raf = 0;
+    const tick = () => { cur += (tgt - cur) * .16; if (Math.abs(tgt - cur) < .001) cur = tgt; draw(cur); raf = cur === tgt ? 0 : requestAnimationFrame(tick); };
+    const on = () => { tgt = reduce ? 1 : target(); if (reduce) return draw(1); if (!raf) raf = requestAnimationFrame(tick); };
+    addEventListener('scroll', on, { passive: true }); addEventListener('resize', on); cur = tgt = reduce ? 1 : target(); draw(cur); };
+  wave(document.getElementById('ocw-in'), 0); wave(document.getElementById('ocw-out'), 1);
+
+  /* 24.11 кейсы крупно — три раскладки на выбор (временно): ?cases=vt|stk|bento, переход ?tr=wave|sheet */
+  const oc = document.querySelector('.oc');
+  if (oc) {
+    const cards = [...oc.querySelectorAll('.oc-card')], tabs = [...oc.querySelectorAll('.oc-tab')], list = oc.querySelector('.oc-list'); let cur = 0;
+    const press = (sel, v, attr) => oc.querySelectorAll(sel).forEach(b => b.setAttribute('aria-pressed', String(b.dataset[attr] === v)));
+    const show = i => { cur = (i + cards.length) % cards.length; cards.forEach((c, k) => c.classList.toggle('is-on', k === cur)); tabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === cur)));
+      const bar = tabs[cur] && tabs[cur].querySelector('.oc-tab__bar'); if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; } };
+    const setCs = v => { oc.dataset.cs = v; press('[data-ocs]', v, 'ocs'); cards.forEach(c => { c.style.removeProperty('--s'); c.style.removeProperty('--b'); }); show(cur); stk(); };
+    const setTr = v => { R.dataset.otr = v; press('[data-otr]', v, 'otr'); dispatchEvent(new Event('scroll')); };
+    const qs = new URLSearchParams(location.search);
+    oc.addEventListener('click', e => { const b = e.target.closest('[data-ocs],[data-otr]'), t = e.target.closest('.oc-tab');
+      if (t) { show(+t.dataset.i); return; } if (!b) return; const u = new URL(location.href);
+      if (b.dataset.ocs) { setCs(b.dataset.ocs); u.searchParams.set('cases', b.dataset.ocs); } else { setTr(b.dataset.otr); u.searchParams.set('tr', b.dataset.otr); } history.replaceState(null, '', u); });
+    tabs.forEach(t => t.querySelector('.oc-tab__bar').addEventListener('animationend', () => { if ((oc.dataset.cs || 'vt') === 'vt') show(cur + 1); }));
+    list.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') oc.classList.add('is-hold'); }); list.addEventListener('pointerleave', () => oc.classList.remove('is-hold'));
+    new IntersectionObserver(es => es.forEach(e => oc.classList.toggle('is-play', e.isIntersecting && !reduce)), { threshold: .35 }).observe(list);
+    /* окно сайта листается, когда карточка на экране */
+    const lio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-live', e.isIntersecting)), { threshold: .45 });
+    cards.forEach(c => lio.observe(c));
+    /* «Стопка»: входящая карточка подрастает (как у chipsa), накрытая — уменьшается и темнеет */
+    let raf3 = 0;
+    function stk() { raf3 = 0; if (oc.dataset.cs !== 'stk' || reduce) return;
+      cards.forEach((c, i) => { const r = c.getBoundingClientRect(), top = parseFloat(getComputedStyle(c).top) || 0, h = r.height / (parseFloat(c.style.getPropertyValue('--s')) || 1);
+        const grow = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * .55)));
+        const nx = cards[i + 1] ? cards[i + 1].getBoundingClientRect().top : Infinity, p = Math.min(1, Math.max(0, (top + h - nx) / h));
+        c.style.setProperty('--s', ((.92 + .08 * grow) * (1 - p * .08)).toFixed(4)); c.style.setProperty('--b', (1 - p * .45).toFixed(3)); }); }
+    addEventListener('scroll', () => { if (!raf3) raf3 = requestAnimationFrame(stk); }, { passive: true });
+    const qc = qs.get('cases'), qt = qs.get('tr');
+    setTr(qt === 'sheet' ? 'sheet' : 'wave'); setCs(/^(vt|stk|bento)$/.test(qc || '') ? qc : 'vt');
+  }
+
   /* иллюстрации и линии — когда видны */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: .25 });
   document.querySelectorAll('.os-card, .os-tf__grid, .os-steps__track, .os-no').forEach(el => io.observe(el));
