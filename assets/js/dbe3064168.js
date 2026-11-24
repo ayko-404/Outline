@@ -34,11 +34,7 @@
     const q = new URLSearchParams(location.search).get('v'); if (q && /^[a-f]$/.test(q)) setV(q);
     kh.addEventListener('click', e => { const b = e.target.closest('[data-kv]'); if (!b) return; setV(b.dataset.kv);
       const u = new URL(location.href); u.searchParams.set('v', b.dataset.kv); history.replaceState(null, '', u); });
-    /* 24.11 фон обложки — слова справа (реф fourmula.ai); переключатель мыши на связке (временно) */
-    const setM = v => { kh.querySelectorAll('[data-kmouse]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kmouse === v))); if (window.__keysMouse) window.__keysMouse(v); };
-    const qm = new URLSearchParams(location.search).get('mouse'); if (qm) kh.querySelectorAll('[data-kmouse]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kmouse === qm)));
-    kh.addEventListener('click', e => { const b = e.target.closest('[data-kmouse]'); if (!b) return; setM(b.dataset.kmouse);
-      const u = new URL(location.href); u.searchParams.set('mouse', b.dataset.kmouse); history.replaceState(null, '', u); });
+    /* 24.11 фон обложки — слова справа (реф fourmula.ai) */
     const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let vis = true; new IntersectionObserver(es => { vis = es[0].isIntersecting; }).observe(kh);
     const chips = [...kh.querySelectorAll('.os-kh__drum li')], M2 = chips.length; let act = 0;
