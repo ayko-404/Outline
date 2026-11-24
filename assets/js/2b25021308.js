@@ -63,29 +63,20 @@
     upd(); addEventListener('scroll', () => { if (!raf2) raf2 = requestAnimationFrame(upd); }, { passive: true }); addEventListener('resize', upd);
   }
 
-  /* 24.11 волны между светлым и тёмным — механика главной (#wavex/#wavel, nomu): 4 слоя, 10 точек, у каждой своя задержка */
   const R = document.documentElement;
-  const wave = (wrap, k) => { if (!wrap) return; const paths = [...wrap.querySelectorAll('path')], P = 10;
-    const noise = (i, L) => k ? (Math.sin(i * .9 + L * 1.3 + 2) + Math.sin(i * .37 + L * 2.1)) / 4 + .5 : (Math.sin(i * .9 + L * 1.7) + Math.sin(i * .37 + L * 2.9 + 1)) / 4 + .5;
-    const delays = paths.map((_, L) => Array.from({ length: P }, (_, i) => L * .13 + noise(i, L) * .1)), smooth = t => t * t * (3 - 2 * t);
-    const draw = prog => paths.forEach((p, L) => { const ys = delays[L].map(d => 100 * (1 - smooth(Math.min(1, Math.max(0, (prog - d) / .5)))));
-      const step = 100 / (P - 1); let d = `M0 ${ys[0].toFixed(3)} C`;
-      for (let i = 1; i < P; i++) { const x0 = (i - 1) * step, x1 = i * step, h = step / 2; d += ` ${(x0 + h).toFixed(3)} ${ys[i - 1].toFixed(3)} ${(x0 + h).toFixed(3)} ${ys[i].toFixed(3)} ${x1.toFixed(3)} ${ys[i].toFixed(3)}`; }
-      p.setAttribute('d', d + ' L100 100 L0 100 Z'); });
-    const target = () => { const r = wrap.getBoundingClientRect(); return Math.min(1, Math.max(0, (innerHeight * .98 - r.top) / (innerHeight * (k ? 1.06 : .88)))); };
-    let cur = 0, tgt = 0, raf = 0;
-    const tick = () => { cur += (tgt - cur) * .16; if (Math.abs(tgt - cur) < .001) cur = tgt; draw(cur); raf = cur === tgt ? 0 : requestAnimationFrame(tick); };
-    const on = () => { tgt = reduce ? 1 : target(); if (reduce) return draw(1); if (!raf) raf = requestAnimationFrame(tick); };
-    addEventListener('scroll', on, { passive: true }); addEventListener('resize', on); cur = tgt = reduce ? 1 : target(); draw(cur); };
-  wave(document.getElementById('ocw-in'), 0); wave(document.getElementById('ocw-out'), 1);
 
   /* 24.11 кейсы на полке (реф shopify.com/editions): фильтр, наклон за курсором, раскрытие с перелётом обложки; переход ?tr=wave|sheet (временно) */
   const oc = document.querySelector('.oc');
   if (oc) {
     const covs = [...oc.querySelectorAll('.oc-cov')], dets = [...oc.querySelectorAll('.oc-det')], idx = [...oc.querySelectorAll('.oc-idx button')], box = oc.querySelector('.oc-dets');
     const mob = () => matchMedia('(max-width: 760px)').matches; let cur = -1, busy = false;
-    const setTr = v => { R.dataset.otr = v; oc.querySelectorAll('[data-otr]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.otr === v))); dispatchEvent(new Event('scroll')); };
-    setTr(new URLSearchParams(location.search).get('tr') === 'sheet' ? 'sheet' : 'wave');
+    /* «Лист»: светлый блок наезжает на тёмный и расширяется до краёв */
+    let raf4 = 0; const rise = () => { raf4 = 0; const r = oc.getBoundingClientRect(), e = Math.max(0, Math.min(1, 1 - r.top / (innerHeight * .9)));
+      oc.style.setProperty('--e2', e.toFixed(4)); oc.classList.toggle('is-rise', e < 1 && cur < 0 && !reduce); };
+    addEventListener('scroll', () => { if (!raf4) raf4 = requestAnimationFrame(rise); }, { passive: true }); addEventListener('resize', rise); rise();
+    const scene = oc.querySelector('.oc-scene');
+    const place = () => { if (mob()) return; const sr = scene.getBoundingClientRect(), H = Math.min(sr.height - 48, innerHeight - 150, 640);
+      const top = Math.max(24, Math.min(sr.height - H - 24, innerHeight / 2 + 30 - H / 2 - sr.top)); box.style.setProperty('--dt', top + 'px'); box.style.setProperty('--dh', H + 'px'); };
     /* фильтр */
     const filt = f => { oc.querySelectorAll('[data-flt]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.flt === f)));
       covs.forEach(c => c.classList.toggle('is-out', f !== 'all' && c.dataset.f !== f)); idx.forEach(b => b.classList.toggle('is-out', f !== 'all' && b.dataset.f !== f)); };
@@ -102,7 +93,7 @@
       stage.style.transition = 'none'; stage.style.transform = back ? 'none' : t; stage.style.borderRadius = back ? '' : `${4 * to.width / from.width}px`; void stage.offsetWidth;
       stage.style.transition = 'transform .75s cubic-bezier(.22, 1, .36, 1), border-radius .75s'; stage.style.transform = back ? t : 'none'; stage.style.borderRadius = '';
       setTimeout(done || (() => {}), 760); };
-    const show = (i, fromCover) => { const d = dets[i]; dets.forEach(x => { x.hidden = x !== d; }); cur = i; oc.classList.add('is-det');
+    const show = (i, fromCover) => { const d = dets[i]; if (cur < 0) place(); dets.forEach(x => { x.hidden = x !== d; }); cur = i; oc.classList.add('is-det'); oc.classList.remove('is-rise');
       covs.forEach((c, k) => c.style.opacity = k === i ? '0' : '');
       if (fromCover && !mob() && !reduce) { busy = true; flip(d.querySelector('.oc-det__stage'), covs[i].querySelector('.oc-cov__art').getBoundingClientRect(), false, () => { busy = false; }); }
       if (mob()) document.documentElement.style.overflow = 'hidden'; };
@@ -113,7 +104,6 @@
     const step = s => { const vis = covs.map((c, k) => k).filter(k => !covs[k].classList.contains('is-out')); if (!vis.length) return; const p = vis.indexOf(cur); show(vis[(p + s + vis.length) % vis.length], false); };
     oc.addEventListener('click', e => { const t = e.target;
       const fb = t.closest('[data-flt]'); if (fb) { if (cur >= 0) close(); filt(fb.dataset.flt); return; }
-      const tb = t.closest('button[data-otr]'); if (tb) { setTr(tb.dataset.otr); const u = new URL(location.href); u.searchParams.set('tr', tb.dataset.otr); history.replaceState(null, '', u); return; }
       const ob = t.closest('[data-open]'); if (ob) { const i = +ob.dataset.open; if (cur >= 0) show(i, false); else show(i, true); hov(i, false); return; }
       if (t.closest('[data-close]')) { close(); return; }
       const sb = t.closest('[data-step]'); if (sb) { step(+sb.dataset.step); return; }
@@ -123,9 +113,32 @@
 
   /* иллюстрации и линии — когда видны */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: .25 });
-  document.querySelectorAll('.os-card, .os-tf__grid, .os-steps__track, .os-no').forEach(el => io.observe(el));
+  document.querySelectorAll('.os-card, .os-tf__grid, .os-steps__track, .os-no, .os-multi').forEach(el => io.observe(el));
 
-  /* «Выбрать тариф» — тариф в форму, плавно к ней */
-  document.addEventListener('click', e => { const b = e.target.closest('[data-os-tariff]'); if (!b) return;
-    const f = document.querySelector('#zayavka form'); if (f && f.elements.tariff) f.elements.tariff.value = b.dataset.osTariff; });
+  /* 24.11 (Никита: «кнопки на этой странице открывают свои поп-апы, не якорь к подвалу»): одна модалка, заголовок — по кнопке;
+     внутрь переносится сама форма заявки из подвала (те же поля и отправка), при закрытии возвращается на место */
+  const form = document.querySelector('#zayavka form');
+  if (form) {
+    const dlg = document.createElement('dialog'); dlg.className = 'sp-pop';
+    dlg.innerHTML = '<div class="sp-pop__box"><button type="button" class="sp-pop__x" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button><div class="sp-pop__head"></div><div class="sp-pop__body"></div></div>';
+    document.body.appendChild(dlg);
+    const head = dlg.querySelector('.sp-pop__head'), body = dlg.querySelector('.sp-pop__body'), home = document.createComment('form-home');
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const LEAD = 'Расскажите о своей задаче — предложим подходящий тариф и объясним, как будет выглядеть будущий сайт.';
+    const open = b => { const plan = b.closest('.os-plan'), tf = b.dataset.osTariff || '';
+      let h;
+      if (plan) { const nm = plan.querySelector('.os-plan__name').textContent.trim(), pr = plan.querySelector('.os-plan__price').textContent.trim(), meta = [...plan.querySelectorAll('.os-plan__meta span')].map(x => x.textContent.trim());
+        h = `<span class="sp-pop__k">Тариф</span><h2 class="sp-pop__t">${esc(nm.charAt(0) + nm.slice(1).toLowerCase())} <em>${esc(pr)}</em></h2><ul class="sp-pop__chips">${meta.map(m => `<li>${esc(m)}</li>`).join('')}</ul><p class="sp-pop__lead">${LEAD}</p>`; }
+      else if (tf === 'Многостраничный') h = `<span class="sp-pop__k">Многостраничный сайт</span><h2 class="sp-pop__t">Обсудим <em>вашу задачу</em></h2><p class="sp-pop__lead">Многостраничные сайты — от&nbsp;69&nbsp;900&nbsp;₽. Итоговая стоимость и сроки рассчитываются после обсуждения задачи.</p>`;
+      else if (b.closest('.oc')) h = `<h2 class="sp-pop__t">Хочу сайт <em>в таком стиле</em></h2><p class="sp-pop__lead">${LEAD}</p>`;
+      else h = `<h2 class="sp-pop__t">Обсудим <em>ваш сайт</em></h2><p class="sp-pop__lead">${LEAD}</p>`;
+      head.innerHTML = h; if (form.elements.tariff) form.elements.tariff.value = plan ? plan.querySelector('.os-plan__name').textContent.trim() : tf;
+      if (!home.parentNode) form.parentNode.insertBefore(home, form); body.appendChild(form);
+      dlg.showModal(); document.documentElement.classList.add('sp-lock'); };
+    const close = () => dlg.close();
+    dlg.addEventListener('close', () => { if (home.parentNode) home.parentNode.insertBefore(form, home); document.documentElement.classList.remove('sp-lock'); });
+    dlg.querySelector('.sp-pop__x').addEventListener('click', close);
+    dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+    document.addEventListener('click', e => { const b = e.target.closest('a[href="#zayavka"]'); if (!b || b.closest('.sp-pop')) return; e.preventDefault(); open(b); });
+  }
 })();
