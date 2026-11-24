@@ -35,6 +35,11 @@
     kh.addEventListener('click', e => { const b = e.target.closest('[data-kv]'); if (!b) return; setV(b.dataset.kv);
       const u = new URL(location.href); u.searchParams.set('v', b.dataset.kv); history.replaceState(null, '', u); });
     /* 24.11 фон обложки — слова справа (реф fourmula.ai) */
+    /* 24.11 варианты композиции связки (временно): ?comp=row|fan|bunch|side */
+    const markC = v => kh.querySelectorAll('[data-kcomp]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kcomp === v)));
+    const qc = new URLSearchParams(location.search).get('comp'); if (qc) markC(qc);
+    kh.addEventListener('click', e => { const b = e.target.closest('[data-kcomp]'); if (!b) return; markC(b.dataset.kcomp); if (window.__keysComp) window.__keysComp(b.dataset.kcomp);
+      const u = new URL(location.href); u.searchParams.set('comp', b.dataset.kcomp); history.replaceState(null, '', u); });
     const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let vis = true; new IntersectionObserver(es => { vis = es[0].isIntersecting; }).observe(kh);
     const chips = [...kh.querySelectorAll('.os-kh__drum li')], M2 = chips.length; let act = 0;
