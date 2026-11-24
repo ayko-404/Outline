@@ -47,6 +47,15 @@
     if (st) document.readyState === 'complete' ? idle() : addEventListener('load', idle, { once: true });
   }
 
+  /* 24.11 2-й блок: закреплённый экран, две фразы по прокрутке (--q), подчёркивание «заявки» — когда фраза встала */
+  const wi = document.querySelector('[data-why-intro]');
+  if (wi && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ink = wi.querySelector('.os-why__b .o-ink'); let raf2 = 0;
+    const upd = () => { raf2 = 0; const r = wi.getBoundingClientRect(), span = r.height - innerHeight; const q = Math.max(0, Math.min(1, -r.top / Math.max(1, span)));
+      wi.style.setProperty('--q', q.toFixed(4)); if (ink) ink.classList.toggle('is-in', q > 0.74); };
+    upd(); addEventListener('scroll', () => { if (!raf2) raf2 = requestAnimationFrame(upd); }, { passive: true }); addEventListener('resize', upd);
+  }
+
   /* иллюстрации и линии — когда видны */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: .25 });
   document.querySelectorAll('.os-card, .os-tf__grid, .os-steps__track, .os-no').forEach(el => io.observe(el));
