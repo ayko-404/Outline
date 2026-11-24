@@ -111,6 +111,36 @@
     addEventListener('keydown', e => { if (cur < 0) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); });
   }
 
+  /* 24.11 тарифы — варианты (временно): ?tv=b|c|now */
+  const tfs = document.querySelector('.os-tf');
+  if (tfs) {
+    const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
+    const count = (el, from, to) => { if (reduce || from === to) { el.textContent = fmt(to); return; } const t0 = performance.now(), D = 650;
+      const tick = now => { const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(from + (to - from) * e); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
+    const setTv = v => { tfs.dataset.tv = v; document.querySelectorAll('[data-tv]').forEach(b => b.tagName === 'BUTTON' && b.setAttribute('aria-pressed', String(b.dataset.tv === v))); };
+    const qtv = new URLSearchParams(location.search).get('tv'); if (/^(b|c|now)$/.test(qtv || '')) setTv(qtv);
+    document.addEventListener('click', e => { const b = e.target.closest('button[data-tv]'); if (!b) return; setTv(b.dataset.tv); const u = new URL(location.href); u.searchParams.set('tv', b.dataset.tv); history.replaceState(null, '', u); });
+    /* «Конструктор» */
+    const tvb = tfs.querySelector('.tvb');
+    if (tvb) { const tabs = [...tvb.querySelectorAll('[data-tvb]')], infos = [...tvb.querySelectorAll('.tvb__info')], lis = [...tvb.querySelectorAll('.tvb__list li')], blocks = [...tvb.querySelectorAll('.tvb__blocks i')], nEl = tvb.querySelector('.tvb__n span');
+      let cur = 1, curN = 9;
+      const sel = k => { const prev = cur, pv = +infos[prev].querySelector('.tvb__price').dataset.to; cur = k; tvb.dataset.k = k;
+        tabs.forEach((t, i) => t.setAttribute('aria-selected', String(i === k))); infos.forEach((x, i) => { x.hidden = i !== k; });
+        count(infos[k].querySelector('.tvb__price'), pv, +infos[k].querySelector('.tvb__price').dataset.to);
+        let j = 0; lis.forEach(li => { const lv = +li.dataset.lv, on = lv <= k; li.style.setProperty('--j', on && lv > prev ? j++ : 0); li.classList.toggle('is-on', on); li.classList.toggle('is-new', on && lv === k && k > 0); });
+        const n = +tabs[k].dataset.n; blocks.forEach((b, i) => b.classList.toggle('is-on', i < n));
+        const n0 = curN; curN = n; if (reduce) nEl.textContent = n; else { const t0 = performance.now(); const tk = now => { const q = Math.min(1, (now - t0) / 500); nEl.textContent = Math.round(n0 + (n - n0) * q); if (q < 1) requestAnimationFrame(tk); }; requestAnimationFrame(tk); } };
+      tabs.forEach((t, i) => t.addEventListener('click', () => sel(i)));
+      lis.forEach(li => li.classList.toggle('is-on', +li.dataset.lv <= 1)); blocks.forEach((b, i) => b.classList.toggle('is-on', i < 9)); }
+    /* «Голограммы»: наклон и блик за курсором, цены досчитываются при появлении */
+    tfs.querySelectorAll('.tvc').forEach(c => { const inn = c.querySelector('.tvc__in');
+      c.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse' || reduce) return; const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        inn.style.setProperty('--ry', ((x - .5) * 10).toFixed(2) + 'deg'); inn.style.setProperty('--rx', ((.5 - y) * 8).toFixed(2) + 'deg'); inn.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); inn.style.setProperty('--gy', (y * 100).toFixed(1) + '%'); });
+      c.addEventListener('pointerleave', () => { inn.style.setProperty('--rx', '0deg'); inn.style.setProperty('--ry', '0deg'); }); });
+    const pio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.querySelectorAll('.tvc__price').forEach((p, i) => setTimeout(() => count(p, 0, +p.dataset.to), i * 120)); pio.unobserve(e.target); }), { threshold: .3 });
+    const g = tfs.querySelector('.tvc-grid'); if (g) pio.observe(g);
+  }
+
   /* иллюстрации и линии — когда видны */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: .25 });
   document.querySelectorAll('.os-card, .os-tf__grid, .os-steps__track, .os-no, .os-multi').forEach(el => io.observe(el));
@@ -127,12 +157,12 @@
     const LEAD = 'Расскажите о своей задаче — предложим подходящий тариф и объясним, как будет выглядеть будущий сайт.';
     const open = b => { const plan = b.closest('.os-plan'), tf = b.dataset.osTariff || '';
       let h;
-      if (plan) { const nm = plan.querySelector('.os-plan__name').textContent.trim(), pr = plan.querySelector('.os-plan__price').textContent.trim(), meta = [...plan.querySelectorAll('.os-plan__meta span')].map(x => x.textContent.trim());
+      if (plan || b.dataset.popName) { const nm = b.dataset.popName || plan.querySelector('.os-plan__name').textContent.trim(), pr = b.dataset.popPrice || plan.querySelector('.os-plan__price').textContent.trim(), meta = b.dataset.popMeta ? b.dataset.popMeta.split('|') : [...plan.querySelectorAll('.os-plan__meta span')].map(x => x.textContent.trim());
         h = `<span class="sp-pop__k">Тариф</span><h2 class="sp-pop__t">${esc(nm.charAt(0) + nm.slice(1).toLowerCase())} <em>${esc(pr)}</em></h2><ul class="sp-pop__chips">${meta.map(m => `<li>${esc(m)}</li>`).join('')}</ul><p class="sp-pop__lead">${LEAD}</p>`; }
       else if (tf === 'Многостраничный') h = `<span class="sp-pop__k">Многостраничный сайт</span><h2 class="sp-pop__t">Обсудим <em>вашу задачу</em></h2><p class="sp-pop__lead">Многостраничные сайты — от&nbsp;69&nbsp;900&nbsp;₽. Итоговая стоимость и сроки рассчитываются после обсуждения задачи.</p>`;
       else if (b.closest('.oc')) h = `<h2 class="sp-pop__t">Хочу сайт <em>в таком стиле</em></h2><p class="sp-pop__lead">${LEAD}</p>`;
       else h = `<h2 class="sp-pop__t">Обсудим <em>ваш сайт</em></h2><p class="sp-pop__lead">${LEAD}</p>`;
-      head.innerHTML = h; if (form.elements.tariff) form.elements.tariff.value = plan ? plan.querySelector('.os-plan__name').textContent.trim() : tf;
+      head.innerHTML = h; if (form.elements.tariff) form.elements.tariff.value = b.dataset.popName || (plan ? plan.querySelector('.os-plan__name').textContent.trim() : tf);
       if (!home.parentNode) form.parentNode.insertBefore(home, form); body.appendChild(form);
       dlg.showModal(); document.documentElement.classList.add('sp-lock'); };
     const close = () => dlg.close();
