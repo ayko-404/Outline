@@ -506,7 +506,7 @@ html.o-lock { overflow: hidden; }
 .o-person span { font-size: var(--fs-caption); line-height: 1.35; color: var(--text-muted); }
 
 /* ── Конец страницы над картой подвала ─────────────── */
-.o-end { position: relative; z-index: 2; border-radius: 0 0 var(--radius-frame-dark) var(--radius-frame-dark); box-shadow: 0 1.5rem 3rem -1.5rem rgb(0 0 0 / .35); }
+.o-end { position: relative; z-index: 2; border-radius: 0 0 var(--radius-frame-dark) var(--radius-frame-dark); box-shadow: 0 2.25rem 3rem -3.5rem rgb(0 0 0 / .38); }   /* 25.11 (Никита: «тёмное пятно на стыке с картой»): тень отступает от краёв на радиус скругления — на углах её нет */
 
 /* ── Подвал: карта во всю ширину, тёмная карточка, логотип контуром (на главной — .fina) ── */
 .o-footer { position: relative; margin-top: calc(var(--radius-frame-dark) * -1); padding-top: var(--radius-frame-dark); background: var(--map-ground); overflow: hidden; }
