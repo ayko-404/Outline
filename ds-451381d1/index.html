@@ -506,7 +506,8 @@ html.o-lock { overflow: hidden; }
 .o-person span { font-size: var(--fs-caption); line-height: 1.35; color: var(--text-muted); }
 
 /* ── Конец страницы над картой подвала ─────────────── */
-.o-end { position: relative; z-index: 2; border-radius: 0 0 var(--radius-frame-dark) var(--radius-frame-dark); box-shadow: 0 2.25rem 3rem -3.5rem rgb(0 0 0 / .38); }   /* 25.11 (Никита: «тёмное пятно на стыке с картой»): тень отступает от краёв на радиус скругления — на углах её нет */
+.o-end { position: relative; z-index: 2; border-radius: 0 0 var(--radius-frame-dark) var(--radius-frame-dark); box-shadow: none; }
+.o-end::after { content: ""; position: absolute; z-index: -1; left: 2.5rem; right: 2.5rem; bottom: -2.25rem; height: 2.25rem; pointer-events: none; background: radial-gradient(50% 100% at 50% 0, rgb(0 0 0 / .26), rgb(0 0 0 / .08) 55%, transparent 100%); }   /* 25.11 v2 (Никита: «пятно на стыке» → «куда пропала тень»): тень — отдельным слоем под ровной частью блока, к углам гаснет, пятна нет */
 
 /* ── Подвал: карта во всю ширину, тёмная карточка, логотип контуром (на главной — .fina) ── */
 .o-footer { position: relative; margin-top: calc(var(--radius-frame-dark) * -1); padding-top: var(--radius-frame-dark); background: var(--map-ground); overflow: hidden; }
